@@ -29,11 +29,16 @@ class Auth extends CI_Controller
                 'logged_in' => TRUE,
                 'email' => $result['email'],
                 'username' => $result['username'],
+                'role' => $result['role'],
                 'id' => $result['id'],
             ];
             $this->session->set_userdata($data);
 
-            redirect(base_url() . "admin");
+            if ($this->session->userdata('role') == 'admin') {
+                redirect(base_url() . "admin");
+            } else {
+                redirect(base_url() . "auth");
+            }
         } else {
             redirect(base_url() . "auth");
         }
@@ -41,12 +46,12 @@ class Auth extends CI_Controller
 
 
     // REGISTER
-    public function register()
+    public function register_karyawan()
     {
-        $this->load->view('auth/register');
+        $this->load->view('auth/register_karyawan');
     }
 
-    public function aksi_register()
+    public function aksi_register_karyawan()
     {
         $email = $this->input->post('email', true);
         $username = $this->input->post('username', true);
@@ -101,7 +106,7 @@ class Auth extends CI_Controller
             redirect(base_url() . "auth");
         } else {
             // Registrasi gagal
-            redirect(base_url() . "auth/register");
+            redirect(base_url() . "auth/register_karyawan");
         }
     }
 

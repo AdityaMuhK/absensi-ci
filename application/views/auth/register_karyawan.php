@@ -23,6 +23,8 @@
             align-items: center;
             height: 100vh;
             font-family: sans-serif;
+            background: linear-gradient(to top left, #9933ff 0%, #003300 100%);
+
         }
 
         .container {
@@ -195,7 +197,7 @@
         </div>
         <div class="register">
             <div class="container">
-                <i class="fa-solid fa-user-pen"></i>
+                <i class="fa-solid fa-user-pen fa-5x"></i>
                 <h2>Halo,Kak!</h2>
                 <p>Jika Kakak Sudah Punya Akun Langsung Login Aja Kak</p>
                 <a type="button" href="<?php echo base_url('auth') ?>">Login <i

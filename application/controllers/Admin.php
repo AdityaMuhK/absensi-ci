@@ -18,6 +18,16 @@ class Admin extends CI_Controller
     {
         $this->load->view('admin/index');
     }
+    // admin
+    public function menu_absen()
+    {
+        $this->load->view('admin/menu_absen');
+    }
+    // admin
+    public function history()
+    {
+        $this->load->view('admin/history');
+    }
 
 }
 ?>

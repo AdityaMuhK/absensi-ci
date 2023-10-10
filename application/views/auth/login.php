@@ -23,6 +23,8 @@
             align-items: center;
             height: 100vh;
             font-family: sans-serif;
+            background: linear-gradient(to top left, #9933ff 0%, #003300 100%);
+
         }
 
         .container {
@@ -179,36 +181,28 @@
 <body>
     <div class="container">
         <div class="login">
-            <div class="container">
-                <h1>Log in</h1>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password"><br>
-                <input type="checkbox"><span>Remember me</span>
-                <a href="#">Forgot password?</a>
-                <button>log in</button>
-                <hr>
-                <p>Or Connect With</p>
-                <hr>
-                <ul>
-                    <li><i class="fab fa-facebook-f fa-2x"></i></li>
-                    <li><i class="fab fa-twitter fa-2x"></i></li>
-                    <li><i class="fab fa-github fa-2x"></i></li>
-                    <li><i class="fab fa-linkedin-in fa-2x"></i></li>
-                </ul>
-                <div class="clearfix"></div>
-                <span class="copyright">&copy;2019</span>
-            </div>
+            <form action="<?php echo base_url('auth/aksi_login'); ?>" method="post">
+                <div class="container">
+                    <h1>Log in</h1>
+                    <input id="email" name="email" type="email" placeholder="Email">
+                    <input id="password" name="password" type="password" placeholder="Password"><br>
+                    <button type="submit">log in</button>
+                    <hr>
+
+                </div>
+            </form>
         </div>
         <div class="register">
             <div class="container">
                 <i class="fas fa-user-plus fa-5x"></i>
                 <h2>Halo,Kak!</h2>
                 <p>Jika Kakak Belum Punya Akun Mendaftar Terlebih Dahulu</p>
-                <a type="button" href="<?php echo base_url('auth/register') ?>">SignIn <i
+                <a type="button" href="<?php echo base_url('auth/register_karyawan') ?>">SignIn <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
