@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         * {
             margin: 0;
@@ -84,18 +86,18 @@
             background: #f3f1f6;
         }
 
-        .sidebar .sub-menu li:hover {
+        .sidebar .sub_menu li:hover {
             background: none;
             color: #77619e;
         }
 
-        .sidebar .nav-links li .icon-link {
+        .sidebar .nav-links li .icon_link {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .sidebar.close .nav-links li .icon-link {
+        .sidebar.close .nav-links li .icon_link {
             display: block;
         }
 
@@ -136,18 +138,18 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li .sub-menu {
+        .sidebar .nav-links li .sub_menu, {
             padding: 6px 6px 14px 80px;
             margin-top: 0px;
             background: #fff;
             display: none;
         }
 
-        .sidebar .nav-links li.showMenu .sub-menu {
+        .sidebar .nav-links li.showMenu .sub_menu {
             display: block;
         }
 
-        .sidebar .nav-links li .sub-menu a {
+        .sidebar .nav-links li .sub_menu a{
             color: #77619e;
             font-size: 15px;
             padding: 5px 0;
@@ -156,11 +158,11 @@
             transition: all 0.3s ease;
         }
 
-        .sidebar .nav-links li .sub-menu a:hover {
+        .sidebar .nav-links li .sub_menu a:hover {
             opacity: 1;
         }
 
-        .sidebar.close .nav-links li .sub-menu {
+        .sidebar.close .nav-links li .sub_menu {
             position: absolute;
             left: 100%;
             top: -10px;
@@ -173,24 +175,24 @@
             transition: 0s;
         }
 
-        .sidebar.close .nav-links li:hover .sub-menu {
+        .sidebar.close .nav-links li:hover .sub_menu {
             top: 0;
             opacity: 1;
             pointer-events: auto;
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li .sub-menu .link_name {
+        .sidebar .nav-links li .sub_menu .link_name {
             display: none;
         }
 
-        .sidebar.close .nav-links li .sub-menu .link_name {
+        .sidebar.close .nav-links li .sub_menu .link_name {
             font-size: 18px;
             opacity: 1;
             display: block;
         }
 
-        .sidebar .nav-links li .sub-menu.blank {
+        .sidebar .nav-links li .sub_menu.blank {
             opacity: 1;
             pointer-events: auto;
             padding: 3px 20px 6px 16px;
@@ -198,7 +200,7 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li:hover .sub-menu.blank {
+        .sidebar .nav-links li:hover .sub_menu.blank {
             top: 50%;
             transform: translateY(-50%);
         }
@@ -293,7 +295,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
+            .sidebar.close .nav-links li .sub_menu {
                 display: none;
             }
 
@@ -327,23 +329,23 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="<?php echo base_url('admin') ?>">
+                <a href="<?php echo base_url('karyawan') ?>">
                     <i class="fa-solid fa-arrow-trend-up"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <div class="icon-link">
+                <div class="icon_link">
                     <a href="#">
                         <i class="fa-solid fa-list"></i>
                         <span class="link_name">Absen Menu</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Kategori</a></li>
-                    <li><a href="<?php echo base_url('adnin/menu_absen') ?>">Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('adnin/history') ?>">Histori</a></li>
+                <ul class="sub_menu">
+                    <li><a class="link_name" href="">Kategori</a></li>
+                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
             </li>
 
@@ -355,6 +357,7 @@
                         ?>
                         <img src="<?php echo $image_url; ?>" alt="profileImg">
                     </div>
+
                     <div class="name-job">
                         <div class="profile_name">
                             <marquee scrolldelay="150">
@@ -377,9 +380,63 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">DashBoard Sidebar</span>
+            <span class="text">Absens Karyawan</span>
         </div>
+        <!-- Tabel -->
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Karyawan</th>
+                            <th scope="col">Kegiatan</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Jam Masuk</th>
+                            <th scope="col">Jam Pulang</th>
+                            <th scope="col">Keterangan Izin</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark Otto</td>
+                            <td>Meeting</td>
+                            <td>2023-10-11</td>
+                            <td>08:00 AM</td>
+                            <td>05:00 PM</td>
+                            <td>-</td>
+                            <td>Done</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob Thornton</td>
+                            <td>Presentation</td>
+                            <td>2023-10-12</td>
+                            <td>09:30 AM</td>
+                            <td>04:30 PM</td>
+                            <td>-</td>
+                            <td>Not Done</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td >Larry the Bird</td>
+                            <td>Presentation</td>
+                            <td>2023-10-13</td>
+                            <td>10:00 AM</td>
+                            <td>03:00 PM</td>
+                            <td>Medical Leave</td>
+                            <td>Done</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Tabel End -->
+
     </section>
+
 
     <script>
         const arrows = document.querySelectorAll(".arrow");
@@ -418,6 +475,9 @@
             });
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

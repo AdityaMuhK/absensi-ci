@@ -23,8 +23,7 @@
             align-items: center;
             height: 100vh;
             font-family: sans-serif;
-            background: linear-gradient(to top left, #9933ff 0%, #003300 100%);
-
+            background: linear-gradient(to top left, #9933ff 23%, #ffffff 100%);
         }
 
         .container {
@@ -54,16 +53,28 @@
             font-size: 2.5em;
         }
 
+        input[type="text"],
         input[type="email"],
         input[type="password"],
-        input[type="text"],
         select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 30px;
-            border: none;
-            background-color: #eeeeef;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: #9526a9;
+            outline: none;
+        }
+
 
         .login span {
             float: left
@@ -137,7 +148,7 @@
         /*Start Register Style*/
         .register {
             float: right;
-            background-image: linear-gradient(135deg, #23212f 5%, #9526a9 95%);
+            background: linear-gradient(to top left, #9933ff 23%, #ffffff 100%);
             height: 100%;
             color: #fff;
             border-radius: 0 10px 10px 0;
@@ -165,6 +176,7 @@
             font-size: 20px;
             text-transform: uppercase;
             transition: 0.2s all ease-in-out;
+            text-decoration: none;
         }
 
         .register a:hover {
@@ -180,18 +192,17 @@
 
         <div class="login">
             <div class="container">
-                <h1>Sign in</h1>
-                <form action="<?php echo base_url('auth/aksi_register'); ?>" method="post">
+                <h1>Sign in Karyawan</h1>
+                <form action="<?php echo base_url('auth/aksi_register_karyawan'); ?>" method="post">
                     <input id="username" name="username" type="text" placeholder="Username">
                     <input id="nama_depan" name="nama_depan" type="text" placeholder="Nama Depan"><br>
                     <input id="nama_belakang" name="nama_belakang" type="text" placeholder="Nama Belakang"><br>
                     <input id="email" name="email" type="email" placeholder="Email">
                     <input id="password" name="password" type="password" placeholder="Password"><br>
-                    <select id="role" name="role">
-                        <option value="karyawan">Karyawan</option>
-                        <option value="admin">Admin</option>
-                    </select>
                     <button type="submit">Sign In</button>
+                    <hr>
+                    <hr>
+
                 </form>
             </div>
         </div>
@@ -199,7 +210,7 @@
             <div class="container">
                 <i class="fa-solid fa-user-pen fa-5x"></i>
                 <h2>Halo,Kak!</h2>
-                <p>Jika Kakak Sudah Punya Akun Langsung Login Aja Kak</p>
+                <p>Jika Kakak Sudah Punya Akun Sebagai Karyawan Langsung Login Aja Kak</p>
                 <a type="button" href="<?php echo base_url('auth') ?>">Login <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>

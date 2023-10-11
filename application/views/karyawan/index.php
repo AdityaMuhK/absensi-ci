@@ -327,7 +327,7 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="<?php echo base_url('admin') ?>">
+                <a href="<?php echo base_url('karyawan') ?>">
                     <i class="fa-solid fa-arrow-trend-up"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
@@ -341,9 +341,9 @@
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Kategori</a></li>
-                    <li><a href="<?php echo base_url('adnin/menu_absen') ?>">Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('adnin/history') ?>">Histori</a></li>
+                    <li><a class="link_name" href="">Kategori</a></li>
+                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
             </li>
 
@@ -355,6 +355,7 @@
                         ?>
                         <img src="<?php echo $image_url; ?>" alt="profileImg">
                     </div>
+
                     <div class="name-job">
                         <div class="profile_name">
                             <marquee scrolldelay="150">

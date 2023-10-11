@@ -24,7 +24,7 @@ class M_model extends CI_Model
 
     public function get_by_id($tabel, $id_column, $id)
     {
-        $data= $this->db->where($id_column, $id)->get($tabel);
+        $data = $this->db->where($id_column, $id)->get($tabel);
         return ($data);
     }
 
@@ -32,6 +32,17 @@ class M_model extends CI_Model
     {
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
+    }
+    function getLoggedInUserName() {
+        return $_SESSION['nama_depan'] . ' ' . $_SESSION['nama_belakang'];
+    }
+    public function getLoggedInUserEmail()
+    {
+        return $_SESSION['email'];
+        $this->db->where('nama_depan', $this->session->userdata('nama_depan'));
+        $this->db->where('nama_belakang', $this->session->userdata('nama_belakang'));
+        $query = $this->db->get('admin');
+        return $query->row()->email;
     }
 }
 ?>

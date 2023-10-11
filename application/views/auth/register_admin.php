@@ -45,7 +45,7 @@
             height: 100%;
             border-radius: 10px 0 0 10px;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 20px;
         }
 
         .login h1 {
@@ -74,6 +74,7 @@
             border-color: #9526a9;
             outline: none;
         }
+
 
         .login span {
             float: left
@@ -188,33 +189,33 @@
 
 <body>
     <div class="container">
+
         <div class="login">
-            <form action="<?php echo base_url('auth/aksi_login'); ?>" method="post">
-                <div class="container">
-                    <h1>Log in</h1>
+            <div class="container">
+                <h1>Sign in Admin</h1>
+                <form action="<?php echo base_url('auth/aksi_register_admin'); ?>" method="post">
+                    <input id="username" name="username" type="text" placeholder="Username">
+                    <input id="nama_depan" name="nama_depan" type="text" placeholder="Nama Depan"><br>
+                    <input id="nama_belakang" name="nama_belakang" type="text" placeholder="Nama Belakang"><br>
                     <input id="email" name="email" type="email" placeholder="Email">
                     <input id="password" name="password" type="password" placeholder="Password"><br>
-                    <button type="submit">log in</button>
+                    <button type="submit">Sign In</button>
                     <hr>
                     <hr>
 
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <div class="register">
             <div class="container">
-                <i class="fas fa-user-plus fa-5x"></i>
+                <i class="fa-solid fa-user-pen fa-5x"></i>
                 <h2>Halo,Kak!</h2>
-                <p>Jika Kakak Belum Punya Akun Mendaftar Terlebih Dahulu</p>
-                <p>Mendaftar Sebagai:</p>
-                <a type="button" href="<?php echo base_url('auth/register_karyawan') ?>">Karyawan <i
-                        class="fas fa-arrow-circle-right"></i></a>
-                <a type="button" href="<?php echo base_url('auth/register_admin') ?>">Admin <i
+                <p>Jika Kakak Sudah Punya Akun Sebagai Karyawan Langsung Login Aja Kak</p>
+                <a type="button" href="<?php echo base_url('auth') ?>">Login <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
