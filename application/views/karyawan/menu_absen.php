@@ -380,7 +380,7 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Absens Karyawan</span>
+            <span class="text">Absensi Karyawan</span>
         </div>
         <!-- Tabel -->
         <div class="container">
