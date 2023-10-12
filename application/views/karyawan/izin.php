@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         * {
             margin: 0;
@@ -124,14 +125,14 @@
             text-decoration: none;
         }
 
-        .sidebar .nav-links li a .link_name {
+        .sidebar .nav-links li a .link-name {
             font-size: 18px;
             font-weight: 400;
             color: #6699ff;
             transition: all 0.4s ease;
         }
 
-        .sidebar.close .nav-links li a .link_name {
+        .sidebar.close .nav-links li a .link-name {
             opacity: 0;
             pointer-events: none;
         }
@@ -180,11 +181,11 @@
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li .sub-menu .link_name {
+        .sidebar .nav-links li .sub-menu .link-name {
             display: none;
         }
 
-        .sidebar.close .nav-links li .sub-menu .link_name {
+        .sidebar.close .nav-links li .sub-menu .link-name {
             font-size: 18px;
             opacity: 1;
             display: block;
@@ -317,53 +318,51 @@
             }
         }
 
-        /* Tabel */
-        .table-wrap {
-            max-width: 1000px;
-            margin: 40px auto;
-            overflow-x: auto;
 
-        }
 
-        table,
-        td,
-        th {
-            /*   border: 1px solid #ddd; */
+        .container {
             text-align: center;
-            font-size: 15px;
-            text-transform: capitalize;
+            margin-top: 50px;
         }
 
-        table thead tr {
+        .card {
             background-color: #6699ff;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
             color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        table {
-            border-collapse: collapse;
+        .absen-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
             width: 100%;
-            border-radius: 16px 16px 0px 0px;
-            overflow: hidden;
+            height: 200px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            resize: none;
         }
 
-        table tbody tr td {
-            border: 1px solid #ddd;
+        .absen-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        th,
-        td {
-            padding: 15px;
-            white-space: nowrap;
-        }
-
-        table tbody tr:nth-child(odd) {
-            background: #b4b4b442;
-            color: #000;
-            font-weight: 500;
-        }
-
-        .box-wrap {
-            padding: 0px 16px;
+        .absen-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -378,19 +377,19 @@
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
                     <i class="fa-solid fa-arrow-trend-up"></i>
-                    <span class="link_name">Dashboard</span>
+                    <span class="link-name">Dashboard</span>
                 </a>
             </li>
             <li>
                 <div class="icon-link">
                     <a href="#">
                         <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
+                        <span class="link-name">Absen Menu</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="">Kategori</a></li>
+                    <li><a class="link-name" href="">Kategori</a></li>
                     <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
@@ -430,40 +429,17 @@
             <i class="fa-solid fa-bars"></i>
             <span class="text">Karyawan</span>
         </div>
-        <!-- Tabel -->
-        <div class="box-wrap">
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama Karyawan</th>
-                            <th>Kegiatan</th>
-                            <th>Date</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Pulang</th>
-                            <th>Keterangan Izin</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nilu yadav</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>done</td>
-                            <td></td>
-                        </tr>
-                        <!-- Tambahkan entri lainnya di sini sesuai kebutuhan -->
-                    </tbody>
-                </table>
+
+        <div class="container">
+            <div class="card">
+                <h1>Absens Izin</h1>
+                <textarea class="absen-box" id="absenTextarea" rows="5"
+                    placeholder="Masukkan keterangan izin cuti di sini..."></textarea><br>
+                <button class="absen-button">Absen</button>
             </div>
         </div>
-        <!-- Tabel End -->
     </section>
+
 
     <script>
         const arrows = document.querySelectorAll(".arrow");
@@ -502,6 +478,9 @@
             });
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

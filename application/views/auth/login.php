@@ -23,7 +23,7 @@
             align-items: center;
             height: 100vh;
             font-family: sans-serif;
-            background: linear-gradient(to top left, #9933ff 23%, #ffffff 100%);
+            background: linear-gradient(to top left, #6699ff 23%, #ffffff 100%);
         }
 
         .container {
@@ -71,7 +71,7 @@
         input[type="email"]:focus,
         input[type="password"]:focus,
         select:focus {
-            border-color: #9526a9;
+            border-color: #6699ff;
             outline: none;
         }
 
@@ -87,7 +87,7 @@
         }
 
         .login a:hover {
-            color: #9526a9;
+            color: #6699ff;
             font-weight: bold
         }
 
@@ -96,7 +96,7 @@
             margin: 30px 0;
             padding: 10px;
             border: none;
-            background-color: #9526a9;
+            background-color: #6699ff;
             color: #fff;
             font-size: 20px;
             cursor: pointer;
@@ -147,7 +147,7 @@
         /*Start Register Style*/
         .register {
             float: right;
-            background: linear-gradient(to top left, #9933ff 23%, #ffffff 100%);
+            background: linear-gradient(to top left, #6699ff 23%, #ffffff 100%);
             height: 100%;
             color: #fff;
             border-radius: 0 10px 10px 0;
@@ -179,7 +179,7 @@
         }
 
         .register a:hover {
-            color: #9526a9;
+            color: #6699ff;
             background-color: #fff;
             cursor: pointer;
         }

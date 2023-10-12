@@ -36,13 +36,5 @@ class M_model extends CI_Model
     function getLoggedInUserName() {
         return $_SESSION['nama_depan'] . ' ' . $_SESSION['nama_belakang'];
     }
-    public function getLoggedInUserEmail()
-    {
-        return $_SESSION['email'];
-        $this->db->where('nama_depan', $this->session->userdata('nama_depan'));
-        $this->db->where('nama_belakang', $this->session->userdata('nama_belakang'));
-        $query = $this->db->get('admin');
-        return $query->row()->email;
-    }
 }
 ?>

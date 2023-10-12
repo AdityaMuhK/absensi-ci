@@ -39,7 +39,7 @@
 
         .sidebar .logo-details i {
             font-size: 30px;
-            color: #77619e;
+            color: #6699ff;
             height: 50px;
             min-width: 78px;
             text-align: center;
@@ -48,7 +48,7 @@
 
         .sidebar .logo-details .logo_name {
             font-size: 22px;
-            color: #77619e;
+            color: #6699ff;
             font-weight: 600;
             transition: 0.3s ease;
             transition-delay: 0.1s;
@@ -86,7 +86,7 @@
 
         .sidebar .sub-menu li:hover {
             background: none;
-            color: #77619e;
+            color: #6699ff;
         }
 
         .sidebar .nav-links li .icon-link {
@@ -104,7 +104,7 @@
             min-width: 78px;
             text-align: center;
             line-height: 50px;
-            color: #77619e;
+            color: #6699ff;
             font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -127,7 +127,7 @@
         .sidebar .nav-links li a .link_name {
             font-size: 18px;
             font-weight: 400;
-            color: #77619e;
+            color: #6699ff;
             transition: all 0.4s ease;
         }
 
@@ -148,7 +148,7 @@
         }
 
         .sidebar .nav-links li .sub-menu a {
-            color: #77619e;
+            color: #6699ff;
             font-size: 15px;
             padding: 5px 0;
             white-space: nowrap;
@@ -239,7 +239,7 @@
 
         .sidebar .profile-details .profile_name,
         .sidebar .profile-details .job {
-            color: #77619e;
+            color: #6699ff;
             font-size: 18px;
             font-weight: 500;
             white-space: nowrap;
@@ -278,7 +278,7 @@
 
         .home-section .home-content .fa-bars,
         .home-section .home-content .text {
-            color: #77619e;
+            color: #6699ff;
             font-size: 35px;
         }
 
@@ -316,6 +316,65 @@
                 left: 0;
             }
         }
+
+        /* Tabel */
+        .table-wrap {
+            max-width: 1000px;
+            margin: 40px auto;
+            overflow-x: auto;
+
+        }
+
+        table,
+        td,
+        th {
+            /*   border: 1px solid #ddd; */
+            text-align: center;
+            font-size: 15px;
+            text-transform: capitalize;
+        }
+
+        table thead tr {
+            background-color: #6699ff;
+            color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 16px 16px 0px 0px;
+            overflow: hidden;
+        }
+
+        table tbody tr td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            white-space: nowrap;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background: #b4b4b442;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .box-wrap {
+            padding: 0px 16px;
+        }
+
+        .icon-btn {
+            background-color: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .icon-btn:focus {
+            outline: none;
+        }
     </style>
 </head>
 
@@ -343,6 +402,7 @@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="">Kategori</a></li>
                     <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
             </li>
@@ -351,16 +411,16 @@
                 <div class="profile-details">
                     <div class="profile-content">
                         <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('path_to_default_image/User.png');
+                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
                         ?>
-                        <img src="<?php echo $image_url; ?>" alt="profileImg">
+                        <a href="<?php echo base_url('karyawan/profile') ?>">
+                            <img src="<?php echo $image_url; ?>" alt="profileImg">
+                        </a>
                     </div>
 
                     <div class="name-job">
                         <div class="profile_name">
-                            <marquee scrolldelay="150">
-                                <?php echo getLoggedInUserName(); ?>
-                            </marquee>
+                            <?php echo $this->session->userdata('username'); ?>
                         </div>
                         <div class="job">
                             <marquee scrolldelay="200">
@@ -378,16 +438,46 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Histori</span>
+            <span class="text">Karyawan</span>
         </div>
-        <div class="container">
-            <div class="mb-3">
-                <textarea class="form-control mx-auto" id="exampleFormControlTextarea1" rows="3"
-                    style="width: 80%; height: 40%; margin-left: 10%;"></textarea>
+        <!-- Tabel -->
+        <div class="box-wrap">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nama Karyawan</th>
+                            <th>Kegiatan</th>
+                            <th>Date</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                            <th>Status</th>
+                            <th>Pulang</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nilu yadav</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>done</td>
+                            <td>
+                                <button class="icon-btn"><i class="fas fa-home"></i></button>
+                            </td>
+                            <td>
+                                <button class="icon-btn"><i class="fas fa-edit"></i></button>
+                                <button class="icon-btn"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- Tambahkan entri lainnya di sini sesuai kebutuhan -->
+                    </tbody>
+                </table>
             </div>
         </div>
-
-
+        <!-- Tabel End -->
     </section>
 
     <script>

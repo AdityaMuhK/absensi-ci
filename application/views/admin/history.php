@@ -39,7 +39,7 @@
 
         .sidebar .logo-details i {
             font-size: 30px;
-            color: #77619e;
+            color: #6699ff;
             height: 50px;
             min-width: 78px;
             text-align: center;
@@ -48,7 +48,7 @@
 
         .sidebar .logo-details .logo_name {
             font-size: 22px;
-            color: #77619e;
+            color: #6699ff;
             font-weight: 600;
             transition: 0.3s ease;
             transition-delay: 0.1s;
@@ -86,7 +86,7 @@
 
         .sidebar .sub-menu li:hover {
             background: none;
-            color: #77619e;
+            color: #6699ff;
         }
 
         .sidebar .nav-links li .icon-link {
@@ -104,7 +104,7 @@
             min-width: 78px;
             text-align: center;
             line-height: 50px;
-            color: #77619e;
+            color: #6699ff;
             font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -127,7 +127,7 @@
         .sidebar .nav-links li a .link_name {
             font-size: 18px;
             font-weight: 400;
-            color: #77619e;
+            color: #6699ff;
             transition: all 0.4s ease;
         }
 
@@ -148,7 +148,7 @@
         }
 
         .sidebar .nav-links li .sub-menu a {
-            color: #77619e;
+            color: #6699ff;
             font-size: 15px;
             padding: 5px 0;
             white-space: nowrap;
@@ -239,7 +239,7 @@
 
         .sidebar .profile-details .profile_name,
         .sidebar .profile-details .job {
-            color: #77619e;
+            color: #6699ff;
             font-size: 18px;
             font-weight: 500;
             white-space: nowrap;
@@ -278,7 +278,7 @@
 
         .home-section .home-content .fa-bars,
         .home-section .home-content .text {
-            color: #77619e;
+            color: #6699ff;
             font-size: 35px;
         }
 
@@ -342,7 +342,8 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Kategori</a></li>
-                    <li><a href="<?php echo base_url('admin/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('admin/menu_absen') ?>"><i
+                                class="fa-solid fa-users-viewfinder"></i>Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('admin/history') ?>">Histori</a></li>
                 </ul>
             </li>
@@ -351,15 +352,13 @@
                 <div class="profile-details">
                     <div class="profile-content">
                         <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('path_to_default_image/User.png');
+                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
                         ?>
                         <img src="<?php echo $image_url; ?>" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name">
-                            <marquee scrolldelay="150">
-                                <?php echo getLoggedInUserName(); ?>
-                            </marquee>
+                            <?php echo $this->session->userdata('username'); ?>
                         </div>
                         <div class="job">
                             <marquee scrolldelay="200">

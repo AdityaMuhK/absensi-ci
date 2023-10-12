@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
     <style>
         * {
             margin: 0;
@@ -41,7 +40,7 @@
 
         .sidebar .logo-details i {
             font-size: 30px;
-            color: #77619e;
+            color: #6699ff;
             height: 50px;
             min-width: 78px;
             text-align: center;
@@ -50,7 +49,7 @@
 
         .sidebar .logo-details .logo_name {
             font-size: 22px;
-            color: #77619e;
+            color: #6699ff;
             font-weight: 600;
             transition: 0.3s ease;
             transition-delay: 0.1s;
@@ -86,18 +85,18 @@
             background: #f3f1f6;
         }
 
-        .sidebar .sub_menu li:hover {
+        .sidebar .sub-menu li:hover {
             background: none;
-            color: #77619e;
+            color: #6699ff;
         }
 
-        .sidebar .nav-links li .icon_link {
+        .sidebar .nav-links li .icon-link {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .sidebar.close .nav-links li .icon_link {
+        .sidebar.close .nav-links li .icon-link {
             display: block;
         }
 
@@ -106,7 +105,7 @@
             min-width: 78px;
             text-align: center;
             line-height: 50px;
-            color: #77619e;
+            color: #6699ff;
             font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -126,31 +125,31 @@
             text-decoration: none;
         }
 
-        .sidebar .nav-links li a .link_name {
+        .sidebar .nav-links li a .link-name {
             font-size: 18px;
             font-weight: 400;
-            color: #77619e;
+            color: #6699ff;
             transition: all 0.4s ease;
         }
 
-        .sidebar.close .nav-links li a .link_name {
+        .sidebar.close .nav-links li a .link-name {
             opacity: 0;
             pointer-events: none;
         }
 
-        .sidebar .nav-links li .sub_menu, {
+        .sidebar .nav-links li .sub-menu {
             padding: 6px 6px 14px 80px;
             margin-top: 0px;
             background: #fff;
             display: none;
         }
 
-        .sidebar .nav-links li.showMenu .sub_menu {
+        .sidebar .nav-links li.showMenu .sub-menu {
             display: block;
         }
 
-        .sidebar .nav-links li .sub_menu a{
-            color: #77619e;
+        .sidebar .nav-links li .sub-menu a {
+            color: #6699ff;
             font-size: 15px;
             padding: 5px 0;
             white-space: nowrap;
@@ -158,11 +157,11 @@
             transition: all 0.3s ease;
         }
 
-        .sidebar .nav-links li .sub_menu a:hover {
+        .sidebar .nav-links li .sub-menu a:hover {
             opacity: 1;
         }
 
-        .sidebar.close .nav-links li .sub_menu {
+        .sidebar.close .nav-links li .sub-menu {
             position: absolute;
             left: 100%;
             top: -10px;
@@ -175,24 +174,24 @@
             transition: 0s;
         }
 
-        .sidebar.close .nav-links li:hover .sub_menu {
+        .sidebar.close .nav-links li:hover .sub-menu {
             top: 0;
             opacity: 1;
             pointer-events: auto;
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li .sub_menu .link_name {
+        .sidebar .nav-links li .sub-menu .link-name {
             display: none;
         }
 
-        .sidebar.close .nav-links li .sub_menu .link_name {
+        .sidebar.close .nav-links li .sub-menu .link-name {
             font-size: 18px;
             opacity: 1;
             display: block;
         }
 
-        .sidebar .nav-links li .sub_menu.blank {
+        .sidebar .nav-links li .sub-menu.blank {
             opacity: 1;
             pointer-events: auto;
             padding: 3px 20px 6px 16px;
@@ -200,7 +199,7 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li:hover .sub_menu.blank {
+        .sidebar .nav-links li:hover .sub-menu.blank {
             top: 50%;
             transform: translateY(-50%);
         }
@@ -241,7 +240,7 @@
 
         .sidebar .profile-details .profile_name,
         .sidebar .profile-details .job {
-            color: #77619e;
+            color: #6699ff;
             font-size: 18px;
             font-weight: 500;
             white-space: nowrap;
@@ -280,7 +279,7 @@
 
         .home-section .home-content .fa-bars,
         .home-section .home-content .text {
-            color: #77619e;
+            color: #6699ff;
             font-size: 35px;
         }
 
@@ -295,7 +294,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub_menu {
+            .sidebar.close .nav-links li .sub-menu {
                 display: none;
             }
 
@@ -318,6 +317,53 @@
                 left: 0;
             }
         }
+
+
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #6699ff;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .absen-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            resize: none;
+        }
+
+        .absen-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .absen-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -331,20 +377,21 @@
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
                     <i class="fa-solid fa-arrow-trend-up"></i>
-                    <span class="link_name">Dashboard</span>
+                    <span class="link-name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <div class="icon_link">
+                <div class="icon-link">
                     <a href="#">
                         <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
+                        <span class="link-name">Absen Menu</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
-                <ul class="sub_menu">
-                    <li><a class="link_name" href="">Kategori</a></li>
+                <ul class="sub-menu">
+                    <li><a class="link-name" href="">Kategori</a></li>
                     <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
             </li>
@@ -353,16 +400,16 @@
                 <div class="profile-details">
                     <div class="profile-content">
                         <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('path_to_default_image/User.png');
+                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
                         ?>
-                        <img src="<?php echo $image_url; ?>" alt="profileImg">
+                        <a href="<?php echo base_url('karyawan/profile') ?>">
+                            <img src="<?php echo $image_url; ?>" alt="profileImg">
+                        </a>
                     </div>
 
                     <div class="name-job">
                         <div class="profile_name">
-                            <marquee scrolldelay="150">
-                                <?php echo getLoggedInUserName(); ?>
-                            </marquee>
+                            <?php echo $this->session->userdata('username'); ?>
                         </div>
                         <div class="job">
                             <marquee scrolldelay="200">
@@ -380,61 +427,19 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Absensi Karyawan</span>
+            <span class="text">Karyawan</span>
         </div>
-        <!-- Tabel -->
+
         <div class="container">
-            <div class="table-responsive">
-                <table class="table table-striped text-center">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama Karyawan</th>
-                            <th scope="col">Kegiatan</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Jam Masuk</th>
-                            <th scope="col">Jam Pulang</th>
-                            <th scope="col">Keterangan Izin</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark Otto</td>
-                            <td>Meeting</td>
-                            <td>2023-10-11</td>
-                            <td>08:00 AM</td>
-                            <td>05:00 PM</td>
-                            <td>-</td>
-                            <td>Done</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob Thornton</td>
-                            <td>Presentation</td>
-                            <td>2023-10-12</td>
-                            <td>09:30 AM</td>
-                            <td>04:30 PM</td>
-                            <td>-</td>
-                            <td>Not Done</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td >Larry the Bird</td>
-                            <td>Presentation</td>
-                            <td>2023-10-13</td>
-                            <td>10:00 AM</td>
-                            <td>03:00 PM</td>
-                            <td>Medical Leave</td>
-                            <td>Done</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <form action="<?php echo base_url('karyawan/aksi_tambah_absensi'); ?>" method="post">
+                    <h1>Absensi</h1>
+                    <textarea class="absen-box" id="kegiatan" name="kegiatan" rows="5"
+                        placeholder="Masukkan absensi di sini..." required></textarea><br>
+                    <button class="absen-button">Absen</button>
+                </form>
             </div>
         </div>
-        <!-- Tabel End -->
-
     </section>
 
 

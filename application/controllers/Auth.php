@@ -26,7 +26,7 @@ class Auth extends CI_Controller
 
         if (!empty($result) && md5($password) === $result['password']) {
             $data = [
-                'logged_in' => TRUE,
+                'logged_in' => true,
                 'email' => $result['email'],
                 'username' => $result['username'],
                 'id' => $result['id'],

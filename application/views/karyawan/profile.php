@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Side Navigation Bar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         * {
             margin: 0;
@@ -124,14 +125,14 @@
             text-decoration: none;
         }
 
-        .sidebar .nav-links li a .link_name {
+        .sidebar .nav-links li a .link-name {
             font-size: 18px;
             font-weight: 400;
             color: #6699ff;
             transition: all 0.4s ease;
         }
 
-        .sidebar.close .nav-links li a .link_name {
+        .sidebar.close .nav-links li a .link-name {
             opacity: 0;
             pointer-events: none;
         }
@@ -180,11 +181,11 @@
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li .sub-menu .link_name {
+        .sidebar .nav-links li .sub-menu .link-name {
             display: none;
         }
 
-        .sidebar.close .nav-links li .sub-menu .link_name {
+        .sidebar.close .nav-links li .sub-menu .link-name {
             font-size: 18px;
             opacity: 1;
             display: block;
@@ -317,53 +318,60 @@
             }
         }
 
-        /* Tabel */
-        .table-wrap {
-            max-width: 1000px;
-            margin: 40px auto;
-            overflow-x: auto;
-
-        }
-
-        table,
-        td,
-        th {
-            /*   border: 1px solid #ddd; */
+        /* CSS untuk card */
+        .card {
+            border: 1px solid #6699ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 70px;
+            margin: 20px;
+            max-width: 1200px;
             text-align: center;
-            font-size: 15px;
-            text-transform: capitalize;
+            background-color: #fff;
         }
 
-        table thead tr {
-            background-color: #6699ff;
-            color: #fff;
+        /* CSS untuk gambar profil */
+        .card img {
+            width: 100px;
+            /* Sesuaikan ukuran gambar profil sesuai kebutuhan Anda */
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #6699ff;
+            border-radius: 50%;
+            margin-bottom: 10px;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border-radius: 16px 16px 0px 0px;
-            overflow: hidden;
+        /* CSS untuk judul card (username) */
+        .card h5 {
+            margin: 0;
+            font-size: 1.5em;
         }
 
-        table tbody tr td {
-            border: 1px solid #ddd;
+        /* CSS untuk informasi tambahan */
+        .card p {
+            font-size: 1em;
+            color: #555;
         }
 
-        th,
-        td {
-            padding: 15px;
-            white-space: nowrap;
-        }
+        /* CSS untuk membuat tata letak responsif */
+        @media (max-width: 767px) {
 
-        table tbody tr:nth-child(odd) {
-            background: #b4b4b442;
-            color: #000;
-            font-weight: 500;
-        }
+            /* Misalnya, pada layar dengan lebar kurang dari atau sama dengan 767px */
+            .card {
+                max-width: 100%;
+                /* Lebar kartu akan mengisi seluruh lebar tata letak */
+            }
 
-        .box-wrap {
-            padding: 0px 16px;
+            .card img {
+                width: 80px;
+                /* Ukuran gambar profil lebih kecil pada layar kecil */
+                height: 80px;
+            }
+
+            .card p {
+                font-size: 10px;
+                /* Ukuran font lebih kecil pada layar kecil */
+            }
         }
     </style>
 </head>
@@ -378,19 +386,19 @@
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
                     <i class="fa-solid fa-arrow-trend-up"></i>
-                    <span class="link_name">Dashboard</span>
+                    <span class="link-name">Dashboard</span>
                 </a>
             </li>
             <li>
                 <div class="icon-link">
                     <a href="#">
                         <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
+                        <span class="link-name">Absen Menu</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="">Kategori</a></li>
+                    <li><a class="link-name" href="">Kategori</a></li>
                     <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
@@ -430,40 +438,25 @@
             <i class="fa-solid fa-bars"></i>
             <span class="text">Karyawan</span>
         </div>
-        <!-- Tabel -->
-        <div class="box-wrap">
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama Karyawan</th>
-                            <th>Kegiatan</th>
-                            <th>Date</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Pulang</th>
-                            <th>Keterangan Izin</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nilu yadav</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>done</td>
-                            <td></td>
-                        </tr>
-                        <!-- Tambahkan entri lainnya di sini sesuai kebutuhan -->
-                    </tbody>
-                </table>
+        <div class="card">
+            <div class="card-body text-center">
+                <?php
+                $profile_image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
+                ?>
+                <img src="<?php echo $profile_image_url; ?>" alt="profileImg" class="rounded-circle">
+                <h5 class="card-title">
+                    <?php echo $this->session->userdata('username'); ?>
+                </h5>
+                <p class="card-text">
+                    <?php echo $this->session->userdata('email'); ?>
+                </p>
+                <p class="card-text">***********</p>
+                <!-- Tampilkan tanda bintang atau karakter lain sebagai ganti password -->
             </div>
         </div>
-        <!-- Tabel End -->
+
     </section>
+
 
     <script>
         const arrows = document.querySelectorAll(".arrow");
@@ -502,6 +495,9 @@
             });
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
