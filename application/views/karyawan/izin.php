@@ -371,7 +371,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">DashBoard</span>
+            <span class="logo_name">Karyawan</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -390,7 +390,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link-name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
@@ -427,7 +427,7 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Karyawan</span>
+            <span class="text">Absen Izin</span>
         </div>
 
         <div class="container">

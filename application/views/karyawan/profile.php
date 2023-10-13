@@ -330,10 +330,14 @@
             background-color: #fff;
         }
 
-        /* CSS untuk gambar profil */
-        .card img {
+        /* CSS untuk gambar profil dan tombol edit */
+        .profile-image {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-image img {
             width: 100px;
-            /* Sesuaikan ukuran gambar profil sesuai kebutuhan Anda */
             height: 100px;
             object-fit: cover;
             border: 2px solid #6699ff;
@@ -341,14 +345,23 @@
             margin-bottom: 10px;
         }
 
-        /* CSS untuk judul card (username) */
-        .card h5 {
-            margin: 0;
-            font-size: 1.5em;
+        .edit-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #6699ff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        /* CSS untuk informasi tambahan */
+        /* CSS untuk judul card (username) dan informasi tambahan */
+        .card h5,
         .card p {
+            margin: 0;
             font-size: 1em;
             color: #555;
         }
@@ -373,6 +386,53 @@
                 /* Ukuran font lebih kecil pada layar kecil */
             }
         }
+
+
+        .profile-form {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* CSS untuk tombol "Simpan Perubahan" */
+        .save {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save:hover {
+            background-color: #0056b3;
+        }
+
+        .save:focus {
+            outline: none;
+        }
+
+        /* Opsi tambahan: menyesuaikan teks tombol */
+        .save span {
+            vertical-align: middle;
+            margin-left: 5px;
+        }
     </style>
 </head>
 
@@ -380,7 +440,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">DashBoard</span>
+            <span class="logo_name">Karyawan</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -399,7 +459,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link-name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
@@ -436,28 +496,66 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Karyawan</span>
+            <span class="text">Profile</span>
         </div>
-        <div class="card">
-            <div class="card-body text-center">
-                <?php
-                $profile_image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
-                ?>
-                <img src="<?php echo $profile_image_url; ?>" alt="profileImg" class="rounded-circle">
-                <h5 class="card-title">
-                    <?php echo $this->session->userdata('username'); ?>
-                </h5>
-                <p class="card-text">
-                    <?php echo $this->session->userdata('email'); ?>
-                </p>
-                <p class="card-text">***********</p>
+        <?php foreach ($akun as $user): ?>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="profile-image">
+                        <img src="<?php echo base_url('assets/images/user/' . $user->image) ?>" alt="profileImg"
+                            class="rounded-circle">
+                        <form action="<?php echo base_url('karyawan/edit_foto'); ?>" method="post"
+                            enctype="multipart/form-data">
+                            <label for="file-upload" class="edit-button"><i class="fa-solid fa-pen"></i></label>
+                            <input id="file-upload" type="file" id="image_upload" name="userfile" style="display:none;">
+                        </form>
+                    </div>
+                    <h5 class="card-title">
+                        <?php echo $this->session->userdata('username'); ?>
+                    </h5>
+                    <p class="card-text">
+                        <?php echo $this->session->userdata('email'); ?>
+                    </p>
+                    <p class="card-text">***********</p>
+                </div>
+
+                <form action="<?php echo base_url('karyawan/edit_profile'); ?>" class="profile-form"
+                    enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="<?php echo $user->username ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">Nama Depan</label>
+                        <input type="text" id="nama_depan" name="nama_depan" value="<?php echo $user->nama_depan ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Nama Belakang</label>
+                        <input type="text" id="nama_belakang" name="nama_belakang"
+                            value="<?php echo $user->nama_belakang ?>">
+                    </div>
+                    <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
+                            Perubahan</span></button>
+
+                </form>
                 <!-- Tampilkan tanda bintang atau karakter lain sebagai ganti password -->
             </div>
+        <?php endforeach ?>
         </div>
 
     </section>
 
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function () {
+            var fileName = this.value.split('\\').pop();
+            alert('File terpilih: ' + fileName);
+        });
 
+    </script>
     <script>
         const arrows = document.querySelectorAll(".arrow");
 

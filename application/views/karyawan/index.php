@@ -365,6 +365,40 @@
         .box-wrap {
             padding: 0px 16px;
         }
+
+        .edit {
+            background-color: #6699ff;
+            /* Ubah warna latar belakang sesuai tema ikon */
+        }
+
+        .pulang {
+            background-color: #00ff00;
+            /* Ubah warna latar belakang sesuai tema ikon */
+        }
+
+        .delete {
+            background-color: #ff6666;
+            /* Ubah warna latar belakang sesuai tema ikon */
+        }
+
+        .icon-btn {
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .icon-btn:focus {
+            outline: none;
+        }
+
+        .icon-btn:hover {
+            background-color: #555;
+            /* Efek hover untuk semua tombol */
+        }
     </style>
 </head>
 
@@ -372,7 +406,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">DashBoard</span>
+            <span class="logo_name">Karyawan</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -391,7 +425,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
@@ -428,7 +462,7 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Karyawan</span>
+            <span class="text">Dashboard</span>
         </div>
         <!-- Tabel -->
         <div class="box-wrap">
@@ -441,8 +475,8 @@
                             <th>Date</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
-                            <th>Keterangan Izin</th>
                             <th>Status</th>
+                            <th>Pulang</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -453,9 +487,15 @@
                             <td>---</td>
                             <td>---</td>
                             <td>---</td>
-                            <td>---</td>
                             <td>done</td>
-                            <td></td>
+                            <td>
+                                <button class="icon-btn pulang"><i class="fas fa-home"></i></button>
+                            </td>
+                            <td>
+                                <button class="icon-btn edit"><i class="fas fa-edit"></i></button>
+                                <span>|</span>
+                                <button class="icon-btn delete"><i class="fas fa-trash"></i></button>
+                            </td>
                         </tr>
                         <!-- Tambahkan entri lainnya di sini sesuai kebutuhan -->
                     </tbody>

@@ -323,7 +323,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">DashBoard</span>
+            <span class="logo_name">Karyawan</span>
         </div>
         <ul class="nav-links">
             <li>

@@ -353,16 +353,19 @@
         .absen-button {
             padding: 10px 20px;
             font-size: 16px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            margin-right: 850px;
         }
 
         .absen-button:hover {
-            background-color: #0056b3;
+            background-color: white;
+            color: #6699ff;
+            border-color: white;
         }
     </style>
 </head>
@@ -371,7 +374,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">DashBoard</span>
+            <span class="logo_name">Karyawan</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -390,7 +393,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link-name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/menu_absen') ?>">Absen Karyawan</a></li>
+                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
                     <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
                     <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
                 </ul>
@@ -427,16 +430,17 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Karyawan</span>
+            <span class="text">Update Absen Menu</span>
         </div>
 
         <div class="container">
             <div class="card">
-                <form action="<?php echo base_url('karyawan/aksi_tambah_absensi'); ?>" method="post">
-                    <h1>Absensi</h1>
+                <form action="<?php echo base_url('karyawan/aksi_update_menu_absensi'); ?>" method="post">
+                    <input type="hidden" name="id" value="<?php echo $absen->id ?>">
+                    <h1>Update Absensi</h1>
                     <textarea class="absen-box" id="kegiatan" name="kegiatan" rows="5"
                         placeholder="Masukkan absensi di sini..." required></textarea><br>
-                    <button class="absen-button">Absen</button>
+                    <button type="submit" class="absen-button">Absen</button>
                 </form>
             </div>
         </div>
