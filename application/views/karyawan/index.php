@@ -470,34 +470,31 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Nama Karyawan</th>
-                            <th>Kegiatan</th>
                             <th>Date</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
                             <th>Status</th>
-                            <th>Pulang</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Nilu yadav</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>done</td>
-                            <td>
-                                <button class="icon-btn pulang"><i class="fas fa-home"></i></button>
-                            </td>
-                            <td>
-                                <button class="icon-btn edit"><i class="fas fa-edit"></i></button>
-                                <span>|</span>
-                                <button class="icon-btn delete"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <!-- Tambahkan entri lainnya di sini sesuai kebutuhan -->
+                        <?php $no = 0;
+                        foreach ($absensi as $row):
+                            $no++ ?>
+                            <tr>
+                                <td>
+                                    <?php echo $row->date ?>
+                                </td>
+                                <td>
+                                    <?php echo $row->jam_masuk ?>
+                                </td>
+                                <td>
+                                    <?php echo $row->jam_pulang ?>
+                                </td>
+                                <td>
+                                    <?php echo $row->status ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

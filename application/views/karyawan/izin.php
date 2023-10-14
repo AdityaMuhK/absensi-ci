@@ -433,9 +433,11 @@
         <div class="container">
             <div class="card">
                 <h1>Absens Izin</h1>
-                <textarea class="absen-box" id="absenTextarea" rows="5"
-                    placeholder="Masukkan keterangan izin cuti di sini..."></textarea><br>
-                <button class="absen-button">Absen</button>
+                <form action="<?= base_url('karyawan/tambah_izin'); ?>" method="post">
+                    <textarea class="absen-box" id="keterangan" name="keterangan" rows="5"
+                        placeholder="Masukkan keterangan izin cuti di sini..."></textarea><br>
+                    <button class="absen-button">Absen</button>
+                </form>
             </div>
         </div>
     </section>

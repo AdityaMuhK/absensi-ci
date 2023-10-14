@@ -367,6 +367,27 @@
             color: #6699ff;
             border-color: white;
         }
+
+        /* Gaya CSS untuk input waktu */
+        .form-control[type="time"] {
+            padding: 10px;
+            /* Sesuaikan padding sesuai kebutuhan Anda */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            /* Sesuaikan ukuran font sesuai kebutuhan Anda */
+            width: 100%;
+            /* Sesuaikan lebar sesuai kebutuhan Anda */
+        }
+
+        /* Gaya tambahan jika diperlukan */
+        .form-control[type="time"]:focus {
+            outline: none;
+            border-color: #007bff;
+            /* Warna border saat fokus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            /* Efek bayangan saat fokus */
+        }
     </style>
 </head>
 
@@ -435,11 +456,17 @@
 
         <div class="container">
             <div class="card">
-                <form action="<?php echo base_url('karyawan/aksi_update_menu_absensi'); ?>" method="post">
-                    <input type="hidden" name="id" value="<?php echo $absen->id ?>">
+                <form action="<?php echo base_url('karyawan/update_menu_absen/' . $absen_id); ?>" method="post">
                     <h1>Update Absensi</h1>
                     <textarea class="absen-box" id="kegiatan" name="kegiatan" rows="5"
-                        placeholder="Masukkan absensi di sini..." required></textarea><br>
+                        placeholder="Masukkan absensi di sini..." value="<?= $absensi->kegiatan; ?>" required></textarea>
+                    <br>
+                    <div class="mb-3">
+                        <label for="jam_masuk" class="form-label">Jam Masuk:</label>
+                        <input type="time" class="form-control" id="jam_masuk" name="jam_masuk"
+                            value="<?= $absensi->jam_masuk; ?>" required>
+                    </div>
+
                     <button type="submit" class="absen-button">Absen</button>
                 </form>
             </div>

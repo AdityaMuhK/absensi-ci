@@ -376,6 +376,11 @@
             /* Ubah warna latar belakang sesuai tema ikon */
         }
 
+        .izin {
+            background-color: #003300;
+            /* Ubah warna latar belakang sesuai tema ikon */
+        }
+
         .delete {
             background-color: #ff6666;
             /* Ubah warna latar belakang sesuai tema ikon */
@@ -475,6 +480,7 @@
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
                             <th>keterangan</th>
+                            <th>Status</th>
                             <th>Pulang</th>
                             <th>Aksi</th>
                         </tr>
@@ -485,50 +491,52 @@
                             $no++ ?>
                             <tr>
                                 <td>
-                                    <?php echo $row->kegiatan ?>
+                                    <?php echo $row->kegiatan; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row->date ?>
+                                    <?php echo $row->date; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row->jam_masuk ?>
+                                    <?php echo $row->jam_masuk; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row->jam_pulang ?>
+                                    <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row->keterangan_izin ?>
+                                    <?php echo $row->keterangan_izin; ?>
                                 </td>
                                 <td>
-                                    <?php if ($row->status === 'false') { ?>
-                                        <a href="<?php echo base_url('karyawan/pulang/') . $row->id; ?>"
-                                            class="icon-btn pulang"><i class="fas fa-home"></i>
-                                        </a>
-                                    <?php } else { ?>
-                                        <button href="" class="icon-btn pulang" disabled>
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    <?php } ?>
+                                    <?php echo $row->status; ?>
                                 </td>
                                 <td>
-                                    <?php if ($row->keterangan_izin == 'masuk'): ?>
-                                        <a href="<?php echo base_url('karyawan/update_menu_absen/') . $row->id; ?>"
-                                            class="icon-btn edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
+                                    <?php if ($row->status == 'done'): ?>
+                                        <!-- Jika sudah selesai, tampilkan tombol Izin -->
+                                        <span class="icon-btn izin">Izin</span>
+                                </td>
+                                    <td>
                                     <?php else: ?>
-                                        <a href="<?php echo base_url('karyawan/update_izin/') . $row->id; ?>"
-                                            class="icon-btn edit">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
+                                        <?php if ($row->status == 'DONE'): ?>
+                                            <!-- Jika status 'pulang', tampilkan tombol "Batal Pulang" -->
+                                            <a href="<?php echo site_url('karyawan/batal_pulang/' . $row->id); ?>"
+                                                class="icon-btn delete"><i class="fa-solid fa-xmark"></i></a>
+                                        </td>
+                                        <td>
+                                        <?php else: ?>
+                                            <!-- Jika status bukan 'pulang', tampilkan tombol "Pulang" -->
+                                            <a href="<?php echo site_url('karyawan/pulang/' . $row->id); ?>" class="icon-btn pulang"
+                                                id="pulangButton_<?php echo $row->id; ?>">
+                                                <i class="fa-solid fa-house"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                        <?php endif; ?>
+                                        <a href="<?php echo site_url('karyawan/update_menu_absen/' . $row->id); ?>"
+                                            class="icon-btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a href="<?php echo site_url('karyawan/hapus/' . $row->id); ?>"
+                                            class="icon-btn delete"><i class="fa-solid fa-trash"></i></a>
                                     <?php endif; ?>
-                                    <span> |</span>
-                                    <button class="icon-btn delete" onclick="hapus(<?php echo $row->id; ?>)">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
                                 </td>
-                            </tr>
-                        <?php endforeach ?>
+                            <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
