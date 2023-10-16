@@ -512,7 +512,7 @@
                                     <?php if ($row->status == 'done'): ?>
                                         <!-- Jika sudah selesai, tampilkan tombol Izin -->
                                         <span class="icon-btn izin">Izin</span>
-                                </td>
+                                    </td>
                                     <td>
                                     <?php else: ?>
                                         <?php if ($row->status == 'DONE'): ?>
@@ -532,7 +532,7 @@
                                         <?php endif; ?>
                                         <a href="<?php echo site_url('karyawan/update_menu_absen/' . $row->id); ?>"
                                             class="icon-btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="<?php echo site_url('karyawan/hapus/' . $row->id); ?>"
+                                        <a href="javascript:void(0);" onclick="confirmDelete(<?php echo $row->id; ?>)"
                                             class="icon-btn delete"><i class="fa-solid fa-trash"></i></a>
                                     <?php endif; ?>
                                 </td>
@@ -577,6 +577,26 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "<?php echo base_url('auth') ?>";
+                }
+            });
+        }
+    </script>
+    <script>
+        // Fungsi untuk mengonfirmasi penghapusan
+        function confirmDelete(absenId) {
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: 'Anda yakin ingin menghapus item ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect ke halaman penghapusan jika dikonfirmasi
+                    window.location.href = "<?php echo site_url('karyawan/hapus/'); ?>" + absenId;
                 }
             });
         }

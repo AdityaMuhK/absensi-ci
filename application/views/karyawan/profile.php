@@ -469,7 +469,7 @@
                 <div class="profile-details">
                     <div class="profile-content">
                         <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
+                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/karyawan/User.png');
                         ?>
                         <a href="<?php echo base_url('karyawan/profile') ?>">
                             <img src="<?php echo $image_url; ?>" alt="profileImg">
@@ -506,8 +506,8 @@
                             class="rounded-circle">
                         <form action="<?php echo base_url('karyawan/edit_foto'); ?>" method="post"
                             enctype="multipart/form-data">
-                            <label for="file-upload" class="edit-button"><i class="fa-solid fa-pen"></i></label>
-                            <input id="file-upload" type="file" id="image_upload" name="userfile" style="display:none;">
+                            <label for="image_upload" class="edit-button"><i class="fa-solid fa-pen"></i></label>
+                            <input type="file" id="image_upload" name="userfile" style="display:none;">
                         </form>
                     </div>
                     <h5 class="card-title">
@@ -550,7 +550,7 @@
     </section>
 
     <script>
-        document.getElementById('file-upload').addEventListener('change', function () {
+        document.getElementById('image_upload').addEventListener('change', function () {
             var fileName = this.value.split('\\').pop();
             alert('File terpilih: ' + fileName);
         });

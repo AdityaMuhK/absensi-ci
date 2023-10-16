@@ -215,7 +215,7 @@ class Karyawan extends CI_Controller
     }
     public function profile()
     {
-        $data['akun'] = $this->m_model->get_by_id('karyawan', 'id', $this->session->userdata('id'))->result();
+        $data['akun'] = $this->m_model->get_by_id('karyawan', 'id_karyawan', $this->session->userdata('id'))->result();
         $this->load->view('karyawan/profile', $data);
     }
 
@@ -258,9 +258,9 @@ class Karyawan extends CI_Controller
 
     public function edit_foto()
     {
-        $config['upload_path'] = './assets/images/karyawan/'; // Lokasi penyimpanan gambar di server
-        $config['allowed_types'] = 'jpg|jpeg|png'; // Tipe file yang diizinkan
-        $config['max_size'] = 5120; // Maksimum ukuran file (dalam KB)
+        $config['upload_path'] = './assets/images/karyawan/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 5120;
 
         $this->load->library('upload', $config);
 
@@ -268,26 +268,31 @@ class Karyawan extends CI_Controller
             $upload_data = $this->upload->data();
             $file_name = $upload_data['file_name'];
 
-            // Update nama file gambar baru ke dalam database untuk user yang sesuai
-            $user_id = $this->session->userdata('id'); // Ganti ini dengan cara Anda menyimpan ID user yang sedang login
-            $current_image = $this->m_model->get_current_image($user_id); // Dapatkan nama gambar saat ini
+            $user_id = $this->session->userdata('id_karyawan');
+            $current_image = $this->m_model->get_current_image($user_id);
 
             if ($current_image !== 'User.png') {
-                // Hapus gambar saat ini jika bukan 'User.png'
                 unlink('./assets/images/karyawan/' . $current_image);
             }
 
-            $this->m_model->update_image($user_id, $file_name); // Gantilah 'm_model' dengan model Anda
+            $this->m_model->update_image($user_id, $file_name);
             $this->session->set_flashdata('berhasil_ubah_foto', 'Foto berhasil diperbarui.');
 
-
-            // Redirect atau tampilkan pesan keberhasilan
-            redirect('karyawan/profile'); // Gantilah dengan halaman yang sesuai
+            redirect('karyawan/profile');
         } else {
             $error = array('error' => $this->upload->display_errors());
             $this->session->set_flashdata('error_profile', $error['error']);
             redirect('karyawan/profile');
-            // Tangani kesalahan unggah gambar
+        }
+    }
+
+    public function hapus($absen_id)
+    {
+        if ($this->session->userdata('role') === 'karyawan') {
+            $this->karyawan_model->hapusAbsensi($absen_id);
+            redirect('karyawan/history');
+        } else {
+            redirect('auth');
         }
     }
 }

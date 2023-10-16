@@ -21,7 +21,7 @@ class Auth extends CI_Controller
         $email = $this->input->post('email', true);
         $password = $this->input->post('password', true);
         $data = ['email' => $email];
-        $query = $this->m_model->getwhere('admin', $data);
+        $query = $this->m_model->getwhere('akun', $data);
         $result = $query->row_array();
 
         if (!empty($result) && md5($password) === $result['password']) {
@@ -90,7 +90,7 @@ class Auth extends CI_Controller
             'image' => $image
         ];
 
-        $table = 'admin';
+        $table = 'akun';
 
         $this->db->insert($table, $data);
 
@@ -153,7 +153,7 @@ class Auth extends CI_Controller
             'image' => $image
         ];
 
-        $table = 'admin';
+        $table = 'akun';
 
         $this->db->insert($table, $data);
 

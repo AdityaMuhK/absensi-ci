@@ -8,9 +8,29 @@ class M_model extends CI_Model
         return $this->db->get('absensi')->result();
     }
 
-    function get_data_by_user($table, $user_id)
+    function get_masuk($id_karyawan)
     {
-        $this->db->where('id_karyawan', $user_id);
+        $this->db->where('id_karyawan', $id_karyawan);
+        return $this->db->get('absensi')->result();
+    }
+
+    function get_izin($table, $id_karyawan)
+    {
+        return $this->db->where('id_karyawan', $id_karyawan)
+            ->where('kegiatan', '-')
+            ->get($table);
+    }
+
+    function get_absen($table, $id_karyawan)
+    {
+        return $this->db->where('id_karyawan', $id_karyawan)
+            ->where('keterangan_izin', 'masuk')
+            ->get($table);
+    }
+
+    function get_data_by_akun($table, $akun_id)
+    {
+        $this->db->where('id_karyawan', $akun_id);
         return $this->db->get($table);
     }
 
@@ -55,15 +75,28 @@ class M_model extends CI_Model
             'jam_pulang' => date('Y-m-d H:i:s'),
             'status' => 'true'
         );
+
+        // Dapatkan data jam masuk sebelum memperbarui
+        $this->db->select('jam_masuk');
+        $this->db->where('id', $id);
+        $query = $this->db->get('absensi');
+        $row = $query->row();
+        $jam_masuk = $row->jam_masuk; // Dapatkan nilai jam masuk sebelum memperbarui
+
+        // Tetapkan nilai jam masuk yang sama ke dalam data sebelum memperbarui
+        $data['jam_masuk'] = $jam_masuk;
+
+        // Lakukan pembaruan data dengan tetap mempertahankan jam masuk yang sama
         $this->db->where('id', $id);
         $this->db->update('absensi', $data);
     }
 
-    public function image_user()
+
+    public function image_akun()
     {
-        $id_karyawan = $this->session->userdata('id');
+        $id_karyawan = $this->session->akundata('id');
         $this->db->select('image');
-        $this->db->from('user');
+        $this->db->from('akun');
         $this->db->where('id_karyawan');
         $query = $this->db->get();
 
@@ -75,23 +108,23 @@ class M_model extends CI_Model
         }
     }
 
-    public function update_image($user_id, $new_image)
+    public function update_image($akun_id, $new_image)
     {
         $data = array(
             'image' => $new_image
         );
 
-        $this->db->where('id', $user_id); // Sesuaikan dengan kolom dan nama tabel yang sesuai
-        $this->db->update('user', $data); // Sesuaikan dengan nama tabel Anda
+        $this->db->where('id', $akun_id); // Sesuaikan dengan kolom dan nama tabel yang sesuai
+        $this->db->update('akun', $data); // Sesuaikan dengan nama tabel Anda
 
         return $this->db->affected_rows(); // Mengembalikan jumlah baris yang diupdate
     }
 
-    public function get_current_image($user_id)
+    public function get_current_image($akun_id)
     {
         $this->db->select('image');
-        $this->db->from('user'); // Gantilah 'user_table' dengan nama tabel Anda
-        $this->db->where('id', $user_id);
+        $this->db->from('akun'); // Gantilah 'akun_table' dengan nama tabel Anda
+        $this->db->where('id', $akun_id);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -102,30 +135,30 @@ class M_model extends CI_Model
         return null; // Kembalikan null jika data tidak ditemukan
     }
 
-    public function cek_absen($id_karyawan, $date)
+    public function cek_absen($id_karyawan, $tanggal)
     {
         $this->db->where('id_karyawan', $id_karyawan);
-        $this->db->where('date', $date);
+        $this->db->where('date', $tanggal);
         $query = $this->db->get('absensi');
 
         if ($query->num_rows() > 0) {
-            return true; // Jika sudah ada entri absen untuk karyawan dan date tertentu
+            return true; // Jika sudah ada entri absen untuk karyawan dan tanggal tertentu
         } else {
-            return false; // Jika belum ada entri absen untuk karyawan dan date tertentu
+            return false; // Jika belum ada entri absen untuk karyawan dan tanggal tertentu
         }
     }
 
-    public function cek_izin($id_karyawan, $date)
+    public function cek_izin($id_karyawan, $tanggal)
     {
         $this->db->where('id_karyawan', $id_karyawan);
-        $this->db->where('date', $date);
+        $this->db->where('date', $tanggal);
         $this->db->where('status', 'true'); // Hanya mencari entri dengan status izin
         $query = $this->db->get('absensi');
 
         if ($query->num_rows() > 0) {
-            return true; // Jika sudah ada entri izin untuk karyawan dan date tertentu
+            return true; // Jika sudah ada entri izin untuk karyawan dan tanggal tertentu
         } else {
-            return false; // Jika belum ada entri izin untuk karyawan dan date tertentu
+            return false; // Jika belum ada entri izin untuk karyawan dan tanggal tertentu
         }
     }
 }

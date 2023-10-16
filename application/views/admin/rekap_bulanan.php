@@ -84,7 +84,7 @@
             background: #f3f1f6;
         }
 
-        .sidebar . li:hover {
+        .sidebar .sub-menu li:hover {
             background: none;
             color: #6699ff;
         }
@@ -136,18 +136,18 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li . {
+        .sidebar .nav-links li .sub-menu {
             padding: 6px 6px 14px 80px;
             margin-top: 0px;
             background: #fff;
             display: none;
         }
 
-        .sidebar .nav-links li.showMenu . {
+        .sidebar .nav-links li.showMenu .sub-menu {
             display: block;
         }
 
-        .sidebar .nav-links li . a {
+        .sidebar .nav-links li .sub-menu a {
             color: #6699ff;
             font-size: 15px;
             padding: 5px 0;
@@ -156,11 +156,11 @@
             transition: all 0.3s ease;
         }
 
-        .sidebar .nav-links li . a:hover {
+        .sidebar .nav-links li .sub-menu a:hover {
             opacity: 1;
         }
 
-        .sidebar.close .nav-links li . {
+        .sidebar.close .nav-links li .sub-menu {
             position: absolute;
             left: 100%;
             top: -10px;
@@ -173,24 +173,24 @@
             transition: 0s;
         }
 
-        .sidebar.close .nav-links li:hover . {
+        .sidebar.close .nav-links li:hover .sub-menu {
             top: 0;
             opacity: 1;
             pointer-events: auto;
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li . .link_name {
+        .sidebar .nav-links li .sub-menu .link_name {
             display: none;
         }
 
-        .sidebar.close .nav-links li . .link_name {
+        .sidebar.close .nav-links li .sub-menu .link_name {
             font-size: 18px;
             opacity: 1;
             display: block;
         }
 
-        .sidebar .nav-links li ..blank {
+        .sidebar .nav-links li .sub-menu.blank {
             opacity: 1;
             pointer-events: auto;
             padding: 3px 20px 6px 16px;
@@ -198,7 +198,7 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li:hover ..blank {
+        .sidebar .nav-links li:hover .sub-menu.blank {
             top: 50%;
             transform: translateY(-50%);
         }
@@ -293,7 +293,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li . {
+            .sidebar.close .nav-links li .sub-menu {
                 display: none;
             }
 
@@ -366,38 +366,49 @@
             padding: 0px 16px;
         }
 
-        .edit {
-            background-color: #6699ff;
-            /* Ubah warna latar belakang sesuai tema ikon */
+        /* Style untuk filter-form */
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
-        .pulang {
-            background-color: #00ff00;
-            /* Ubah warna latar belakang sesuai tema ikon */
+        /* Style untuk label */
+        .label {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .delete {
-            background-color: #ff6666;
-            /* Ubah warna latar belakang sesuai tema ikon */
-        }
-
-        .icon-btn {
-            border: none;
-            cursor: pointer;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .icon-btn:focus {
+        /* Style untuk input[type="date"] */
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 14px;
             outline: none;
         }
 
-        .icon-btn:hover {
-            background-color: #555;
-            /* Efek hover untuk semua tombol */
+        /* Style untuk tombol Filter */
+        .btn-dark {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-dark:hover {
+            background-color: #23272b;
         }
     </style>
 </head>
@@ -435,17 +446,15 @@
                     <span class="link_name">Rekap Bulanan</span>
                 </a>
             </li>
+
             <li>
                 <div class="profile-details">
                     <div class="profile-content">
                         <?php
                         $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
                         ?>
-                        <a href="<?php echo base_url('admin/profile') ?>">
-                            <img src="<?php echo $image_url; ?>" alt="profileImg">
-                        </a>
+                        <img src="<?php echo $image_url; ?>" alt="profileImg">
                     </div>
-
                     <div class="name-job">
                         <div class="profile_name">
                             <?php echo $this->session->userdata('username'); ?>
@@ -466,55 +475,57 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Dashboard</span>
+            <span class="text">Rekap Bulanan</span>
         </div>
         <!-- Tabel -->
         <div class="box-wrap">
             <div class="table-wrap">
+                <!-- Filter Tanggal -->
+                <form action="<?= base_url('admin/rekap_bulanan'); ?>" method="get" class="filter-form">
+                    <div class="form-group">
+                        <label for="bulan">Pilih Bulan</label>
+                        <input type="month" class="form-control" id="bulan" name="bulan">
+                    </div>
+                    <button type="submit" class="btn btn-dark my-2">Filter</button>
+                </form>
+
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nama Karyawan</th>
-                            <th>kegiatan</th>
-                            <th>Date</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Pulang</th>
-                            <th>Keterangan Izin</th>
+                            <th>Tanggal</th>
+                            <th>Kegiatan</th>
+                            <th>Masuk</th>
+                            <th>Pulang</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 0;
-                        foreach ($admin_data as $admin):
-                            $no++ ?>
+                        <?php foreach ($rekap_bulanan as $rekap): ?>
                             <tr>
                                 <td>
-                                    <?php echo $admin->id ?>
+                                    <?php echo $rekap->id; ?>
                                 </td>
                                 <td>
-                                    <?php panggil_username($admin->id_karyawan) ?>
+                                    <?php echo panggil_username($rekap->id_karyawan) ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->kegiatan ?>
+                                    <?php echo $rekap->date; ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->date ?>
+                                    <?php echo $rekap->kegiatan; ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->jam_masuk ?>
+                                    <?php echo $rekap->jam_masuk; ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->jam_pulang ?>
+                                    <?php echo $rekap->jam_pulang; ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->keterangan_izin ?>
+                                    <?php echo $rekap->status; ?>
                                 </td>
-                                <td>
-                                    <?php echo $admin->status ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                            <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

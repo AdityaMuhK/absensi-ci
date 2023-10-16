@@ -316,6 +316,100 @@
                 left: 0;
             }
         }
+
+        /* Tabel */
+        .table-wrap {
+            max-width: 1000px;
+            margin: 40px auto;
+            overflow-x: auto;
+
+        }
+
+        table,
+        td,
+        th {
+            /*   border: 1px solid #ddd; */
+            text-align: center;
+            font-size: 15px;
+            text-transform: capitalize;
+        }
+
+        table thead tr {
+            background-color: #6699ff;
+            color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 16px 16px 0px 0px;
+            overflow: hidden;
+        }
+
+        table tbody tr td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            white-space: nowrap;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background: #b4b4b442;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .box-wrap {
+            padding: 0px 16px;
+        }
+
+        /* Style untuk filter-form */
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Style untuk label */
+        .label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Style untuk input[type="date"] */
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* Style untuk tombol Filter */
+        .btn-dark {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-dark:hover {
+            background-color: #23272b;
+        }
     </style>
 </head>
 
@@ -333,19 +427,24 @@
                 </a>
             </li>
             <li>
-                <div class="icon-link">
-                    <a href="#">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
-                    </a>
-                    <i class="fa-solid fa-angle-down arrow"></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Kategori</a></li>
-                    <li><a href="<?php echo base_url('admin/menu_absen') ?>"><i
-                                class="fa-solid fa-users-viewfinder"></i>Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('admin/history') ?>">Histori</a></li>
-                </ul>
+                <a href="<?php echo base_url('admin/rekap_harian') ?>">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="link_name">Rekap Harian</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="<?php echo base_url('admin/rekap_mingguan') ?>">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="link_name">Rekap Mingguan</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="<?php echo base_url('admin/rekap_bulanan') ?>">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="link_name">Rekap Bulanan</span>
+                </a>
             </li>
 
             <li>
@@ -376,8 +475,61 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">DashBoard Sidebar</span>
+            <span class="text">Rekap Mingguan</span>
         </div>
+        <!-- Tabel -->
+        <div class="box-wrap">
+            <div class="table-wrap">
+                <!-- Filter Tanggal -->
+                <form action="<?= base_url('admin/rekap_mingguan'); ?>" method="get" class="filter-form">
+                    <div class="form-group">
+                        <label for="tanggal">Pilih Tanggal</label>
+                        <input type="date" class="form-control" id="tanggal" name="tanggal">
+                    </div>
+                    <button type="submit" class="btn btn-dark my-2">Filter</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Karyawan</th>
+                            <th>Tanggal</th>
+                            <th>Kegiatan</th>
+                            <th>Masuk</th>
+                            <th>Pulang</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($rekap_mingguan as $rekap): ?>
+                            <tr>
+                                <td>
+                                    <?php echo $rekap->id; ?>
+                                </td>
+                                <td>
+                                    <?php echo panggil_username($rekap->id_karyawan) ?>
+                                </td>
+                                <td>
+                                    <?php echo $rekap->date ?>
+                                </td>
+                                <td>
+                                    <?php echo $rekap->kegiatan; ?>
+                                </td>
+                                <td>
+                                    <?php echo $rekap->jam_masuk; ?>
+                                </td>
+                                <td>
+                                    <?php echo $rekap->jam_pulang; ?>
+                                </td>
+                                <td>
+                                    <?php echo $rekap->status; ?>
+                                </td>
+                            <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Tabel End -->
     </section>
 
     <script>

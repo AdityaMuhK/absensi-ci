@@ -462,11 +462,10 @@
                         placeholder="Masukkan absensi di sini..." value="<?= $absensi->kegiatan; ?>" required></textarea>
                     <br>
                     <div class="mb-3">
-                        <label for="jam_masuk" class="form-label">Jam Masuk:</label>
                         <input type="time" class="form-control" id="jam_masuk" name="jam_masuk"
                             value="<?= $absensi->jam_masuk; ?>" required>
                     </div>
-
+                    <br>
                     <button type="submit" class="absen-button">Absen</button>
                 </form>
             </div>
