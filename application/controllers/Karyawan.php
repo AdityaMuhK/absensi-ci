@@ -20,7 +20,7 @@ class Karyawan extends CI_Controller
     public function upload_img($value)
     {
         $kode = round(microtime(true) * 1000);
-        $config['upload_path'] = './images/';
+        $config['upload_path'] = './images/karyawan/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = '3000';
         $config['fle_name'] = $kode;
@@ -35,6 +35,7 @@ class Karyawan extends CI_Controller
     }
     public function index()
     {
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
         if ($this->session->userdata('role') === 'karyawan') {
             $data['absensi'] = $this->karyawan_model->get_data('absensi')->num_rows();
             $data['absensi_data'] = $this->karyawan_model->get_data('absensi')->result();
@@ -64,6 +65,8 @@ class Karyawan extends CI_Controller
             date_default_timezone_set('Asia/Jakarta');
 
             $data['absensi'] = $this->karyawan_model->get_data('absensi')->result();
+            $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
+
             $this->load->view('karyawan/history', $data);
         } else {
             redirect('auth');
@@ -72,7 +75,9 @@ class Karyawan extends CI_Controller
 
     public function tambah_menu_absen()
     {
-        $this->load->view('karyawan/history/tambah_menu_absen');
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
+
+        $this->load->view('karyawan/history/tambah_menu_absen', $data);
     }
     // public function update_menu_absen()
     // {
@@ -81,12 +86,13 @@ class Karyawan extends CI_Controller
 
     public function aksi_tambah_menu_absen()
     {
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
         if ($this->session->userdata('role') === 'karyawan') {
             $user_id = $this->session->userdata('id'); // Ambil id pengguna yang sedang login
             $this->form_validation->set_rules('kegiatan', 'Kegiatan', 'required');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('karyawan/histori/update_menu_absen');
+                $this->load->view('karyawan/histori/update_menu_absen', $data);
             } else {
                 date_default_timezone_set('Asia/Jakarta');
                 $jam_masuk = date('H:i:s');
@@ -185,7 +191,8 @@ class Karyawan extends CI_Controller
     }
     public function izin()
     {
-        $this->load->view('karyawan/izin');
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
+        $this->load->view('karyawan/izin', $data);
     }
 
     public function tambah_izin()
@@ -215,7 +222,7 @@ class Karyawan extends CI_Controller
     }
     public function profile()
     {
-        $data['akun'] = $this->m_model->get_by_id('karyawan', 'id_karyawan', $this->session->userdata('id'))->result();
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
         $this->load->view('karyawan/profile', $data);
     }
 
@@ -238,51 +245,64 @@ class Karyawan extends CI_Controller
         if (!empty($password_baru)) {
             if ($password_baru === $konfirmasi_password) {
                 $data['password'] = md5($password_baru);
+                $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
             } else {
-                $this->session->set_flashdata('message', 'Password baru dan Konfirmasi password tidak sama');
+                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
                 redirect(base_url('karyawan/profile'));
             }
         }
 
-
-
         $this->session->set_userdata($data);
-        $update_result = $this->m_model->update_data('admin', $data, array('id' => $this->session->userdata('id')));
+        $update_result = $this->m_model->update_data('akun', $data, array('id' => $this->session->userdata('id')));
 
         if ($update_result) {
+            $this->session->set_flashdata('update_akun', 'Data berhasil diperbarui');
             redirect(base_url('karyawan/profile'));
         } else {
+            $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
             redirect(base_url('karyawan/profile'));
         }
     }
 
-    public function edit_foto()
+    public function edit_image()
     {
-        $config['upload_path'] = './assets/images/karyawan/';
-        $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size'] = 5120;
+        $image = $_FILES['image']['name'];
+        $image_temp = $_FILES['image']['tmp_name'];
 
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload('userfile')) {
-            $upload_data = $this->upload->data();
-            $file_name = $upload_data['file_name'];
-
-            $user_id = $this->session->userdata('id_karyawan');
-            $current_image = $this->m_model->get_current_image($user_id);
-
-            if ($current_image !== 'User.png') {
-                unlink('./assets/images/karyawan/' . $current_image);
-            }
-
-            $this->m_model->update_image($user_id, $file_name);
+        // Jika ada image yang diunggah
+        if ($image) {
+            $kode = round(microtime(true) * 1000);
+            $file_name = $kode . '_' . $image;
+            $upload_path = './images/karyawan/' . $file_name;
             $this->session->set_flashdata('berhasil_ubah_foto', 'Foto berhasil diperbarui.');
+            if (move_uploaded_file($image_temp, $upload_path)) {
+                // Hapus image lama jika ada
+                $old_file = $this->karyawan_model->get_karyawan_image_by_id($this->input->post('id'));
+                if ($old_file && file_exists('./images/karyawan/' . $old_file)) {
+                    unlink('./images/karyawan/' . $old_file);
+                }
 
-            redirect('karyawan/profile');
+                $data = [
+                    'image' => $file_name
+                ];
+            } else {
+                // Gagal mengunggah image baru
+                redirect(base_url('karyawan/ubah_image/' . $this->input->post('id')));
+            }
         } else {
-            $error = array('error' => $this->upload->display_errors());
-            $this->session->set_flashdata('error_profile', $error['error']);
-            redirect('karyawan/profile');
+            // Jika tidak ada image yang diunggah
+            $data = [
+                'image' => 'User.png'
+            ];
+        }
+
+        // Eksekusi dengan model ubah_data
+        $eksekusi = $this->karyawan_model->ubah_data('akun', $data, array('id' => $this->input->post('id')));
+
+        if ($eksekusi) {
+            redirect(base_url('karyawan/profile'));
+        } else {
+            redirect(base_url('karyawan/ubah_image/' . $this->input->post('id')));
         }
     }
 

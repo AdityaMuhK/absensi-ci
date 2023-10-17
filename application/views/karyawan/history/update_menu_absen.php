@@ -422,14 +422,13 @@
 
             <li>
                 <div class="profile-details">
-                    <div class="profile-content">
-                        <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
-                        ?>
-                        <a href="<?php echo base_url('karyawan/profile') ?>">
-                            <img src="<?php echo $image_url; ?>" alt="profileImg">
-                        </a>
-                    </div>
+                    <?php foreach ($akun as $user): ?>
+                        <div class="profile-content">
+                            <a href="<?php echo base_url('karyawan/profile') ?>">
+                                <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg">
+                            </a>
+                        </div>
+                    <?php endforeach ?>
 
                     <div class="name-job">
                         <div class="profile_name">
@@ -459,7 +458,8 @@
                 <form action="<?php echo base_url('karyawan/update_menu_absen/' . $absen_id); ?>" method="post">
                     <h1>Update Absensi</h1>
                     <textarea class="absen-box" id="kegiatan" name="kegiatan" rows="5"
-                        placeholder="Masukkan absensi di sini..." value="<?= $absensi->kegiatan; ?>" required></textarea>
+                        placeholder="Masukkan absensi di sini..." value="<?= $absensi->kegiatan; ?>"
+                        required></textarea>
                     <br>
                     <div class="mb-3">
                         <input type="time" class="form-control" id="jam_masuk" name="jam_masuk"

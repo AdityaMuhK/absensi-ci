@@ -26,7 +26,11 @@ class Admin_model extends CI_Model
         $this->db->insert($tabel, $data);
         return $this->db->insert_id();
     }
-
+    public function ubah_data($tabel, $data, $where)
+    {
+        $data = $this->db->update($tabel, $data, $where);
+        return $this->db->affected_rows();
+    }
     public function get_by_id($tabel, $id_column, $id)
     {
         $data = $this->db->where($id_column, $id)->get($tabel);
@@ -59,8 +63,21 @@ class Admin_model extends CI_Model
         return $this->db->get('absensi')->result();
     }
 
+    public function exportDataRekapHarian()
+    {
+        $this->db->select(
+            'absensi.id, absensi.id_karyawan, absensi.date, absensi.kegiatan, absensi.jam_masuk, absensi.jam_pulang, absensi.keterangan_izin, absensi.status'
+        );
+        $this->db->from('absensi');
+        $this->db->join(
+            'akun',
+            'akun.id = absensi.id_karyawan',
+            'left'
+        );
+        $query = $this->db->get();
 
-
+        return $query->result();
+    }
 
     public function getRekapBulan($bulan)
     {
@@ -80,5 +97,60 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+    public function image_akun()
+    {
+        $id_karyawan = $this->session->akundata('id');
+        $this->db->select('image');
+        $this->db->from('akun');
+        $this->db->where('id_karyawan');
+        $query = $this->db->get();
 
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->image;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_admin_image_by_id($id)
+    {
+        $this->db->select('image');
+        $this->db->from('akun');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->image;
+        } else {
+            return false;
+        }
+    }
+    public function update_image($akun_id, $new_image)
+    {
+        $data = array(
+            'image' => $new_image
+        );
+
+        $this->db->where('id', $akun_id); // Sesuaikan dengan kolom dan nama tabel yang sesuai
+        $this->db->update('akun', $data); // Sesuaikan dengan nama tabel Anda
+
+        return $this->db->affected_rows(); // Mengembalikan jumlah baris yang diupdate
+    }
+
+    public function get_current_image($akun_id)
+    {
+        $this->db->select('image');
+        $this->db->from('akun'); // Gantilah 'akun_table' dengan nama tabel Anda
+        $this->db->where('id', $akun_id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->image;
+        }
+
+        return null; // Kembalikan null jika data tidak ditemukan
+    }
 }

@@ -125,14 +125,14 @@
             text-decoration: none;
         }
 
-        .sidebar .nav-links li a .link-name {
+        .sidebar .nav-links li a .link_name {
             font-size: 18px;
             font-weight: 400;
             color: #6699ff;
             transition: all 0.4s ease;
         }
 
-        .sidebar.close .nav-links li a .link-name {
+        .sidebar.close .nav-links li a .link_name {
             opacity: 0;
             pointer-events: none;
         }
@@ -181,11 +181,11 @@
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li .sub-menu .link-name {
+        .sidebar .nav-links li .sub-menu .link_name {
             display: none;
         }
 
-        .sidebar.close .nav-links li .sub-menu .link-name {
+        .sidebar.close .nav-links li .sub-menu .link_name {
             font-size: 18px;
             opacity: 1;
             display: block;
@@ -480,6 +480,7 @@
             }
         }
 
+
         button[type="submit"]:hover {
             background-color: #343a40;
         }
@@ -574,7 +575,7 @@
             max-width: 700px;
         }
 
-        .closes {
+        .close {
             color: #fff;
             font-size: 35px;
             font-weight: bold;
@@ -605,34 +606,40 @@
             </div>
             <ul class="nav-links">
                 <li>
-                    <a href="<?php echo base_url('karyawan') ?>">
+                    <a href="<?php echo base_url('admin') ?>">
                         <i class="fa-solid fa-arrow-trend-up"></i>
-                        <span class="link-name">Dashboard</span>
+                        <span class="link_name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <div class="icon-link">
-                        <a href="#">
-                            <i class="fa-solid fa-list"></i>
-                            <span class="link-name">Absen Menu</span>
-                        </a>
-                        <i class="fa-solid fa-angle-down arrow"></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link-name" href="">Kategori</a></li>
-                        <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
-                        <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
-                        <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
-                    </ul>
+                    <a href="<?php echo base_url('admin/rekap_harian') ?>">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="link_name">Rekap Harian</span>
+                    </a>
                 </li>
 
                 <li>
+                    <a href="<?php echo base_url('admin/rekap_mingguan') ?>">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="link_name">Rekap Mingguan</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo base_url('admin/rekap_bulanan') ?>">
+                        <i class="fas fa-chart-pie"></i>
+                        <span class="link_name">Rekap Bulanan</span>
+                    </a>
+                </li>
+                <li>
                     <div class="profile-details">
-                        <div class="profile-content">
-                            <a href="<?php echo base_url('karyawan/profile') ?>">
-                                <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg">
-                            </a>
-                        </div>
+                        <?php foreach ($akun as $user): ?>
+                            <div class="profile-content">
+                                <a href="<?php echo base_url('admin/profile') ?>">
+                                    <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg">
+                                </a>
+                            </div>
+                        <?php endforeach ?>
 
                         <div class="name-job">
                             <div class="profile_name">
@@ -659,8 +666,8 @@
             <div class="card">
                 <div class="card-body text-center">
                     <div class="profile-image">
-                        <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg"
-                            class="rounded-circle">
+                        <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg"
+                            class="rounded-circle trigger-modall">
 
                         <input name="id" type="hidden" value="<?php echo $user->id ?>">
                         <button for="image_upload" class="edit-button" data-bs-toggle="modal"
@@ -675,7 +682,7 @@
                     </p>
                 </div>
 
-                <form action="<?php echo base_url('karyawan/edit_profile'); ?>" class="profile-form"
+                <form action="<?php echo base_url('admin/edit_profile'); ?>" class="profile-form"
                     enctype="multipart/form-data" method="post">
 
                     <div class="form-group">
@@ -698,9 +705,11 @@
                     <div class="form-group position-relative">
                         <label for="password">Kata Sandi</label>
                         <input type="password" id="password" name="password">
-                        <span class="input-group-text" onclick="togglePassword('password')"><i id="icon-password"
-                                class="fas fa-eye"></i></span>
+                        <span class="input-group-text" onclick="togglePassword('password')">
+                            <i id="icon-password" class="fas fa-eye"></i>
+                        </span>
                     </div>
+
                     <div class="form-group">
                         <label for="password_baru">Kata Sandi Baru</label>
                         <input type="password" id="password_baru" name="password_baru">
@@ -720,8 +729,7 @@
             <div class="modal" id="imageModal">
                 <div class="modal-content">
                     <span class="close" id="closeModal">&times;</span>
-                    <form action="<?php echo base_url('karyawan/edit_image'); ?>" method="post"
-                        enctype="multipart/form-data">
+                    <form action="<?php echo base_url('admin/edit_image'); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?php echo $user->id; ?>">
                         <label for="image">Pilih gambar:</label>
                         <input type="file" id="image" name="image" accept="image/*">
@@ -733,9 +741,8 @@
             <!-- Modal Image-->
             <div class="modalimg" id="imageModall">
                 <div class="modal-content">
-                    <span class="closes" id="closeModall">&times;</span>
-                    <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg"
-                        class="modal-image">
+                    <span class="close" id="closeModall">&times;</span>
+                    <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg" class="modal-image">
                 </div>
             </div>
 

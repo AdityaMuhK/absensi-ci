@@ -410,6 +410,23 @@
         .btn-dark:hover {
             background-color: #23272b;
         }
+
+        .btn-green {
+            background-color: #00ff00;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-green:hover {
+            background-color: #66ff66;
+        }
     </style>
 </head>
 
@@ -449,12 +466,13 @@
 
             <li>
                 <div class="profile-details">
-                    <div class="profile-content">
-                        <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
-                        ?>
-                        <img src="<?php echo $image_url; ?>" alt="profileImg">
-                    </div>
+                    <?php foreach ($akun as $user): ?>
+                        <div class="profile-content">
+                            <a href="<?php echo base_url('admin/profile') ?>">
+                                <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg">
+                            </a>
+                        </div>
+                    <?php endforeach ?>
                     <div class="name-job">
                         <div class="profile_name">
                             <?php echo $this->session->userdata('username'); ?>
@@ -486,7 +504,9 @@
                         <label for="bulan">Pilih Bulan</label>
                         <input type="month" class="form-control" id="bulan" name="bulan">
                     </div>
-                    <button type="submit" class="btn btn-dark my-2">Filter</button>
+                    <button type="submit" class="btn-dark my-2">Filter</button>
+                    <a href="http://localhost/absensi-aditya/admin/export" type="button" class="btn-green my-2"><i
+                            class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </form>
 
                 <table>

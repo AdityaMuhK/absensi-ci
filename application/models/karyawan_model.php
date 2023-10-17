@@ -23,7 +23,11 @@ class Karyawan_model extends CI_Model
         $data = $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
-
+    public function ubah_data($tabel, $data, $where)
+    {
+        $data = $this->db->update($tabel, $data, $where);
+        return $this->db->affected_rows();
+    }
     public function getAbsensiById($absen_id)
     {
         return $this->db->get_where('absensi', array('id' => $absen_id))->row();
@@ -90,5 +94,60 @@ class Karyawan_model extends CI_Model
         $this->db->update('absensi', $data);
     }
 
+    public function image_akun()
+    {
+        $id_karyawan = $this->session->akundata('id');
+        $this->db->select('image');
+        $this->db->from('akun');
+        $this->db->where('id_karyawan');
+        $query = $this->db->get();
 
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->image;
+        } else {
+            return false;
+        }
+    }
+    
+    public function get_karyawan_image_by_id($id)
+    {
+        $this->db->select('image');
+        $this->db->from('akun');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->image;
+        } else {
+            return false;
+        }
+    }
+    public function update_image($akun_id, $new_image)
+    {
+        $data = array(
+            'image' => $new_image
+        );
+
+        $this->db->where('id', $akun_id); // Sesuaikan dengan kolom dan nama tabel yang sesuai
+        $this->db->update('akun', $data); // Sesuaikan dengan nama tabel Anda
+
+        return $this->db->affected_rows(); // Mengembalikan jumlah baris yang diupdate
+    }
+
+    public function get_current_image($akun_id)
+    {
+        $this->db->select('image');
+        $this->db->from('akun'); // Gantilah 'akun_table' dengan nama tabel Anda
+        $this->db->where('id', $akun_id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->image;
+        }
+
+        return null; // Kembalikan null jika data tidak ditemukan
+    }
 }

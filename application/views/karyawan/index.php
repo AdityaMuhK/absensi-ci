@@ -433,14 +433,13 @@
 
             <li>
                 <div class="profile-details">
-                    <div class="profile-content">
-                        <?php
-                        $image_url = isset($this->session->userdata['image']) ? base_url('images/' . $this->session->userdata('image')) : base_url('images/User.png');
-                        ?>
-                        <a href="<?php echo base_url('karyawan/profile') ?>">
-                            <img src="<?php echo $image_url; ?>" alt="profileImg">
-                        </a>
-                    </div>
+                    <?php foreach ($akun as $user): ?>
+                        <div class="profile-content">
+                            <a href="<?php echo base_url('karyawan/profile') ?>">
+                                <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg">
+                            </a>
+                        </div>
+                    <?php endforeach ?>
 
                     <div class="name-job">
                         <div class="profile_name">
@@ -478,7 +477,7 @@
                     </thead>
                     <tbody>
                         <?php $no = 0;
-                        foreach ($absensi as $row):
+                        foreach ($absensi_data as $row):
                             $no++ ?>
                             <tr>
                                 <td>
