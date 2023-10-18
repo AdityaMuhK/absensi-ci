@@ -144,6 +144,20 @@
             float: none;
         }
 
+        .show_hide {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /* Ubah style untuk input[type="password"] */
+        input[type="password"] {
+            padding-right: 30px;
+            /* Tambahkan ruang di sebelah kanan untuk ikon */
+        }
+
         /*Start Register Style*/
         .register {
             float: right;
@@ -214,7 +228,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

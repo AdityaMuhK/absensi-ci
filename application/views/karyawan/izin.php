@@ -260,7 +260,7 @@
         .home-section {
             position: relative;
             background: #e4e9f7;
-            height: 100vh;
+            height: auto;
             left: 260px;
             width: calc(100% - 260px);
             transition: all 0.5s ease;
@@ -328,13 +328,15 @@
         .card {
             background-color: #6699ff;
             border-radius: 8px;
-            padding: 10px;
-            margin: 10px auto;
-            max-width: 900px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 1000px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
+            text-align: left;
+            margin-bottom: 10px;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
@@ -353,16 +355,19 @@
         .absen-button {
             padding: 10px 20px;
             font-size: 16px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            margin-right: 850px;
         }
 
         .absen-button:hover {
-            background-color: #0056b3;
+            background-color: white;
+            color: #6699ff;
+            border-color: white;
         }
     </style>
 </head>
@@ -401,7 +406,7 @@
                     <?php foreach ($akun as $user): ?>
                         <div class="profile-content">
                             <a href="<?php echo base_url('karyawan/profile') ?>">
-                                <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg">
+                                <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg">
                             </a>
                         </div>
                     <?php endforeach ?>

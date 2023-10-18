@@ -259,7 +259,7 @@
         .home-section {
             position: relative;
             background: #e4e9f7;
-            height: 100vh;
+            height: auto;
             left: 260px;
             width: calc(100% - 260px);
             transition: all 0.5s ease;
@@ -441,7 +441,7 @@
                     <?php foreach ($akun as $user): ?>
                         <div class="profile-content">
                             <a href="<?php echo base_url('karyawan/profile') ?>">
-                                <img src="<?php echo base_url('images/karyawan/' . $user->image) ?>" alt="profileImg">
+                                <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg">
                             </a>
                         </div>
                     <?php endforeach ?>
@@ -508,7 +508,7 @@
                                     <?php echo $row->status; ?>
                                 </td>
                                 <td>
-                                    <?php if ($row->status == 'done'): ?>
+                                    <?php if ($row->status == 'IZIN'): ?>
                                         <!-- Jika sudah selesai, tampilkan tombol Izin -->
                                         <span class="icon-btn izin">Izin</span>
                                     </td>

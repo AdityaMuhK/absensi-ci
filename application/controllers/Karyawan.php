@@ -20,7 +20,7 @@ class Karyawan extends CI_Controller
     public function upload_img($value)
     {
         $kode = round(microtime(true) * 1000);
-        $config['upload_path'] = './images/karyawan/';
+        $config['upload_path'] = './images/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = '3000';
         $config['fle_name'] = $kode;
@@ -153,6 +153,7 @@ class Karyawan extends CI_Controller
                     }
                 }
 
+                $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
                 $data['absensi'] = $absensi;
                 $data['absen_id'] = $absen_id;
                 $this->load->view('karyawan/history/update_menu_absen', $data);
@@ -273,13 +274,13 @@ class Karyawan extends CI_Controller
         if ($image) {
             $kode = round(microtime(true) * 1000);
             $file_name = $kode . '_' . $image;
-            $upload_path = './images/karyawan/' . $file_name;
+            $upload_path = './images/' . $file_name;
             $this->session->set_flashdata('berhasil_ubah_foto', 'Foto berhasil diperbarui.');
             if (move_uploaded_file($image_temp, $upload_path)) {
                 // Hapus image lama jika ada
                 $old_file = $this->karyawan_model->get_karyawan_image_by_id($this->input->post('id'));
-                if ($old_file && file_exists('./images/karyawan/' . $old_file)) {
-                    unlink('./images/karyawan/' . $old_file);
+                if ($old_file && file_exists('./images/' . $old_file)) {
+                    unlink('./images/' . $old_file);
                 }
 
                 $data = [

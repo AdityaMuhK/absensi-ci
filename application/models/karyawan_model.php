@@ -65,7 +65,7 @@ class Karyawan_model extends CI_Model
             'kegiatan' => '-',
             'jam_masuk' => '-',
             'jam_pulang' => '-',
-            'status' => 'DONE'
+            'status' => 'IZIN'
         );
 
         $this->db->insert('absensi', $data);

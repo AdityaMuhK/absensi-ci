@@ -260,7 +260,7 @@
         .home-section {
             position: relative;
             background: #e4e9f7;
-            height: 100vh;
+            height: auto;
             left: 260px;
             width: calc(100% - 260px);
             transition: all 0.5s ease;
@@ -594,6 +594,27 @@
         .profile-image img {
             cursor: pointer;
         }
+
+        .logout-button {
+            background-color: #ff5050;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #ff6666;
+        }
+
+        .fa-arrow-right-from-bracket {
+            margin-left: 5px;
+        }
     </style>
 </head>
 
@@ -602,7 +623,7 @@
         <div class="sidebar">
             <div class="logo-details">
                 <i class="fa-solid fa-cubes"></i>
-                <span class="logo_name">Karyawan</span>
+                <span class="logo_name">Admin</span>
             </div>
             <ul class="nav-links">
                 <li>
@@ -636,7 +657,7 @@
                         <?php foreach ($akun as $user): ?>
                             <div class="profile-content">
                                 <a href="<?php echo base_url('admin/profile') ?>">
-                                    <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg">
+                                    <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg">
                                 </a>
                             </div>
                         <?php endforeach ?>
@@ -666,7 +687,7 @@
             <div class="card">
                 <div class="card-body text-center">
                     <div class="profile-image">
-                        <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg"
+                        <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg"
                             class="rounded-circle trigger-modall">
 
                         <input name="id" type="hidden" value="<?php echo $user->id ?>">
@@ -720,6 +741,10 @@
                     </div>
                     <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
                             Perubahan</span></button>
+                    <a class="logout-button" onclick="confirmLogout()">
+                        Logout
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
 
                 </form>
 
@@ -742,7 +767,7 @@
             <div class="modalimg" id="imageModall">
                 <div class="modal-content">
                     <span class="close" id="closeModall">&times;</span>
-                    <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg" class="modal-image">
+                    <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg" class="modal-image">
                 </div>
             </div>
 

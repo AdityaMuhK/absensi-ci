@@ -10,6 +10,7 @@ class Admin_model extends CI_Model
     function get_data($tabel)
     {
         return $this->db->get($tabel);
+        $this->db->join('akun', 'absensi.id_karyawan = akun.id', 'left');
     }
 
     function getwhere($tabel, $data)
@@ -62,20 +63,43 @@ class Admin_model extends CI_Model
         $this->db->select('absensi.id, absensi.date, absensi.kegiatan, absensi.id_karyawan, absensi.jam_masuk, absensi.jam_pulang, absensi.status');
         return $this->db->get('absensi')->result();
     }
-
-    public function exportDataRekapHarian()
+    public function get_all_karyawan()
     {
-        $this->db->select(
-            'absensi.id, absensi.id_karyawan, absensi.date, absensi.kegiatan, absensi.jam_masuk, absensi.jam_pulang, absensi.keterangan_izin, absensi.status'
-        );
+        $this->db->select('absensi.*, akun.nama_depan, akun.nama_belakang');
         $this->db->from('absensi');
-        $this->db->join(
-            'akun',
-            'akun.id = absensi.id_karyawan',
-            'left'
-        );
+        $this->db->join('akun', 'absensi.id_karyawan = akun.id', 'left');
         $query = $this->db->get();
+        return $query->result();
+    }
+    //start get data perhari
+    public function getHarianData($tanggal)
+    {
+        $this->db->select('absensi.*, akun.nama_depan, akun.nama_belakang');
+        $this->db->from('absensi');
+        $this->db->join('akun', 'absensi.id_karyawan = akun.id', 'left');
+        $this->db->where('date', $tanggal);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    // start get data per minggu
+    public function getMingguanData($tanggal_awal, $tanggal_akhir)
+    {
+        $this->db->select('absensi.*, akun.nama_depan, akun.nama_belakang');
+        $this->db->from('absensi');
+        $this->db->join('akun', 'absensi.id_karyawan = akun.id', 'left');
+        $this->db->where("WEEK(date, 3) BETWEEN $tanggal_awal AND $tanggal_akhir");
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    //start get data per bulan
+    public function getBulananData($bulan)
+    {
+        $this->db->select("absensi.*, akun.nama_depan, akun.nama_belakang");
+        $this->db->from("absensi");
+        $this->db->join("akun", "absensi.id_karyawan = akun.id", "left");
+        $this->db->where("DATE_FORMAT(date, '%m') = ", $bulan); // Perbaikan di sini
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -153,4 +177,5 @@ class Admin_model extends CI_Model
 
         return null; // Kembalikan null jika data tidak ditemukan
     }
+
 }

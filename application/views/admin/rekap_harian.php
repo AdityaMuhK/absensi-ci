@@ -259,7 +259,7 @@
         .home-section {
             position: relative;
             background: #e4e9f7;
-            height: 100vh;
+            height: auto;
             left: 260px;
             width: calc(100% - 260px);
             transition: all 0.5s ease;
@@ -434,7 +434,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">Karyawan</span>
+            <span class="logo_name">Admin</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -469,7 +469,7 @@
                     <?php foreach ($akun as $user): ?>
                         <div class="profile-content">
                             <a href="<?php echo base_url('admin/profile') ?>">
-                                <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg">
+                                <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg">
                             </a>
                         </div>
                     <?php endforeach ?>
@@ -506,7 +506,7 @@
                     </div>
                     <button type="submit" class="btn-dark my-2"><i class="fa-solid fa-calendar-days"></i>
                         Filter</button>
-                    <a href="http://localhost/absensi-aditya/admin/export" type="button" class="btn-green my-2"><i
+                    <a href="<?php echo base_url('admin/export_absensi') ?>" type="button" class="btn-green my-2"><i
                             class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </form>
                 <table>
@@ -545,7 +545,8 @@
                                 <td>
                                     <?= $rekap['status']; ?>
                                 </td>
-                            <?php endforeach ?>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

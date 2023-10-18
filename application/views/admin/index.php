@@ -259,7 +259,7 @@
         .home-section {
             position: relative;
             background: #e4e9f7;
-            height: 100vh;
+            height: auto;
             left: 260px;
             width: calc(100% - 260px);
             transition: all 0.5s ease;
@@ -399,6 +399,35 @@
             background-color: #555;
             /* Efek hover untuk semua tombol */
         }
+
+        /* Style untuk filter-form */
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-green {
+            background-color: #00ff00;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-green:hover {
+            background-color: #66ff66;
+        }
     </style>
 </head>
 
@@ -406,7 +435,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class="fa-solid fa-cubes"></i>
-            <span class="logo_name">Karyawan</span>
+            <span class="logo_name">Admin</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -440,7 +469,7 @@
                     <?php foreach ($akun as $user): ?>
                         <div class="profile-content">
                             <a href="<?php echo base_url('admin/profile') ?>">
-                                <img src="<?php echo base_url('images/admin/' . $user->image) ?>" alt="profileImg">
+                                <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg">
                             </a>
                         </div>
                     <?php endforeach ?>
@@ -470,47 +499,47 @@
         <!-- Tabel -->
         <div class="box-wrap">
             <div class="table-wrap">
+
+                <div class="filter-form">
+                    <label for="bulan">EXPORT DATA KARYAWAN</label>
+                    <a href="<?php echo base_url('admin/export') ?>" type="button" class="btn-green my-2"><i
+                            class="fa-solid fa-cloud-arrow-down"></i> Export</a>
+                </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Nama Karyawan</th>
-                            <th>kegiatan</th>
-                            <th>Date</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Pulang</th>
-                            <th>Keterangan Izin</th>
-                            <th>Status</th>
+                            <th>No</th>
+                            <th>Username</th>
+                            <th>Nama depan</th>
+                            <th>Nama belakang</th>
+                            <th>image</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 0;
-                        foreach ($admin_data as $admin):
+                        foreach ($get_karyawan as $row):
                             $no++ ?>
                             <tr>
                                 <td>
-                                    <?php echo $admin->id ?>
+                                    <?php echo $no ?>
                                 </td>
                                 <td>
-                                    <?php panggil_username($admin->id_karyawan) ?>
+                                    <?php echo $row->username ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->kegiatan ?>
+                                    <?php echo $row->nama_depan ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->date ?>
+                                    <?php echo $row->nama_belakang ?>
                                 </td>
                                 <td>
-                                    <?php echo $admin->jam_masuk ?>
+                                    <img style="width:80px; height:80px; border-radius:50%"
+                                        src="<?= base_url('images/' . $row->image) ?>" alt="">
+
                                 </td>
                                 <td>
-                                    <?php echo $admin->jam_pulang ?>
-                                </td>
-                                <td>
-                                    <?php echo $admin->keterangan_izin ?>
-                                </td>
-                                <td>
-                                    <?php echo $admin->status ?>
+                                    <?php echo $row->email ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
