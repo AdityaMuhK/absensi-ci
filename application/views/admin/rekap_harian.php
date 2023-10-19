@@ -439,7 +439,7 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('admin') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
@@ -506,7 +506,7 @@
                     </div>
                     <button type="submit" class="btn-dark my-2"><i class="fa-solid fa-calendar-days"></i>
                         Filter</button>
-                    <a href="<?php echo base_url('admin/export_absensi') ?>" type="button" class="btn-green my-2"><i
+                    <a href="<?php echo base_url('admin/export_harian') ?>" type="button" class="btn-green my-2"><i
                             class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </form>
                 <table>
@@ -522,10 +522,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($rekap_harian as $rekap): ?>
+                        <?php $no = 0;
+                        foreach ($rekap_harian as $rekap):
+                            $no++ ?>
                             <tr>
                                 <td>
-                                    <?= $rekap['id']; ?>
+                                    <?= $no; ?>
                                 </td>
                                 <td>
                                     <?= panggil_username($rekap['id_karyawan']) ?>

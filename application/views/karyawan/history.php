@@ -404,6 +404,12 @@
             background-color: #555;
             /* Efek hover untuk semua tombol */
         }
+
+        .disabled-btn {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -416,24 +422,27 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <div class="icon-link">
-                    <a href="#">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
-                    </a>
-                    <i class="fa-solid fa-angle-down arrow"></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
-                    <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
-                </ul>
+                <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                    <i class="fas fa-user-clock"></i>
+                    <span class="link_name">Absen Karyawan</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('karyawan/izin') ?>">
+                    <i class="fas fa-file-signature"></i>
+                    <span class="link_name">Absen Izin</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('karyawan/history') ?>">
+                    <i class="fas fa-history"></i>
+                    <span class="link_name">Histori</span>
+                </a>
             </li>
 
             <li>
@@ -515,9 +524,9 @@
                                     <td>
                                     <?php else: ?>
                                         <?php if ($row->status == 'DONE'): ?>
-                                            <!-- Jika status 'pulang', tampilkan tombol "Batal Pulang" -->
+                                            <!-- Jika status 'pulang', tampilkan tombol "disable -->
                                             <a href="<?php echo site_url('karyawan/batal_pulang/' . $row->id); ?>"
-                                                class="icon-btn delete"><i class="fa-solid fa-xmark"></i></a>
+                                                class="icon-btn pulang disabled-btn"><i class="fa-solid fa-house"></i></a>
                                         </td>
                                         <td>
                                         <?php else: ?>

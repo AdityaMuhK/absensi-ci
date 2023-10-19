@@ -478,6 +478,10 @@
             button[type="submit"] span {
                 margin-left: 3px;
             }
+
+            button .logout-button {
+                font-size: 10px;
+            }
         }
 
 
@@ -628,7 +632,7 @@
             <ul class="nav-links">
                 <li>
                     <a href="<?php echo base_url('admin') ?>">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <i class="fas fa-tachometer-alt"></i>
                         <span class="link_name">Dashboard</span>
                     </a>
                 </li>

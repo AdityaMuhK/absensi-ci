@@ -318,7 +318,6 @@
             }
         }
 
-        /* CSS untuk card */
         .card {
             border: 1px solid #6699ff;
             border-radius: 10px;
@@ -330,7 +329,6 @@
             background-color: #fff;
         }
 
-        /* CSS untuk gambar profil dan tombol edit */
         .profile-image {
             position: relative;
             display: inline-block;
@@ -358,7 +356,6 @@
             font-size: 16px;
         }
 
-        /* CSS untuk judul card (username) dan informasi tambahan */
         .card h5,
         .card p {
             margin: 0;
@@ -366,24 +363,18 @@
             color: #555;
         }
 
-        /* CSS untuk membuat tata letak responsif */
         @media (max-width: 767px) {
-
-            /* Misalnya, pada layar dengan lebar kurang dari atau sama dengan 767px */
             .card {
                 max-width: 100%;
-                /* Lebar kartu akan mengisi seluruh lebar tata letak */
             }
 
             .card img {
                 width: 80px;
-                /* Ukuran gambar profil lebih kecil pada layar kecil */
                 height: 80px;
             }
 
             .card p {
                 font-size: 10px;
-                /* Ukuran font lebih kecil pada layar kecil */
             }
         }
 
@@ -392,7 +383,6 @@
             margin-top: 20px;
             text-align: left;
             max-width: 400px;
-            /* Sesuaikan dengan kebutuhan Anda */
             margin-left: auto;
             margin-right: auto;
         }
@@ -401,7 +391,6 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            /* Menampilkan label di atas input */
             margin-bottom: 15px;
         }
 
@@ -444,13 +433,11 @@
 
         .form-group.position-relative input {
             padding-right: 40px;
-            /* Biarkan ruang untuk ikon */
         }
 
         .form-group.position-relative .input-group-text {
             position: absolute;
             right: 10px;
-            /* Sesuaikan posisi ikon */
             top: 70%;
             transform: translateY(-50%);
             cursor: pointer;
@@ -526,7 +513,7 @@
             color: #f00;
         }
 
-        /* Memperbaiki tampilan input file */
+        /* input file */
         input[type="file"] {
             padding: 8px;
             border: 1px solid #ccc;
@@ -535,7 +522,7 @@
             margin-bottom: 10px;
         }
 
-        /* Memperbaiki tampilan tombol Simpan dan menambahkan ikon */
+        /* tombol Simpan dan menambahkan ikon */
         button[type="submit"] {
             background-color: #007bff;
             color: #fff;
@@ -553,8 +540,8 @@
             margin-right: 5px;
         }
 
-        /* Tambahkan CSS untuk modal */
-        .modalimg {
+        /* CSS untuk modal foto profil*/
+        .modalimage {
             display: none;
             position: fixed;
             z-index: 1;
@@ -568,7 +555,7 @@
             padding-top: 60px;
         }
 
-        .modalimg-content {
+        .modalimage-content {
             margin: 5% auto;
             display: block;
             max-width: 700px;
@@ -627,24 +614,27 @@
             <ul class="nav-links">
                 <li>
                     <a href="<?php echo base_url('karyawan') ?>">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
-                        <span class="link-name">Dashboard</span>
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="link_name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <div class="icon-link">
-                        <a href="#">
-                            <i class="fa-solid fa-list"></i>
-                            <span class="link-name">Absen Menu</span>
-                        </a>
-                        <i class="fa-solid fa-angle-down arrow"></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link-name" href="">Kategori</a></li>
-                        <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
-                        <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
-                        <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
-                    </ul>
+                    <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                        <i class="fas fa-user-clock"></i>
+                        <span class="link_name">Absen Karyawan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('karyawan/izin') ?>">
+                        <i class="fas fa-file-signature"></i>
+                        <span class="link_name">Absen Izin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('karyawan/history') ?>">
+                        <i class="fas fa-history"></i>
+                        <span class="link_name">Histori</span>
+                    </a>
                 </li>
 
                 <li>
@@ -717,17 +707,27 @@
                     </div>
                     <div class="form-group position-relative">
                         <label for="password">Kata Sandi</label>
-                        <input type="password" id="password" name="password">
+                        <input type="password" id="password" name="password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
                         <span class="input-group-text" onclick="togglePassword('password')"><i id="icon-password"
                                 class="fas fa-eye"></i></span>
+                        <br>
+                        <small id="password-error-message" style="color: red;"></small>
                     </div>
                     <div class="form-group">
                         <label for="password_baru">Kata Sandi Baru</label>
-                        <input type="password" id="password_baru" name="password_baru">
+                        <input type="password" id="password_baru" name="password_baru"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                        <br>
+                        <small id="password-error-message-new" style="color: red;"></small>
                     </div>
                     <div class="form-group">
                         <label for="konfirmasi_password">Konfirmasi Kata Sandi Baru</label>
-                        <input type="password" id="konfirmasi_password" name="konfirmasi_password">
+                        <input type="password" id="konfirmasi_password" name="konfirmasi_password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                        <br>
+                        <small id="password-error-message-confirm" style="color: red;"></small>
+
                     </div>
                     <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
                             Perubahan</span></button>
@@ -755,7 +755,7 @@
             </div>
 
             <!-- Modal Image-->
-            <div class="modalimg" id="imageModall">
+            <div class="modalimage" id="imageModall">
                 <div class="modal-content">
                     <span class="closes" id="closeModall">&times;</span>
                     <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg" class="modal-image">
@@ -779,7 +779,44 @@
                 }
             }
         </script>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('password');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('password_baru');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message-new');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('konfirmasi_password');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message-confirm');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+        </script>
         <script>
             const arrows = document.querySelectorAll(".arrow");
 

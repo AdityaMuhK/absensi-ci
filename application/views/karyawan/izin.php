@@ -381,24 +381,27 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link-name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <div class="icon-link">
-                    <a href="#">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="link-name">Absen Menu</span>
-                    </a>
-                    <i class="fa-solid fa-angle-down arrow"></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link-name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
-                    <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
-                </ul>
+                <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                    <i class="fas fa-user-clock"></i>
+                    <span class="link-name">Absen Karyawan</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('karyawan/izin') ?>">
+                    <i class="fas fa-file-signature"></i>
+                    <span class="link-name">Absen Izin</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('karyawan/history') ?>">
+                    <i class="fas fa-history"></i>
+                    <span class="link-name">Histori</span>
+                </a>
             </li>
 
             <li>

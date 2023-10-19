@@ -440,7 +440,7 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('admin') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
@@ -501,8 +501,8 @@
             <div class="table-wrap">
 
                 <div class="filter-form">
-                    <label for="bulan">EXPORT DATA KARYAWAN</label>
-                    <a href="<?php echo base_url('admin/export') ?>" type="button" class="btn-green my-2"><i
+                    <label for="bulan">EXPORT DATA ABSENSI</label>
+                    <a href="<?php echo base_url('admin/export_absensi_all') ?>" type="button" class="btn-green my-2"><i
                             class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </div>
                 <table>

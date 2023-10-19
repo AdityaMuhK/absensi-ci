@@ -184,6 +184,45 @@
             background-color: #fff;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .login,
+            .register {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .register {
+                margin-top: 20px;
+            }
+
+
+            .login,
+            .register,
+            .container {
+                height: auto;
+            }
+
+            .login input,
+            .register input,
+            .login button,
+            .register a {
+                width: 90%;
+            }
+
+            .register a {
+                font-size: 10px;
+            }
+
+            .register h2 {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 
@@ -192,13 +231,15 @@
 
         <div class="login">
             <div class="container">
-                <h1>Sign in Admin</h1>
+                <h1>REGISTER</h1>
                 <form action="<?php echo base_url('auth/aksi_register_admin'); ?>" method="post">
                     <input id="username" name="username" type="text" placeholder="Username">
                     <input id="nama_depan" name="nama_depan" type="text" placeholder="Nama Depan"><br>
                     <input id="nama_belakang" name="nama_belakang" type="text" placeholder="Nama Belakang"><br>
                     <input id="email" name="email" type="email" placeholder="Email">
-                    <input id="password" name="password" type="password" placeholder="Password"><br>
+                    <input id="password" name="password" type="password" placeholder="Password"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"><br>
+                    <small id="password-error-message" style="color: red;"></small>
                     <button type="submit">Sign In</button>
                     <hr>
                     <hr>
@@ -216,6 +257,20 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('password');
+            passwordInput.addEventListener('input', function () {
+                const password = this.value;
+                const errorMessage = document.getElementById('password-error-message');
+                if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                    errorMessage.innerText = 'Password harus terdiri dari 8 karakter yang terdiri dari huruf dan angka';
+                } else {
+                    errorMessage.innerText = '';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

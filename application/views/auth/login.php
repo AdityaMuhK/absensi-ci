@@ -197,6 +197,77 @@
             background-color: #fff;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .login,
+            .register {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .register {
+                margin-top: 20px;
+            }
+
+            .login,
+            .register,
+            .container {
+                height: auto;
+            }
+
+            .login input,
+            .register input,
+            .login button,
+            .register a {
+                width: 90%;
+            }
+
+            .register a {
+                font-size: 10px;
+            }
+
+            .register h2 {
+                font-size: 2em;
+            }
+        }
+
+        /* Ganti CSS input agar ikon eye dan eye slash bisa didalam input */
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-container input {
+            padding-left: 10px;
+            padding-right: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-container input:focus {
+            border-color: #6699ff;
+            outline: none;
+        }
+
+        /* Ganti CSS untuk ikon mata dan mata tertutup */
+        .show_hide {
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        #eye-slash {
+            display: none;
+        }
     </style>
 </head>
 
@@ -205,15 +276,24 @@
         <div class="login">
             <form action="<?php echo base_url('auth/aksi_login'); ?>" method="post">
                 <div class="container">
-                    <h1>Log in</h1>
+                    <h1>LOG IN</h1>
                     <input id="email" name="email" type="email" placeholder="Email">
-                    <input id="password" name="password" type="password" placeholder="Password"><br>
+                    <div class="input-container">
+                        <input id="password" name="password" type="password" placeholder="Password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                        <span class="show_hide" id="show_hide_password">
+                            <i class="fas fa-eye-slash" id="eye-slash"></i>
+                            <i class="fas fa-eye" id="eye"></i>
+                        </span>
+                    </div>
+                    <small id="password-error-message" style="color: red;"></small>
+                    <br>
                     <button type="submit">log in</button>
                     <hr>
                     <hr>
-
                 </div>
             </form>
+
         </div>
         <div class="register">
             <div class="container">
@@ -228,6 +308,41 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('password');
+            passwordInput.addEventListener('input', function () {
+                const password = this.value;
+                const errorMessage = document.getElementById('password-error-message');
+                if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                    errorMessage.innerText = 'Password harus terdiri dari 8 karakter yang terdiri dari huruf dan angka';
+                } else {
+                    errorMessage.innerText = '';
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('password');
+            const showHideButton = document.getElementById('show_hide_password');
+            const eyeSlashIcon = document.getElementById('eye-slash');
+            const eyeIcon = document.getElementById('eye');
+
+            showHideButton.addEventListener('click', function () {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.style.display = 'none';
+                    eyeSlashIcon.style.display = 'inline-block';
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.style.display = 'inline-block';
+                    eyeSlashIcon.style.display = 'none';
+                }
+            });
+        });
+
+    </script>
+
 </body>
 
 </html>

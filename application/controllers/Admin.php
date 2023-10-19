@@ -231,10 +231,10 @@ class Admin extends CI_Controller
 
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
-        $sheet->getColumnDimension('C')->setWidth(50);
+        $sheet->getColumnDimension('C')->setWidth(20);
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
-        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(50);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -359,53 +359,86 @@ class Admin extends CI_Controller
 
     }
     //end export semua data absensi
+
+
     //start export data absen perhari
-    public function export_absensi()
+    public function export_harian()
     {
-        $tanggal = date('Y-m-d');
+        $date = date('Y-m-d');
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        if (!empty($tanggal)) {
+        if (!empty($date)) {
             $style_col = [
                 'font' => ['bold' => true],
                 'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+                    'horizontal' =>
+                        \PhpOffice\PhpSpreadsheet\style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' =>
+                        \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER,
                 ],
                 'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
-                ]
+                    'top' => [
+                        'borderstyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'right' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'bottom' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'left' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                ],
             ];
 
             $style_row = [
                 'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+                    'vertical' =>
+                        \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER,
                 ],
                 'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
-                ]
+                    'top' => [
+                        'borderstyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'right' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'bottom' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                    'left' => [
+                        'borderStyle' =>
+                            \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                    ],
+                ],
             ];
 
-            $sheet->setCellValue('A1', "DATA ABSEN KARYAWAN");
+            // set judul
+            $sheet->setCellValue('A1', 'REKAP DATA HARIAN');
             $sheet->mergeCells('A1:E1');
-            $sheet->getStyle('A1')->getFont()->setBold(true);
+            $sheet
+                ->getStyle('A1')
+                ->getFont()
+                ->setBold(true);
+            // set thead
+            $sheet->setCellValue('A3', 'ID');
+            $sheet->setCellValue('B3', 'NAMA KARYAWAN');
+            $sheet->setCellValue('C3', 'KEGIATAN');
+            $sheet->setCellValue('D3', 'DATE');
+            $sheet->setCellValue('E3', 'JAM MASUK');
+            $sheet->setCellValue('F3', 'JAM PULANG');
+            $sheet->setCellValue('G3', 'KETERANGAN IZIN');
 
-            $sheet->setCellValue('A3', "ID");
-            $sheet->setCellValue('B3', "NAMA KARYAWAN");
-            $sheet->setCellValue('C3', "KEGIATAN");
-            $sheet->setCellValue('D3', "TANGGAL MASUK");
-            $sheet->setCellValue('E3', "JAM MASUK");
-            $sheet->setCellValue('F3', "JAM PULANG");
-            $sheet->setCellValue('G3', "KETERANGAN IZIN");
-            $sheet->setCellValue('H3', "STATUS");
-
+            // mengaplikasikan style thead
             $sheet->getStyle('A3')->applyFromArray($style_col);
             $sheet->getStyle('B3')->applyFromArray($style_col);
             $sheet->getStyle('C3')->applyFromArray($style_col);
@@ -413,21 +446,23 @@ class Admin extends CI_Controller
             $sheet->getStyle('E3')->applyFromArray($style_col);
             $sheet->getStyle('F3')->applyFromArray($style_col);
             $sheet->getStyle('G3')->applyFromArray($style_col);
-            $sheet->getStyle('H3')->applyFromArray($style_col);
 
-            $karyawan = $this->admin_model->getHarianData($tanggal);
+            // get dari database
+            $data_harian = $this->admin_model->getHarianData($date);
 
             $no = 1;
             $numrow = 4;
-            foreach ($karyawan as $data) {
-                $sheet->setCellValue('A' . $numrow, $no);
-                $sheet->setCellValue('B' . $numrow, $data->nama_depan . ' ' . $data->nama_belakang);
+            foreach ($data_harian as $data) {
+                $sheet->setCellValue('A' . $numrow, $data->id);
+                $sheet->setCellValue(
+                    'B' . $numrow,
+                    $data->nama_depan . ' ' . $data->nama_belakang
+                );
                 $sheet->setCellValue('C' . $numrow, $data->kegiatan);
                 $sheet->setCellValue('D' . $numrow, $data->date);
                 $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
                 $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
                 $sheet->setCellValue('G' . $numrow, $data->keterangan_izin);
-                $sheet->setCellValue('H' . $numrow, $data->status);
 
                 $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
                 $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -436,75 +471,85 @@ class Admin extends CI_Controller
                 $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
                 $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
                 $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
 
                 $no++;
                 $numrow++;
             }
 
+            // set panjang column
             $sheet->getColumnDimension('A')->setWidth(5);
             $sheet->getColumnDimension('B')->setWidth(25);
-            $sheet->getColumnDimension('C')->setWidth(50);
+            $sheet->getColumnDimension('C')->setWidth(25);
             $sheet->getColumnDimension('D')->setWidth(20);
             $sheet->getColumnDimension('E')->setWidth(30);
             $sheet->getColumnDimension('F')->setWidth(30);
             $sheet->getColumnDimension('G')->setWidth(30);
-            $sheet->getColumnDimension('H')->setWidth(30);
 
             $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
-            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $sheet
+                ->getPageSetup()
+                ->setOrientation(
+                    \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+                );
 
-            $sheet->setTitle("LAPORAN DATA ABSEN KARYAWAN");
-            header('Content-Type: aplication/vnd.openxmlformants-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="absensi_perhari.xlsx"');
+            // set nama file saat di export
+            $sheet->setTitle('LAPORAN REKAP DATA HARIAN');
+            header(
+                'Content-Type: aplication/vnd.openxmlformants-officedocument.spreadsheetml.sheet'
+            );
+            header(
+                'Content-Disposition: attachment; filename="REKAP_HARIAN.xlsx"'
+            );
             header('Cache-Control: max-age=0');
 
             $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
         }
-
     }
     //end export data absen perhari
+
+
     //start export data absen mingguan
-    public function export_absensi_mingguan()
+    public function export_rekap_mingguan()
     {
         $tanggal_akhir = date('Y-m-d');
         $tanggal_awal = date('Y-m-d', strtotime('-7 days', strtotime($tanggal_akhir)));
         $tanggal_awal = date('W', strtotime($tanggal_awal));
         $tanggal_akhir = date('W', strtotime($tanggal_akhir));
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        if (!empty($tanggal_awal && $tanggal_akhir)) {
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
             $style_col = [
                 'font' => ['bold' => true],
                 'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
                 ],
                 'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
+                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
                 ]
             ];
 
             $style_row = [
                 'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
                 ],
                 'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
+                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
                 ]
             ];
 
             $sheet->setCellValue('A1', "DATA ABSEN KARYAWAN");
-            $sheet->mergeCells('A1:E1');
+            $sheet->mergeCells('A1:H1');
             $sheet->getStyle('A1')->getFont()->setBold(true);
 
             $sheet->setCellValue('A3', "ID");
@@ -525,19 +570,19 @@ class Admin extends CI_Controller
             $sheet->getStyle('G3')->applyFromArray($style_col);
             $sheet->getStyle('H3')->applyFromArray($style_col);
 
-            $karyawan = $this->admin_model->getMingguanData($tanggal_awal, $tanggal_akhir);
+            $data = $this->admin_model->getMingguanData($tanggal_awal, $tanggal_akhir);
 
             $no = 1;
             $numrow = 4;
-            foreach ($karyawan as $data) {
+            foreach ($data as $row) {
                 $sheet->setCellValue('A' . $numrow, $no);
-                $sheet->setCellValue('B' . $numrow, $data->nama_depan . ' ' . $data->nama_belakang);
-                $sheet->setCellValue('C' . $numrow, $data->kegiatan);
-                $sheet->setCellValue('D' . $numrow, $data->date);
-                $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
-                $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
-                $sheet->setCellValue('G' . $numrow, $data->keterangan_izin);
-                $sheet->setCellValue('H' . $numrow, $data->status);
+                $sheet->setCellValue('B' . $numrow, $row->username);
+                $sheet->setCellValue('C' . $numrow, $row->kegiatan);
+                $sheet->setCellValue('D' . $numrow, $row->date);
+                $sheet->setCellValue('E' . $numrow, $row->jam_masuk);
+                $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
+                $sheet->setCellValue('G' . $numrow, $row->keterangan_izin);
+                $sheet->setCellValue('H' . $numrow, $row->status);
 
                 $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
                 $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -566,14 +611,13 @@ class Admin extends CI_Controller
             $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
             $sheet->setTitle("LAPORAN DATA ABSEN KARYAWAN");
-            header('Content-Type: aplication/vnd.openxmlformants-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="data_absensi_perminggu.xlsx"');
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="Rekap_Mingguan.xlsx"');
             header('Cache-Control: max-age=0');
 
-            $writer = new Xlsx($spreadsheet);
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
             $writer->save('php://output');
         }
-
     }
     //end export data absen mingguan
 

@@ -439,7 +439,7 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('admin') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
@@ -523,10 +523,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($rekap_bulanan as $rekap): ?>
+                        <?php $no = 0;
+                        foreach ($rekap_bulanan as $rekap):
+                            $no++ ?>
                             <tr>
                                 <td>
-                                    <?php echo $rekap->id; ?>
+                                    <?php echo $no; ?>
                                 </td>
                                 <td>
                                     <?php echo panggil_username($rekap->id_karyawan) ?>

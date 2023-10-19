@@ -368,17 +368,14 @@
 
         .edit {
             background-color: #6699ff;
-            /* Ubah warna latar belakang sesuai tema ikon */
         }
 
         .pulang {
             background-color: #00ff00;
-            /* Ubah warna latar belakang sesuai tema ikon */
         }
 
         .delete {
             background-color: #ff6666;
-            /* Ubah warna latar belakang sesuai tema ikon */
         }
 
         .icon-btn {
@@ -397,7 +394,35 @@
 
         .icon-btn:hover {
             background-color: #555;
-            /* Efek hover untuk semua tombol */
+        }
+
+        /* Style untuk filter-form */
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-green {
+            background-color: #00ff00;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-green:hover {
+            background-color: #66ff66;
         }
     </style>
 </head>
@@ -411,26 +436,28 @@
         <ul class="nav-links">
             <li>
                 <a href="<?php echo base_url('karyawan') ?>">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <div class="icon-link">
-                    <a href="#">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="link_name">Absen Menu</span>
-                    </a>
-                    <i class="fa-solid fa-angle-down arrow"></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="">Kategori</a></li>
-                    <li><a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">Absen Karyawan</a></li>
-                    <li><a href="<?php echo base_url('karyawan/izin') ?>">Absen Izin</a></li>
-                    <li><a href="<?php echo base_url('karyawan/history') ?>">Histori</a></li>
-                </ul>
+                <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                    <i class="fas fa-user-clock"></i>
+                    <span class="link_name">Absen Karyawan</span>
+                </a>
             </li>
-
+            <li>
+                <a href="<?php echo base_url('karyawan/izin') ?>">
+                    <i class="fas fa-file-signature"></i>
+                    <span class="link_name">Absen Izin</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('karyawan/history') ?>">
+                    <i class="fas fa-history"></i>
+                    <span class="link_name">Histori</span>
+                </a>
+            </li>
             <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
@@ -466,6 +493,11 @@
         <!-- Tabel -->
         <div class="box-wrap">
             <div class="table-wrap">
+                <div class="filter-form">
+                    <label for="bulan">EXPORT DATA KARYAWAN</label>
+                    <a href="<?php echo base_url('karyawan/export') ?>" type="button" class="btn-green my-2"><i
+                            class="fa-solid fa-cloud-arrow-down"></i> Export</a>
+                </div>
                 <table>
                     <thead>
                         <tr>
