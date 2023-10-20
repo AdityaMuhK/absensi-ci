@@ -198,6 +198,39 @@
             cursor: pointer;
         }
 
+        /* Ganti CSS input agar ikon eye dan eye slash bisa didalam input */
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-container input {
+            padding-left: 10px;
+            padding-right: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-container input:focus {
+            border-color: #6699ff;
+            outline: none;
+        }
+
+        /* Ganti CSS untuk ikon mata dan mata tertutup */
+        .show_hide {
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        #eye-slash {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -235,39 +268,6 @@
                 font-size: 2em;
             }
         }
-
-        /* Ganti CSS input agar ikon eye dan eye slash bisa didalam input */
-        .input-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .input-container input {
-            padding-left: 10px;
-            padding-right: 40px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .input-container input:focus {
-            border-color: #6699ff;
-            outline: none;
-        }
-
-        /* Ganti CSS untuk ikon mata dan mata tertutup */
-        .show_hide {
-            position: absolute;
-            top: 40%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        #eye-slash {
-            display: none;
-        }
     </style>
 </head>
 
@@ -286,7 +286,6 @@
                             <i class="fas fa-eye" id="eye"></i>
                         </span>
                     </div>
-                    <small id="password-error-message" style="color: red;"></small>
                     <br>
                     <button type="submit">log in</button>
                     <hr>
@@ -299,29 +298,17 @@
             <div class="container">
                 <i class="fas fa-user-plus fa-5x"></i>
                 <h2>Halo,Kak!</h2>
-                <p>Jika Kakak Belum Punya Akun Mendaftar Terlebih Dahulu</p>
-                <p>Mendaftar Sebagai:</p>
-                <a type="button" href="<?php echo base_url('auth/register_karyawan') ?>">Karyawan <i
+                <p>Jika Belum Punya Akun Mendaftar Terlebih Dahulu</p>
+                <a type="button" href="<?php echo base_url('auth/register_karyawan') ?>">REGISTRASI <i
                         class="fas fa-arrow-circle-right"></i></a>
-                <a type="button" href="<?php echo base_url('auth/register_admin') ?>">Admin <i
-                        class="fas fa-arrow-circle-right"></i></a>
+                <!-- <a type="button" href="<?php echo base_url('auth/register_admin') ?>">Admin <i
+                        class="fas fa-arrow-circle-right"></i></a> -->
             </div>
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const passwordInput = document.getElementById('password');
-            passwordInput.addEventListener('input', function () {
-                const password = this.value;
-                const errorMessage = document.getElementById('password-error-message');
-                if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
-                    errorMessage.innerText = 'Password harus terdiri dari 8 karakter yang terdiri dari huruf dan angka';
-                } else {
-                    errorMessage.innerText = '';
-                }
-            });
-        });
 
+        // ikon mata untuk memperlihatkan password
         document.addEventListener('DOMContentLoaded', function () {
             const passwordInput = document.getElementById('password');
             const showHideButton = document.getElementById('show_hide_password');

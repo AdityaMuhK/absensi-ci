@@ -292,31 +292,6 @@
             font-weight: 600;
         }
 
-        @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
-                display: none;
-            }
-
-            .sidebar {
-                width: 78px;
-            }
-
-            .sidebar.close {
-                width: 0;
-            }
-
-            .home-section {
-                left: 78px;
-                width: calc(100% - 78px);
-                z-index: 100;
-            }
-
-            .sidebar.close~.home-section {
-                width: 100%;
-                left: 0;
-            }
-        }
-
         /* Tabel */
         .table-wrap {
             max-width: 1000px;
@@ -410,6 +385,32 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        @media (max-width: 400px) {
+            .sidebar.close .nav-links li{
+                display: none   ;
+            }
+
+            .sidebar {
+                width: 78px;
+            }
+
+            .sidebar.close {
+                width: 0;
+            }
+
+            .home-section {
+                left: 78px;
+                width: calc(100% - 78px);
+                z-index: 100;
+            }
+
+            .sidebar.close~.home-section {
+                width: 100%;
+                left: 0;
+            }
+            
+        }
     </style>
 </head>
 
@@ -475,7 +476,7 @@
     <section class="home-section">
         <div class="home-content">
             <i class="fa-solid fa-bars"></i>
-            <span class="text">Histori</span>
+            <span class="text">Histori Absen</span>
         </div>
         <!-- Tabel -->
         <div class="box-wrap">
@@ -483,6 +484,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>NO</th>
                             <th>Kegiatan</th>
                             <th>Date</th>
                             <th>Jam Masuk</th>
@@ -495,9 +497,12 @@
                     </thead>
                     <tbody>
                         <?php $no = 0;
-                        foreach ($absensi as $row):
-                            $no++ ?>
+                        foreach ($absensi as $row) {
+                            $no++; ?>
                             <tr>
+                                <td>
+                                    <?php echo $no; ?>
+                                </td>
                                 <td>
                                     <?php echo $row->kegiatan; ?>
                                 </td>
@@ -522,6 +527,10 @@
                                         <span class="icon-btn izin">Izin</span>
                                     </td>
                                     <td>
+                                        <a href="javascript:void(0);" onclick="confirmDelete(<?php echo $row->id; ?>)"
+                                            class="icon-btn delete"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                    <td>
                                     <?php else: ?>
                                         <?php if ($row->status == 'DONE'): ?>
                                             <!-- Jika status 'pulang', tampilkan tombol "disable -->
@@ -544,7 +553,7 @@
                                             class="icon-btn delete"><i class="fa-solid fa-trash"></i></a>
                                     <?php endif; ?>
                                 </td>
-                            <?php endforeach ?>
+                            <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -594,7 +603,7 @@
         function confirmDelete(absenId) {
             Swal.fire({
                 title: 'Konfirmasi Hapus',
-                text: 'Anda yakin ingin menghapus item ini?',
+                text: 'Anda yakin ingin menghapus absen ini?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

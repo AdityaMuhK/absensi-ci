@@ -294,7 +294,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
+            .sidebar.close .nav-links li .name-job {
                 display: none;
             }
 
@@ -615,25 +615,25 @@
                 <li>
                     <a href="<?php echo base_url('karyawan') ?>">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span class="link_name">Dashboard</span>
+                        <span class="link-name">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
                         <i class="fas fa-user-clock"></i>
-                        <span class="link_name">Absen Karyawan</span>
+                        <span class="link-name">Absen Karyawan</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url('karyawan/izin') ?>">
                         <i class="fas fa-file-signature"></i>
-                        <span class="link_name">Absen Izin</span>
+                        <span class="link-name">Absen Izin</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url('karyawan/history') ?>">
                         <i class="fas fa-history"></i>
-                        <span class="link_name">Histori</span>
+                        <span class="link-name">Histori</span>
                     </a>
                 </li>
 

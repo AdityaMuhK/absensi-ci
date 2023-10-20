@@ -292,31 +292,6 @@
             font-weight: 600;
         }
 
-        @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
-                display: none;
-            }
-
-            .sidebar {
-                width: 78px;
-            }
-
-            .sidebar.close {
-                width: 0;
-            }
-
-            .home-section {
-                left: 78px;
-                width: calc(100% - 78px);
-                z-index: 100;
-            }
-
-            .sidebar.close~.home-section {
-                width: 100%;
-                left: 0;
-            }
-        }
-
         /* Tabel */
         .table-wrap {
             max-width: 1000px;
@@ -396,33 +371,77 @@
             background-color: #555;
         }
 
-        /* Style untuk filter-form */
-        .filter-form {
+        .card-wrap {
             display: flex;
-            flex-direction: column;
-            width: 300px;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        .btn-green {
-            background-color: #00ff00;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-            text-align: center;
-            text-decoration: none;
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            margin: 0 0 20px 0;
+            margin-left: 5px;
+            margin-right: 5px;
+            max-width: 300px;
+            flex-basis: calc(33.33% - 20px);
+            position: relative;
         }
 
-        .btn-green:hover {
-            background-color: #66ff66;
+        .card .icon {
+            font-size: 4em;
+            color: #6699ff;
+            position: absolute;
+            top: 20px;
+            right: 10px;
+        }
+
+        .card-content {
+            text-align: left;
+        }
+
+        .card-content h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .card-content .total {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        @media (max-width: 400px) {
+            .card {
+                max-width: 100%;
+                /* Mengisi lebar penuh pada layar kecil */
+                flex-basis: 100%;
+            }
+
+            .sidebar.close .nav-links li .name-job {
+                display: none;
+            }
+
+            .sidebar {
+                width: 78px;
+            }
+
+            .sidebar.close {
+                width: 0;
+            }
+
+            .home-section {
+                left: 78px;
+                width: calc(100% - 78px);
+                z-index: 100;
+            }
+
+            .sidebar.close~.home-section {
+                width: 100%;
+                left: 0;
+            }
         }
     </style>
 </head>
@@ -490,17 +509,44 @@
             <i class="fa-solid fa-bars"></i>
             <span class="text">Dashboard</span>
         </div>
+
         <!-- Tabel -->
         <div class="box-wrap">
             <div class="table-wrap">
-                <div class="filter-form">
-                    <label for="bulan">EXPORT DATA KARYAWAN</label>
-                    <a href="<?php echo base_url('karyawan/export') ?>" type="button" class="btn-green my-2"><i
-                            class="fa-solid fa-cloud-arrow-down"></i> Export</a>
+                <!-- Cards -->
+                <div class="card-wrap">
+                    <div class="card">
+                        <i class="fa-solid fa-user-clock icon"></i>
+                        <div class="card-content">
+                            <h3>Total Izin</h3>
+                            <span class="total">
+                                <?php echo $totalIzin; ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-user-check icon"></i>
+                        <div class="card-content">
+                            <h3>Total Masuk</h3>
+                            <span class="total">
+                                <?php echo $totalMasuk; ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-users icon"></i>
+                        <div class="card-content">
+                            <h3>Total Keseluruhan</h3>
+                            <span class="total">
+                                <?php echo ($totalIzin + $totalMasuk); ?>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <table>
                     <thead>
                         <tr>
+                            <th>NO</th>
                             <th>Date</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
@@ -509,9 +555,12 @@
                     </thead>
                     <tbody>
                         <?php $no = 0;
-                        foreach ($absensi_data as $row):
+                        foreach ($absensi as $row):
                             $no++ ?>
-                            <tr>
+                            <tr class="text-center">
+                                <td>
+                                    <?php echo $no ?>
+                                </td>
                                 <td>
                                     <?php echo $row->date ?>
                                 </td>

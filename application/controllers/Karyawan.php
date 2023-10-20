@@ -37,8 +37,19 @@ class Karyawan extends CI_Controller
     {
         $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
         if ($this->session->userdata('role') === 'karyawan') {
-            $data['absensi'] = $this->karyawan_model->get_data('absensi')->num_rows();
-            $data['absensi_data'] = $this->karyawan_model->get_data('absensi')->result();
+            date_default_timezone_set('Asia/Jakarta');
+
+            $absensi = $this->karyawan_model->get_data('absensi')->result();
+
+            $totalIzin = $this->hitungTotalIzin($absensi);
+            $totalMasuk = $this->hitungTotalMasuk($absensi);
+            $totalKeseluruhan = count($absensi);
+
+            $data['absensi'] = $absensi;
+            $data['totalIzin'] = $totalIzin;
+            $data['totalMasuk'] = $totalMasuk;
+            $data['totalKeseluruhan'] = $totalKeseluruhan;
+
             $this->load->view('karyawan/index', $data);
         } else {
             redirect('auth');
@@ -64,13 +75,46 @@ class Karyawan extends CI_Controller
             // Set zona waktu ke 'Asia/Jakarta'
             date_default_timezone_set('Asia/Jakarta');
 
+            $user_id = $this->session->userdata('id');
+
+            $absensi = $this->karyawan_model->getAbsensiByUserId($user_id);
+
+            // Lakukan perhitungan total izin dan total masuk
+            $totalIzin = $this->hitungTotalIzin($absensi);
+            $totalMasuk = $this->hitungTotalMasuk($absensi);
+            $totalKeseluruhan = count($absensi);
+
             $data['absensi'] = $this->karyawan_model->get_data('absensi')->result();
             $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
+            $data['totalIzin'] = $totalIzin;
+            $data['totalMasuk'] = $totalMasuk;
+            $data['totalKeseluruhan'] = $totalKeseluruhan;
 
             $this->load->view('karyawan/history', $data);
         } else {
             redirect('auth');
         }
+    }
+    private function hitungTotalIzin($absensi)
+    {
+        $totalIzin = 0;
+        foreach ($absensi as $absen) {
+            if ($absen->status === 'IZIN') {
+                $totalIzin++;
+            }
+        }
+        return $totalIzin;
+    }
+
+    private function hitungTotalMasuk($absensi)
+    {
+        $totalMasuk = 0;
+        foreach ($absensi as $absen) {
+            if ($absen->status === 'DONE') {
+                $totalMasuk++;
+            }
+        }
+        return $totalMasuk;
     }
 
     public function tambah_menu_absen()

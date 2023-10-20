@@ -294,7 +294,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
+            .sidebar.close .nav-links li .name-job {
                 display: none;
             }
 

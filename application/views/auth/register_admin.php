@@ -185,6 +185,39 @@
             cursor: pointer;
         }
 
+        /* Ganti CSS input agar ikon eye dan eye slash bisa didalam input */
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-container input {
+            padding-left: 10px;
+            padding-right: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-container input:focus {
+            border-color: #6699ff;
+            outline: none;
+        }
+
+        /* Ganti CSS untuk ikon mata dan mata tertutup */
+        .show_hide {
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        #eye-slash {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -237,8 +270,15 @@
                     <input id="nama_depan" name="nama_depan" type="text" placeholder="Nama Depan"><br>
                     <input id="nama_belakang" name="nama_belakang" type="text" placeholder="Nama Belakang"><br>
                     <input id="email" name="email" type="email" placeholder="Email">
-                    <input id="password" name="password" type="password" placeholder="Password"
-                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"><br>
+                    <div class="input-container">
+                        <input id="password" name="password" type="password" placeholder="Password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                        <span class="show_hide" id="show_hide_password">
+                            <i class="fas fa-eye-slash" id="eye-slash"></i>
+                            <i class="fas fa-eye" id="eye"></i>
+                        </span>
+                    </div>
+                    <br>
                     <small id="password-error-message" style="color: red;"></small>
                     <button type="submit">Sign In</button>
                     <hr>
@@ -251,13 +291,15 @@
             <div class="container">
                 <i class="fa-solid fa-user-pen fa-5x"></i>
                 <h2>Halo,Kak!</h2>
-                <p>Jika Kakak Sudah Punya Akun Sebagai Karyawan Langsung Login Aja Kak</p>
+                <p>Jika Sudah Punya Akun Sebagai Karyawan Langsung Login Aja</p>
                 <a type="button" href="<?php echo base_url('auth') ?>">Login <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
     <script>
+
+        // agar mengisi password minimal 8 karakter huruf dan angka
         document.addEventListener('DOMContentLoaded', function () {
             const passwordInput = document.getElementById('password');
             passwordInput.addEventListener('input', function () {
@@ -267,6 +309,26 @@
                     errorMessage.innerText = 'Password harus terdiri dari 8 karakter yang terdiri dari huruf dan angka';
                 } else {
                     errorMessage.innerText = '';
+                }
+            });
+        });
+
+        // ikon mata untuk memperlihatkan password
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('password');
+            const showHideButton = document.getElementById('show_hide_password');
+            const eyeSlashIcon = document.getElementById('eye-slash');
+            const eyeIcon = document.getElementById('eye');
+
+            showHideButton.addEventListener('click', function () {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.style.display = 'none';
+                    eyeSlashIcon.style.display = 'inline-block';
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.style.display = 'inline-block';
+                    eyeSlashIcon.style.display = 'none';
                 }
             });
         });

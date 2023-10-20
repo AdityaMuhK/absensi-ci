@@ -293,7 +293,7 @@
         }
 
         @media (max-width: 400px) {
-            .sidebar.close .nav-links li .sub-menu {
+            .sidebar.close .nav-links li .name-job {
                 display: none;
             }
 
@@ -376,6 +376,8 @@
             background-color: #f5f5f5;
             border: 1px solid #ccc;
             border-radius: 5px;
+            margin-left: auto;
+
         }
 
         /* Style untuk label */
@@ -412,7 +414,7 @@
         }
 
         .btn-green {
-            background-color: #00ff00;
+            background-color: #6699ff;
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -425,7 +427,7 @@
         }
 
         .btn-green:hover {
-            background-color: #66ff66;
+            background-color: #99ccff;
         }
     </style>
 </head>

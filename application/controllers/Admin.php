@@ -37,9 +37,43 @@ class Admin extends CI_Controller
     // admin
     public function index()
     {
+        date_default_timezone_set('Asia/Jakarta');
+
+        $absensi = $this->m_model->get_data('absensi')->result();
+
+        $totalIzin = $this->hitungTotalIzin($absensi);
+        $totalMasuk = $this->hitungTotalMasuk($absensi);
+        $totalKeseluruhan = count($absensi);
+
+        $data['absensi'] = $absensi;
+        $data['totalIzin'] = $totalIzin;
+        $data['totalMasuk'] = $totalMasuk;
+        $data['totalKeseluruhan'] = $totalKeseluruhan;
         $data['get_karyawan'] = $this->m_model->get_data('akun')->result();
         $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
         $this->load->view('admin/index', $data);
+    }
+
+    private function hitungTotalIzin($absensi)
+    {
+        $totalIzin = 0;
+        foreach ($absensi as $absen) {
+            if ($absen->status === 'IZIN') {
+                $totalIzin++;
+            }
+        }
+        return $totalIzin;
+    }
+
+    private function hitungTotalMasuk($absensi)
+    {
+        $totalMasuk = 0;
+        foreach ($absensi as $absen) {
+            if ($absen->status === 'DONE') {
+                $totalMasuk++;
+            }
+        }
+        return $totalMasuk;
     }
     public function rekap_harian()
     {
@@ -252,111 +286,144 @@ class Admin extends CI_Controller
     //end export data karyawan
 
     //start export semua data absensi
-    public function export_absensi_all()
+    public function export_all()
     {
-        // $tanggal = date('Y-m-d');
-        $tanggal = $this->input->post('tanggal');
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        if (!empty($tanggal)) {
-            $style_col = [
-                'font' => ['bold' => true],
-                'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' =>
+                    \PhpOffice\PhpSpreadsheet\style\Alignment::HORIZONTAL_CENTER,
+                'vertical' =>
+                    \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderstyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
                 ],
-                'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
-                ]
-            ];
-
-            $style_row = [
-                'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER
+                'right' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
                 ],
-                'borders' => [
-                    'top' => ['borderstyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN]
-                ]
-            ];
+                'bottom' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
 
-            $sheet->setCellValue('A1', "DATA ABSEN KARYAWAN");
-            $sheet->mergeCells('A1:E1');
-            $sheet->getStyle('A1')->getFont()->setBold(true);
+        $style_row = [
+            'alignment' => [
+                'vertical' =>
+                    \PhpOffice\PhpSpreadsheet\style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderstyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
 
-            $sheet->setCellValue('A3', "ID");
-            $sheet->setCellValue('B3', "NAMA KARYAWAN");
-            $sheet->setCellValue('C3', "KEGIATAN");
-            $sheet->setCellValue('D3', "TANGGAL MASUK");
-            $sheet->setCellValue('E3', "JAM MASUK");
-            $sheet->setCellValue('F3', "JAM PULANG");
-            $sheet->setCellValue('G3', "KETERANGAN IZIN");
-            $sheet->setCellValue('H3', "STATUS");
+        // set judul
+        $sheet->setCellValue('A1', 'DATA ABSESNI KARYAWAN');
+        $sheet->mergeCells('A1:E1');
+        $sheet
+            ->getStyle('A1')
+            ->getFont()
+            ->setBold(true);
+        // set thead
+        $sheet->setCellValue('A3', 'ID');
+        $sheet->setCellValue('B3', 'NAMA KARYAWAN');
+        $sheet->setCellValue('C3', 'KEGIATAN');
+        $sheet->setCellValue('D3', 'TANGGAL');
+        $sheet->setCellValue('E3', 'JAM MASUK');
+        $sheet->setCellValue('F3', 'JAM PULANG');
+        $sheet->setCellValue('G3', 'STATUS');
 
-            $sheet->getStyle('A3')->applyFromArray($style_col);
-            $sheet->getStyle('B3')->applyFromArray($style_col);
-            $sheet->getStyle('C3')->applyFromArray($style_col);
-            $sheet->getStyle('D3')->applyFromArray($style_col);
-            $sheet->getStyle('E3')->applyFromArray($style_col);
-            $sheet->getStyle('F3')->applyFromArray($style_col);
-            $sheet->getStyle('G3')->applyFromArray($style_col);
-            $sheet->getStyle('H3')->applyFromArray($style_col);
+        // mengaplikasikan style thead
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
 
-            $karyawan = $this->admin_model->get_all_karyawan();
+        // get dari database
+        $data_siswa = $this->admin_model->getExportKaryawan();
 
-            $no = 1;
-            $numrow = 4;
-            foreach ($karyawan as $data) {
-                $sheet->setCellValue('A' . $numrow, $no);
-                $sheet->setCellValue('B' . $numrow, $data->nama_depan . ' ' . $data->nama_belakang);
-                $sheet->setCellValue('C' . $numrow, $data->kegiatan);
-                $sheet->setCellValue('D' . $numrow, $data->date);
-                $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
-                $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
-                $sheet->setCellValue('G' . $numrow, $data->keterangan_izin);
-                $sheet->setCellValue('H' . $numrow, $data->status);
+        $no = 1;
+        $numrow = 4;
+        foreach ($data_siswa as $data) {
+            $sheet->setCellValue('A' . $numrow, $data->id);
+            $sheet->setCellValue('B' . $numrow, $data->username);
+            $sheet->setCellValue('C' . $numrow, $data->kegiatan);
+            $sheet->setCellValue('D' . $numrow, $data->date);
+            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $data->status);
 
-                $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
-                $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
 
-                $no++;
-                $numrow++;
-            }
-
-            $sheet->getColumnDimension('A')->setWidth(5);
-            $sheet->getColumnDimension('B')->setWidth(25);
-            $sheet->getColumnDimension('C')->setWidth(50);
-            $sheet->getColumnDimension('D')->setWidth(20);
-            $sheet->getColumnDimension('E')->setWidth(30);
-            $sheet->getColumnDimension('F')->setWidth(30);
-            $sheet->getColumnDimension('G')->setWidth(30);
-            $sheet->getColumnDimension('H')->setWidth(30);
-
-            $sheet->getDefaultRowDimension()->setRowHeight(-1);
-
-            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-
-            $sheet->setTitle("LAPORAN DATA ABSEN KARYAWAN");
-            header('Content-Type: aplication/vnd.openxmlformants-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="semua_data_absensi.xlsx"');
-            header('Cache-Control: max-age=0');
-
-            $writer = new Xlsx($spreadsheet);
-            $writer->save('php://output');
+            $no++;
+            $numrow++;
         }
 
+        // set panjang column
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(25);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(25);
+        $sheet->getColumnDimension('E')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(25);
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+        $sheet
+            ->getPageSetup()
+            ->setOrientation(
+                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+            );
+
+        // set nama file saat di export
+        $sheet->setTitle('LAPORAN DATA PEMBAYARAN');
+        header(
+            'Content-Type: aplication/vnd.openxmlformants-officedocument.spreadsheetml.sheet'
+        );
+        header(
+            'Content-Disposition: attachment; filename="ABSEN KARYAWAN.xlsx"'
+        );
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
     //end export semua data absensi
 
