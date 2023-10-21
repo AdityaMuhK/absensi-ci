@@ -438,7 +438,7 @@
         .form-group.position-relative .input-group-text {
             position: absolute;
             right: 10px;
-            top: 70%;
+            top: 55%;
             transform: translateY(-50%);
             cursor: pointer;
         }
@@ -601,6 +601,19 @@
         .fa-arrow-right-from-bracket {
             margin-left: 5px;
         }
+
+        .select_hover {
+            transition: background-color 0.3s, padding 0.3s;
+            /* Tambahkan transisi untuk efek yang lebih halus */
+        }
+
+        .select_hover:hover {
+            background-color: #b3d1ff;
+            padding: 5px;
+            /* Ubah nilai padding pada hover */
+            border-radius: 5px;
+            /* Tambahkan sudut melengkung */
+        }
     </style>
 </head>
 
@@ -613,25 +626,25 @@
             </div>
             <ul class="nav-links">
                 <li>
-                    <a href="<?php echo base_url('karyawan') ?>">
+                    <a class="select_hover" href="<?php echo base_url('karyawan') ?>">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="link-name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                    <a class="select_hover" href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
                         <i class="fas fa-user-clock"></i>
                         <span class="link-name">Absen Karyawan</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('karyawan/izin') ?>">
+                    <a class="select_hover" href="<?php echo base_url('karyawan/izin') ?>">
                         <i class="fas fa-file-signature"></i>
                         <span class="link-name">Absen Izin</span>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('karyawan/history') ?>">
+                    <a class="select_hover" href="<?php echo base_url('karyawan/history') ?>">
                         <i class="fas fa-history"></i>
                         <span class="link-name">Histori</span>
                     </a>
@@ -678,10 +691,10 @@
                         <input type="file" id="image" name="image" accept="image/*" style="display:none;">
                     </div>
                     <h5 class="card-title">
-                        <?php echo $this->session->userdata('username'); ?>
+                        <?php echo $user->username ?>
                     </h5>
-                    <p class="card-text">
-                        <?php echo $this->session->userdata('email'); ?>
+                    <p class="p">
+                        <?php echo $user->nama_depan . ' ' . $user->nama_belakang ?>
                     </p>
                 </div>
 
@@ -690,7 +703,7 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
+                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>" disabled>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>

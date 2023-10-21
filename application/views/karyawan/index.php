@@ -443,6 +443,19 @@
                 left: 0;
             }
         }
+
+        .select_hover {
+            transition: background-color 0.3s, padding 0.3s;
+            /* Tambahkan transisi untuk efek yang lebih halus */
+        }
+
+        .select_hover:hover {
+            background-color: #b3d1ff;
+            padding: 5px;
+            /* Ubah nilai padding pada hover */
+            border-radius: 5px;
+            /* Tambahkan sudut melengkung */
+        }
     </style>
 </head>
 
@@ -454,25 +467,25 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="<?php echo base_url('karyawan') ?>">
+                <a class="select_hover" href="<?php echo base_url('karyawan') ?>">
                     <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
+                <a class="select_hover" href="<?php echo base_url('karyawan/tambah_menu_absen') ?>">
                     <i class="fas fa-user-clock"></i>
                     <span class="link_name">Absen Karyawan</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('karyawan/izin') ?>">
+                <a class="select_hover" href="<?php echo base_url('karyawan/izin') ?>">
                     <i class="fas fa-file-signature"></i>
                     <span class="link_name">Absen Izin</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('karyawan/history') ?>">
+                <a class="select_hover" href="<?php echo base_url('karyawan/history') ?>">
                     <i class="fas fa-history"></i>
                     <span class="link_name">Histori</span>
                 </a>

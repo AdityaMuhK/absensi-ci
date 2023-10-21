@@ -80,15 +80,6 @@
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li:hover {
-            background: #f3f1f6;
-        }
-
-        .sidebar . li:hover {
-            background: none;
-            color: #6699ff;
-        }
-
         .sidebar .nav-links li .icon-link {
             display: flex;
             align-items: center;
@@ -156,10 +147,6 @@
             transition: all 0.3s ease;
         }
 
-        .sidebar .nav-links li . a:hover {
-            opacity: 1;
-        }
-
         .sidebar.close .nav-links li . {
             position: absolute;
             left: 100%;
@@ -188,6 +175,19 @@
             font-size: 18px;
             opacity: 1;
             display: block;
+        }
+
+        .select_hover {
+            transition: background-color 0.3s, padding 0.3s;
+            /* Tambahkan transisi untuk efek yang lebih halus */
+        }
+
+        .select_hover:hover {
+            background-color: #b3d1ff;
+            padding: 5px;
+            /* Ubah nilai padding pada hover */
+            border-radius: 5px;
+            /* Tambahkan sudut melengkung */
         }
 
         .sidebar .nav-links li ..blank {
@@ -488,27 +488,27 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="<?php echo base_url('admin') ?>">
+                <a class="select_hover" href="<?php echo base_url('admin') ?>">
                     <i class="fas fa-tachometer-alt"></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('admin/rekap_harian') ?>">
+                <a class="select_hover" href="<?php echo base_url('admin/rekap_harian') ?>">
                     <i class="fas fa-chart-line"></i>
                     <span class="link_name">Rekap Harian</span>
                 </a>
             </li>
 
             <li>
-                <a href="<?php echo base_url('admin/rekap_mingguan') ?>">
+                <a class="select_hover" href="<?php echo base_url('admin/rekap_mingguan') ?>">
                     <i class="fas fa-chart-bar"></i>
                     <span class="link_name">Rekap Mingguan</span>
                 </a>
             </li>
 
             <li>
-                <a href="<?php echo base_url('admin/rekap_bulanan') ?>">
+                <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
                     <i class="fas fa-chart-pie"></i>
                     <span class="link_name">Rekap Bulanan</span>
                 </a>
@@ -580,7 +580,7 @@
                     </div>
                 </div>
                 <div class="filter-form">
-                    <label for="bulan">EXPORT DATA ABSENSI</label>
+                    <label for="bulan">EXPORT DATA KARYAWAN</label>
                     <a href="<?php echo base_url('admin/export_all') ?>" type="button" class="btn-green my-2"><i
                             class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </div>
