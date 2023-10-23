@@ -32,11 +32,6 @@ class Karyawan_model extends CI_Model
     {
         return $this->db->get_where('absensi', array('id' => $absen_id))->row();
     }
-    public function getAbsensiByUserId($akun_id)
-    {
-        $this->db->where('id_karyawan', $akun_id);
-        return $this->db->get('absensi')->result();
-    }
     public function addAbsensi($data)
     {
         $data['date'] = date('Y-m-d');
@@ -58,7 +53,6 @@ class Karyawan_model extends CI_Model
         $this->db->where('id', $absen_id);
         $this->db->update('absensi', $data);
     }
-
     public function addIzin($data)
     {
 
@@ -113,7 +107,12 @@ class Karyawan_model extends CI_Model
             return false;
         }
     }
-
+    function get_data_by_karyawan_id($table, $karyawan_id)
+    {
+        $this->db->where('id_karyawan', $karyawan_id);
+        return $this->db->get($table);
+    }
+    
     public function get_karyawan_image_by_id($id)
     {
         $this->db->select('image');

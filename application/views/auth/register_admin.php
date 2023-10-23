@@ -214,7 +214,7 @@
             cursor: pointer;
         }
 
-        #eye-slash {
+        #eye {
             display: none;
         }
 
@@ -269,7 +269,8 @@
                     <input id="username" name="username" type="text" placeholder="Username">
                     <input id="nama_depan" name="nama_depan" type="text" placeholder="Nama Depan"><br>
                     <input id="nama_belakang" name="nama_belakang" type="text" placeholder="Nama Belakang"><br>
-                    <input id="email" name="email" type="email" placeholder="Email">
+                    <input id="email" name="email" type="email" placeholder="Email" onblur="validateEmail()">
+                    <span id="emailError" style="color: red; display: none;">Email harus berakhiran @gmail.com</span>
                     <div class="input-container">
                         <input id="password" name="password" type="password" placeholder="Password"
                             pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
@@ -332,6 +333,21 @@
                 }
             });
         });
+        // validasi email
+        function validateEmail() {
+            var emailInput = document.getElementById('email');
+            var email = emailInput.value;
+
+            var emailError = document.getElementById('emailError');
+
+            if (!email.endsWith('@gmail.com')) {
+                emailError.style.display = 'inline';
+                return false;
+            } else {
+                emailError.style.display = 'none';
+                return true;
+            }
+        }
     </script>
 </body>
 

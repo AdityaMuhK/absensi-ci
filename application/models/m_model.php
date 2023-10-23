@@ -161,5 +161,12 @@ class M_model extends CI_Model
             return false; // Jika belum ada entri izin untuk karyawan dan tanggal tertentu
         }
     }
+    public function getAbsensiByUserId($data)
+    {
+        $today = date('Y-m-d');
+        $this->db->where('id_karyawan', $data);
+        $this->db->where('DATE(date) =', $today);
+        return $this->db->get('absensi')->result();
+    }
 }
 ?>

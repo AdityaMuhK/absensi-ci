@@ -429,6 +429,7 @@
         .btn-green:hover {
             background-color: #99ccff;
         }
+
         .select_hover {
             transition: background-color 0.3s, padding 0.3s;
             /* Tambahkan transisi untuk efek yang lebih halus */
@@ -475,6 +476,12 @@
                 <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
                     <i class="fas fa-chart-pie"></i>
                     <span class="link_name">Rekap Bulanan</span>
+                </a>
+            </li>
+            <li>
+                <a class="select_hover" href="<?php echo base_url('admin/rekap_keseluruhan') ?>">
+                    <i class="fas fa-chart-area"></i>
+                    <span class="link_name">Rekap Keseluruhan</span>
                 </a>
             </li>
 

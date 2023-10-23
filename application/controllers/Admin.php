@@ -103,7 +103,23 @@ class Admin extends CI_Controller
 
         $this->load->view('admin/rekap_bulanan', $data);
     }
+    public function rekap_keseluruhan()
+    {
+        $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
+        if ($this->session->userdata('role') === 'admin') {
 
+            $absensi = $this->m_model->get_data('absensi')->result();
+
+            $data['absensi'] = $absensi;
+
+            $user_id = $this->session->userdata('id');
+            $data['username'] = $this->m_model->get_by_id('akun', 'id', $user_id)->row()->username;
+
+            $this->load->view('admin/rekap_keseluruhan', $data);
+        } else {
+            redirect('auth');
+        }
+    }
     public function profile()
     {
         $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
@@ -230,15 +246,13 @@ class Admin extends CI_Controller
         $sheet->setCellValue('B3', "USERNAME");
         $sheet->setCellValue('C3', "NAMA DEPAN");
         $sheet->setCellValue('D3', "NAMA BELAKANG");
-        $sheet->setCellValue('E3', "IMAGE");
-        $sheet->setCellValue('F3', "EMAIL");
+        $sheet->setCellValue('E3', "EMAIL");
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
         $sheet->getStyle('C3')->applyFromArray($style_col);
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
-        $sheet->getStyle('F3')->applyFromArray($style_col);
 
         $karyawan = $this->m_model->get_data('akun')->result();
 
@@ -249,15 +263,13 @@ class Admin extends CI_Controller
             $sheet->setCellValue('B' . $numrow, $data->username);
             $sheet->setCellValue('C' . $numrow, $data->nama_depan);
             $sheet->setCellValue('D' . $numrow, $data->nama_belakang);
-            $sheet->setCellValue('E' . $numrow, $data->image);
-            $sheet->setCellValue('F' . $numrow, $data->email);
+            $sheet->setCellValue('E' . $numrow, $data->email);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
@@ -266,9 +278,8 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->getColumnDimension('D')->setWidth(20);
-        $sheet->getColumnDimension('E')->setWidth(30);
-        $sheet->getColumnDimension('F')->setWidth(50);
+        $sheet->getColumnDimension('D')->setWidth(30);
+        $sheet->getColumnDimension('E')->setWidth(50);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 

@@ -227,7 +227,7 @@
             cursor: pointer;
         }
 
-        #eye-slash {
+        #eye {
             display: none;
         }
 

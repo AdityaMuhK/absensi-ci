@@ -514,6 +514,12 @@
                 </a>
             </li>
             <li>
+                <a class="select_hover" href="<?php echo base_url('admin/rekap_keseluruhan') ?>">
+                    <i class="fas fa-chart-area"></i>
+                    <span class="link_name">Rekap Keseluruhan</span>
+                </a>
+            </li>
+            <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
                         <div class="profile-content">
@@ -581,7 +587,7 @@
                 </div>
                 <div class="filter-form">
                     <label for="bulan">EXPORT DATA KARYAWAN</label>
-                    <a href="<?php echo base_url('admin/export_all') ?>" type="button" class="btn-green my-2"><i
+                    <a href="<?php echo base_url('admin/export') ?>" type="button" class="btn-green my-2"><i
                             class="fa-solid fa-cloud-arrow-down"></i> Export</a>
                 </div>
                 <table>

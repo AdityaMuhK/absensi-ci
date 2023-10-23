@@ -334,7 +334,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-            margin-right: 850px;
+            margin-right: 780px;
         }
 
         .absen-button:hover {
@@ -384,6 +384,25 @@
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
         }
+
+        .jam {
+            transform: translateY(130px);
+            text-align: center;
+            font-size: 20px;
+            color: #6699ff;
+        }
+
+        #tanggal {
+            border-bottom: 1px solid #6699ff;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        #jam {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -418,7 +437,14 @@
                     <span class="link-name">Histori</span>
                 </a>
             </li>
-
+            <p class="jam">
+                <span id="tanggal">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <?php echo date('d-m-Y'); ?>
+                </span>
+                <br>
+                <i class="fa-regular fa-clock"></i><span id="jam"></span>
+            </p>
             <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
@@ -453,17 +479,40 @@
 
         <div class="container">
             <div class="card">
-                <h1>Absens Izin</h1>
+                <h1>Absensi Izin <i class="fas fa-file-signature"></i></h1>
                 <form action="<?= base_url('karyawan/tambah_izin'); ?>" method="post">
                     <textarea class="absen-box" id="keterangan" name="keterangan" rows="5"
                         placeholder="Masukkan keterangan izin cuti di sini..."></textarea><br>
-                    <button class="absen-button">Absen</button>
+                    <button class="absen-button"><i class="fa-solid fa-floppy-disk"></i> Tambahkan Izin</button>
                 </form>
             </div>
         </div>
     </section>
 
+    <!-- script tanggal & jam -->
+    <script type="text/javascript">
+        window.onload = function () {
+            jam();
+        }
 
+        function jam() {
+            var e = document.getElementById('jam'),
+                d = new Date(),
+                h, m, s;
+            h = d.getHours();
+            m = set(d.getMinutes());
+            s = set(d.getSeconds());
+
+            e.innerHTML = h + ':' + m + ':' + s;
+
+            setTimeout('jam()', 1000);
+        }
+
+        function set(e) {
+            e = e < 10 ? '0' + e : e;
+            return e;
+        }
+    </script>
     <script>
         const arrows = document.querySelectorAll(".arrow");
 

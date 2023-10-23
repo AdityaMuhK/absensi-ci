@@ -105,9 +105,18 @@ class Auth extends CI_Controller
                 'nama_belakang' => $nama_belakang,
                 'image' => $image
             ]);
+            // Tampilkan SweetAlert untuk notifikasi registrasi berhasil
+            $success_message = "Registrasi sebagai karyawan berhasil.";
+            $this->session->set_flashdata('success_message', $success_message);
+
             redirect(base_url() . "auth");
         } else {
             // Registrasi gagal
+
+            // Tampilkan SweetAlert untuk notifikasi registrasi gagal
+            $error_message = "Registrasi sebagai karyawan gagal.";
+            $this->session->set_flashdata('error_message', $error_message);
+            
             redirect(base_url() . "auth/register_karyawan");
         }
     }

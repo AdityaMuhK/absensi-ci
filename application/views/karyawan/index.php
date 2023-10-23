@@ -456,6 +456,25 @@
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
         }
+
+        .jam {
+            transform: translateY(130px);
+            text-align: center;
+            font-size: 20px;
+            color: #6699ff;
+        }
+
+        #tanggal {
+            border-bottom: 1px solid #6699ff;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        #jam {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -490,6 +509,15 @@
                     <span class="link_name">Histori</span>
                 </a>
             </li>
+            <p class="jam">
+                <span id="tanggal">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <?php echo date('d-m-Y'); ?>
+                </span>
+                <br>
+                <i class="fa-regular fa-clock"></i><span id="jam"></span>
+            </p>
+
             <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
@@ -560,6 +588,8 @@
                     <thead>
                         <tr>
                             <th>NO</th>
+                            <th>Username</th>
+                            <th>Kegiatan</th>
                             <th>Date</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
@@ -573,6 +603,12 @@
                             <tr class="text-center">
                                 <td>
                                     <?php echo $no ?>
+                                </td>
+                                <td>
+                                    <?php echo $username; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row->kegiatan ?>
                                 </td>
                                 <td>
                                     <?php echo $row->date ?>
@@ -594,7 +630,30 @@
         </div>
         <!-- Tabel End -->
     </section>
+    <!-- script tanggal & jam -->
+    <script type="text/javascript">
+        window.onload = function () {
+            jam();
+        }
 
+        function jam() {
+            var e = document.getElementById('jam'),
+                d = new Date(),
+                h, m, s;
+            h = d.getHours();
+            m = set(d.getMinutes());
+            s = set(d.getSeconds());
+
+            e.innerHTML = h + ':' + m + ':' + s;
+
+            setTimeout('jam()', 1000);
+        }
+
+        function set(e) {
+            e = e < 10 ? '0' + e : e;
+            return e;
+        }
+    </script>
     <script>
         const arrows = document.querySelectorAll(".arrow");
 

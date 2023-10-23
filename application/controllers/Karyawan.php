@@ -39,7 +39,8 @@ class Karyawan extends CI_Controller
         if ($this->session->userdata('role') === 'karyawan') {
             date_default_timezone_set('Asia/Jakarta');
 
-            $absensi = $this->karyawan_model->get_data('absensi')->result();
+            $user_id = $this->session->userdata('id');
+            $absensi = $this->karyawan_model->get_data_by_karyawan_id('absensi', $user_id)->result();
 
             $totalIzin = $this->hitungTotalIzin($absensi);
             $totalMasuk = $this->hitungTotalMasuk($absensi);
@@ -49,6 +50,9 @@ class Karyawan extends CI_Controller
             $data['totalIzin'] = $totalIzin;
             $data['totalMasuk'] = $totalMasuk;
             $data['totalKeseluruhan'] = $totalKeseluruhan;
+
+            $user_id = $this->session->userdata('id');
+            $data['username'] = $this->m_model->get_by_id('akun', 'id', $user_id)->row()->username;
 
             $this->load->view('karyawan/index', $data);
         } else {
@@ -77,14 +81,14 @@ class Karyawan extends CI_Controller
 
             $user_id = $this->session->userdata('id');
 
-            $absensi = $this->karyawan_model->getAbsensiByUserId($user_id);
+            $absensi = $this->m_model->getAbsensiByUserId($user_id);
 
             // Lakukan perhitungan total izin dan total masuk
             $totalIzin = $this->hitungTotalIzin($absensi);
             $totalMasuk = $this->hitungTotalMasuk($absensi);
             $totalKeseluruhan = count($absensi);
 
-            $data['absensi'] = $this->karyawan_model->get_data('absensi')->result();
+            $data['absensi'] = $absensi;
             $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
             $data['totalIzin'] = $totalIzin;
             $data['totalMasuk'] = $totalMasuk;
@@ -214,12 +218,23 @@ class Karyawan extends CI_Controller
     public function pulang($absen_id)
     {
         if ($this->session->userdata('role') === 'karyawan') {
-            $this->karyawan_model->setAbsensiPulang($absen_id);
-            redirect('karyawan/history');
+            date_default_timezone_set('Asia/Jakarta');
+            $current_time = date('H:i:s');
+
+            // Periksa apakah sudah melewati jam 17:00
+            if ($current_time >= '17:00:00') {
+                $this->karyawan_model->setAbsensiPulang($absen_id);
+                redirect('karyawan/history');
+            } else {
+                // Tampilkan notifikasi SweetAlert jika belum pulang setelah jam 17:00
+                $this->session->set_flashdata('error_message', 'Anda hanya dapat pulang setelah jam 17:00.');
+                redirect('karyawan/history');
+            }
         } else {
             redirect('auth');
         }
     }
+
     public function batal_pulang($absen_id)
     {
         if ($this->session->userdata('role') === 'karyawan') {
