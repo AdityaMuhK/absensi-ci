@@ -127,27 +127,26 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li . {
+        .sidebar .nav-links li .sub-menu {
             padding: 6px 6px 14px 80px;
             margin-top: 0px;
             background: #fff;
             display: none;
         }
 
-        .sidebar .nav-links li.showMenu . {
+        .sidebar .nav-links li.showMenu .sub-menu {
             display: block;
         }
 
-        .sidebar .nav-links li . a {
+        .sidebar .nav-links li .sub-menu a {
             color: #6699ff;
             font-size: 15px;
             padding: 5px 0;
             white-space: nowrap;
-            opacity: 0.6;
             transition: all 0.3s ease;
         }
 
-        .sidebar.close .nav-links li . {
+        .sidebar.close .nav-links li .sub-menu {
             position: absolute;
             left: 100%;
             top: -10px;
@@ -160,18 +159,18 @@
             transition: 0s;
         }
 
-        .sidebar.close .nav-links li:hover . {
+        .sidebar.close .nav-links li:hover .sub-menu {
             top: 0;
             opacity: 1;
             pointer-events: auto;
             transition: all 0.4s ease;
         }
 
-        .sidebar .nav-links li . .link_name {
+        .sidebar .nav-links li .sub-menu .link_name {
             display: none;
         }
 
-        .sidebar.close .nav-links li . .link_name {
+        .sidebar.close .nav-links li .sub-menu .link_name {
             font-size: 18px;
             opacity: 1;
             display: block;
@@ -184,13 +183,13 @@
 
         .select_hover:hover {
             background-color: #b3d1ff;
-            padding: 5px;
+            padding: 2px;
             /* Ubah nilai padding pada hover */
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
         }
 
-        .sidebar .nav-links li ..blank {
+        .sidebar .nav-links li .sub-menu .blank {
             opacity: 1;
             pointer-events: auto;
             padding: 3px 20px 6px 16px;
@@ -198,7 +197,7 @@
             pointer-events: none;
         }
 
-        .sidebar .nav-links li:hover ..blank {
+        .sidebar .nav-links li:hover .sub-menu .blank {
             top: 50%;
             transform: translateY(-50%);
         }
@@ -494,30 +493,36 @@
                 </a>
             </li>
             <li>
-                <a class="select_hover" href="<?php echo base_url('admin/rekap_harian') ?>">
-                    <i class="fas fa-chart-line"></i>
-                    <span class="link_name">Rekap Harian</span>
-                </a>
-            </li>
-
-            <li>
-                <a class="select_hover" href="<?php echo base_url('admin/rekap_mingguan') ?>">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="link_name">Rekap Mingguan</span>
-                </a>
-            </li>
-
-            <li>
-                <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
-                    <i class="fas fa-chart-pie"></i>
-                    <span class="link_name">Rekap Bulanan</span>
-                </a>
-            </li>
-            <li>
-                <a class="select_hover" href="<?php echo base_url('admin/rekap_keseluruhan') ?>">
-                    <i class="fas fa-chart-area"></i>
-                    <span class="link_name">Rekap Keseluruhan</span>
-                </a>
+                <div class="icon-link select_hover">
+                    <a href="#">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span class="link_name">Rekap Data</span>
+                    </a>
+                    <i class="fa-solid fa-angle-up arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><span class="link_name">Rekap Data</span></li>
+                    <li>
+                        <a class="select_hover" href="<?php echo base_url('admin/rekap_harian') ?>">
+                            <span class="">Rekap Harian</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="select_hover" href="<?php echo base_url('admin/rekap_mingguan') ?>">
+                            <span class="">Rekap Mingguan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
+                            <span class="">Rekap Bulanan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="select_hover" href="<?php echo base_url('admin/rekap_keseluruhan') ?>">
+                            <span class="">Rekap Keseluruhan</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <div class="profile-details">

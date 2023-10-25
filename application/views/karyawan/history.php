@@ -152,7 +152,6 @@
             font-size: 15px;
             padding: 5px 0;
             white-space: nowrap;
-            opacity: 0.6;
             transition: all 0.3s ease;
         }
 

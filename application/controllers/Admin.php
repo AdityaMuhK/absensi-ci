@@ -112,8 +112,8 @@ class Admin extends CI_Controller
 
             $data['absensi'] = $absensi;
 
-            $user_id = $this->session->userdata('id');
-            $data['username'] = $this->m_model->get_by_id('akun', 'id', $user_id)->row()->username;
+            $akun_id = $this->session->userdata('id');
+            $data['username'] = $this->m_model->get_by_id('akun', 'id', $akun_id)->row()->username;
 
             $this->load->view('admin/rekap_keseluruhan', $data);
         } else {

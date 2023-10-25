@@ -627,7 +627,7 @@
 
         .select_hover:hover {
             background-color: #b3d1ff;
-            padding: 5px;
+            padding: 2px;
             /* Ubah nilai padding pada hover */
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
@@ -650,24 +650,36 @@
                     </a>
                 </li>
                 <li>
-                    <a class="select_hover" href="<?php echo base_url('admin/rekap_harian') ?>">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="link_name">Rekap Harian</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a class="select_hover" href="<?php echo base_url('admin/rekap_mingguan') ?>">
-                        <i class="fas fa-chart-bar"></i>
-                        <span class="link_name">Rekap Mingguan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
-                        <i class="fas fa-chart-pie"></i>
-                        <span class="link_name">Rekap Bulanan</span>
-                    </a>
+                    <div class="icon-link select_hover">
+                        <a href="#">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span class="link_name">Rekap Data</span>
+                        </a>
+                        <i class="fa-solid fa-angle-up arrow"></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><span class="link_name">Rekap Data</span></li>
+                        <li>
+                            <a class="select_hover" href="<?php echo base_url('admin/rekap_harian') ?>">
+                                <span class="">Rekap Harian</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="select_hover" href="<?php echo base_url('admin/rekap_mingguan') ?>">
+                                <span class="">Rekap Mingguan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="select_hover" href="<?php echo base_url('admin/rekap_bulanan') ?>">
+                                <span class="">Rekap Bulanan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="select_hover" href="<?php echo base_url('admin/rekap_keseluruhan') ?>">
+                                <span class="">Rekap Keseluruhan</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <div class="profile-details">
@@ -722,7 +734,6 @@
 
                 <form action="<?php echo base_url('admin/edit_profile'); ?>" class="profile-form"
                     enctype="multipart/form-data" method="post">
-
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
