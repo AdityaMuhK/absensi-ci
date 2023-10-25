@@ -489,7 +489,6 @@
                     </li>
                 </ul>
             </li>
-
             <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
@@ -581,7 +580,6 @@
         </div>
         <!-- Tabel End -->
     </section>
-
     <script>
         const arrows = document.querySelectorAll(".arrow");
 

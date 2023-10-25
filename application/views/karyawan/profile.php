@@ -328,6 +328,17 @@
             background-color: #fff;
         }
 
+        .card .card-body {
+            padding: 20px;
+            /* Menambah ruang di dalam card-body */
+            background-color: #f9f9f9;
+            /* Memberikan latar belakang */
+            border-radius: 8px;
+            /* Membuat sudut elemen agak melengkung */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Menambah efek bayangan */
+        }
+
         .profile-image {
             position: relative;
             display: inline-block;
@@ -358,9 +369,24 @@
         .card h5,
         .card p {
             margin: 0;
-            font-size: 1em;
-            color: #555;
+            font-size: 1.2em;
+            /* Menambah ukuran font */
+            color: #333;
+            /* Mengganti warna teks menjadi lebih gelap */
+            line-height: 1.4;
+            /* Menambah spasi antara baris */
         }
+
+        .card h5 {
+            font-weight: bold;
+            /* Menjadikan teks h5 lebih tebal */
+        }
+
+        .card p {
+            margin-top: 5px;
+            /* Memberikan sedikit jarak antara h5 dan p */
+        }
+
 
         @media (max-width: 767px) {
             .card {
@@ -462,7 +488,20 @@
 
             /* Opsi tambahan: menyesuaikan teks tombol */
             button[type="submit"] span {
+                font-size: 10px;
                 margin-left: 3px;
+                white-space: nowrap;
+
+            }
+
+            button[type="submit"] i {
+                font-size: 10px;
+                margin-left: 3px;
+            }
+
+            .logout-button {
+                font-size: 10px;
+                margin-top: 10px;
             }
         }
 
@@ -521,7 +560,7 @@
             margin-bottom: 10px;
         }
 
-        /* tombol Simpan dan menambahkan ikon */
+        /* tombol Simpan image */
         button[type="submit"] {
             background-color: #007bff;
             color: #fff;
@@ -632,6 +671,14 @@
             font-weight: bold;
             margin-top: 5px;
         }
+
+        @media screen and (max-width: 600px) {
+
+            #tanggal,
+            #jam {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -669,11 +716,10 @@
                 </li>
                 <p class="jam">
                     <span id="tanggal">
-                        <i class="fa-solid fa-calendar-days"></i>
                         <?php echo date('d-m-Y'); ?>
                     </span>
                     <br>
-                    <i class="fa-regular fa-clock"></i><span id="jam"></span>
+                    <span id="jam"></span>
                 </p>
                 <li>
                     <div class="profile-details">
@@ -706,7 +752,7 @@
                 <span class="text">Profile</span>
             </div>
             <div class="card">
-                <div class="card-body text-center">
+                <div class="card-body">
                     <div class="profile-image">
                         <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg" class="rounded-circle">
 
@@ -715,10 +761,10 @@
                             data-bs-target="#editImageModal"><i class="fa-solid fa-pen"></i></button>
                         <input type="file" id="image" name="image" accept="image/*" style="display:none;">
                     </div>
-                    <h5 class="card-title">
+                    <h5 class="">
                         <?php echo $user->username ?>
                     </h5>
-                    <p class="p">
+                    <p class="">
                         <?php echo $user->nama_depan . ' ' . $user->nama_belakang ?>
                     </p>
                 </div>
@@ -728,7 +774,7 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>" disabled>
+                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -746,27 +792,35 @@
                     <div class="form-group position-relative">
                         <label for="password">Kata Sandi</label>
                         <input type="password" id="password" name="password"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
-                        <span class="input-group-text" onclick="togglePassword('password')"><i id="icon-password"
-                                class="fas fa-eye"></i></span>
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                        <span class="input-group-text" onclick="togglePassword('password')">
+                            <i id="icon-password" class="fas fa-eye"></i>
+                        </span>
                         <br>
                         <small id="password-error-message" style="color: red;"></small>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group position-relative">
                         <label for="password_baru">Kata Sandi Baru</label>
                         <input type="password" id="password_baru" name="password_baru"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                        <span class="input-group-text" onclick="togglePassword('password_baru')">
+                            <i id="icon-password_baru" class="fas fa-eye"></i>
+                        </span>
                         <br>
                         <small id="password-error-message-new" style="color: red;"></small>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-group position-relative">
                         <label for="konfirmasi_password">Konfirmasi Kata Sandi Baru</label>
                         <input type="password" id="konfirmasi_password" name="konfirmasi_password"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                        <span class="input-group-text" onclick="togglePassword('konfirmasi_password')">
+                            <i id="icon-konfirmasi_password" class="fas fa-eye"></i>
+                        </span>
                         <br>
                         <small id="password-error-message-confirm" style="color: red;"></small>
-
                     </div>
+
                     <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
                             Perubahan</span></button>
                     <a class="logout-button" onclick="confirmLogout()">
@@ -827,19 +881,20 @@
         </script>
         <script>
             function togglePassword(inputId) {
-                var x = document.getElementById(inputId);
-                var icon = document.getElementById("icon-" + inputId);
+                const input = document.getElementById(inputId);
+                const icon = document.getElementById(`icon-${inputId}`);
 
-                if (x.type === "password") {
-                    x.type = "text";
+                if (input.type === "password") {
+                    input.type = "text";
                     icon.classList.remove("fa-eye");
                     icon.classList.add("fa-eye-slash");
                 } else {
-                    x.type = "password";
+                    input.type = "password";
                     icon.classList.remove("fa-eye-slash");
                     icon.classList.add("fa-eye");
                 }
             }
+
         </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {

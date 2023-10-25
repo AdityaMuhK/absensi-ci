@@ -474,6 +474,14 @@
             font-weight: bold;
             margin-top: 5px;
         }
+
+        @media screen and (max-width: 600px) {
+
+            #tanggal,
+            #jam {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -510,11 +518,10 @@
             </li>
             <p class="jam">
                 <span id="tanggal">
-                    <i class="fa-solid fa-calendar-days"></i>
                     <?php echo date('d-m-Y'); ?>
                 </span>
                 <br>
-                <i class="fa-regular fa-clock"></i><span id="jam"></span>
+                <span id="jam"></span>
             </p>
 
             <li>

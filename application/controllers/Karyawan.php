@@ -227,7 +227,7 @@ class Karyawan extends CI_Controller
                 redirect('karyawan/history');
             } else {
                 // Tampilkan notifikasi SweetAlert jika belum pulang setelah jam 17:00
-                $this->session->set_flashdata('error_message', 'Anda hanya dapat pulang setelah jam 17:00.');
+                $this->session->set_flashdata('error_message', 'Anda hanya dapat pulang setelah pukul 17:00.');
                 redirect('karyawan/history');
             }
         } else {
@@ -255,31 +255,31 @@ class Karyawan extends CI_Controller
         $this->load->view('karyawan/izin', $data);
     }
 
-    public function tambah_izin()
-    {
-        if ($this->session->userdata('role') === 'karyawan') {
-            $user_id = $this->session->userdata('id');
-            $this->form_validation->set_rules('keterangan', 'Keterangan Izin', 'required');
+        public function tambah_izin()
+        {
+            if ($this->session->userdata('role') === 'karyawan') {
+                $user_id = $this->session->userdata('id');
+                $this->form_validation->set_rules('keterangan', 'Keterangan Izin', 'required');
 
-            if ($this->form_validation->run() == FALSE) {
-                $this->load->view('karyawan/izin');
+                if ($this->form_validation->run() == FALSE) {
+                    $this->load->view('karyawan/izin');
+                } else {
+                    $data = array(
+                        'id_karyawan' => $user_id,
+                        'keterangan' => $this->input->post('keterangan'),
+                        // Mengambil data dari form input
+                    );
+
+                    // Memanggil fungsi untuk menambahkan izin
+                    $this->karyawan_model->addIzin($data);
+
+                    // Redirect ke halaman history_absen
+                    redirect('karyawan/history');
+                }
             } else {
-                $data = array(
-                    'id_karyawan' => $user_id,
-                    'keterangan' => $this->input->post('keterangan'),
-                    // Mengambil data dari form input
-                );
-
-                // Memanggil fungsi untuk menambahkan izin
-                $this->karyawan_model->addIzin($data);
-
-                // Redirect ke halaman history_absen
-                redirect('karyawan/history');
+                redirect('auth');
             }
-        } else {
-            redirect('auth');
         }
-    }
     public function profile()
     {
         $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();

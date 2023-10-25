@@ -476,6 +476,8 @@
                 left: 0;
             }
         }
+
+        
     </style>
 </head>
 
@@ -494,7 +496,7 @@
             </li>
             <li>
                 <div class="icon-link select_hover">
-                    <a href="#">
+                    <a>
                         <i class="fa-solid fa-chart-column"></i>
                         <span class="link_name">Rekap Data</span>
                     </a>
@@ -524,7 +526,7 @@
                     </li>
                 </ul>
             </li>
-
+            
             <li>
                 <div class="profile-details">
                     <?php foreach ($akun as $user): ?>
@@ -640,7 +642,7 @@
         </div>
         <!-- Tabel End -->
     </section>
-
+    
     <script>
         const arrows = document.querySelectorAll(".arrow");
 

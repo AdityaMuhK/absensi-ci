@@ -451,7 +451,7 @@
             position: absolute;
             right: 10px;
             /* Sesuaikan posisi ikon */
-            top: 70%;
+            top: 55%;
             transform: translateY(-50%);
             cursor: pointer;
         }
@@ -632,6 +632,7 @@
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
         }
+
     </style>
 </head>
 
@@ -681,6 +682,7 @@
                         </li>
                     </ul>
                 </li>
+                
                 <li>
                     <div class="profile-details">
                         <?php foreach ($akun as $user): ?>
@@ -725,7 +727,8 @@
                         <input type="file" id="image" name="image" accept="image/*" style="display:none;">
                     </div>
                     <h5 class="card-title">
-                        <?php echo $this->session->userdata('username'); ?>
+                        <?php echo $this->session->userdata('username'); ?>(
+                        <?php echo $user->nama_depan . ' ' . $user->nama_belakang ?>)
                     </h5>
                     <p class="card-text">
                         <?php echo $this->session->userdata('email'); ?>
@@ -753,19 +756,34 @@
                     </div>
                     <div class="form-group position-relative">
                         <label for="password">Kata Sandi</label>
-                        <input type="password" id="password" name="password">
+                        <input type="password" id="password" name="password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
                         <span class="input-group-text" onclick="togglePassword('password')">
                             <i id="icon-password" class="fas fa-eye"></i>
                         </span>
+                        <br>
+                        <small id="password-error-message" style="color: red;"></small>
+                    </div>
+                    <div class="form-group position-relative">
+                        <label for="password_baru">Kata Sandi Baru</label>
+                        <input type="password" id="password_baru" name="password_baru"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                        <span class="input-group-text" onclick="togglePassword('password_baru')">
+                            <i id="icon-password_baru" class="fas fa-eye"></i>
+                        </span>
+                        <br>
+                        <small id="password-error-message-new" style="color: red;"></small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="password_baru">Kata Sandi Baru</label>
-                        <input type="password" id="password_baru" name="password_baru">
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group position-relative">
                         <label for="konfirmasi_password">Konfirmasi Kata Sandi Baru</label>
-                        <input type="password" id="konfirmasi_password" name="konfirmasi_password">
+                        <input type="password" id="konfirmasi_password" name="konfirmasi_password"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                        <span class="input-group-text" onclick="togglePassword('konfirmasi_password')">
+                            <i id="icon-konfirmasi_password" class="fas fa-eye"></i>
+                        </span>
+                        <br>
+                        <small id="password-error-message-confirm" style="color: red;"></small>
                     </div>
                     <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
                             Perubahan</span></button>
@@ -800,23 +818,62 @@
             </div>
 
         </section>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('password');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('password_baru');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message-new');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordInput = document.getElementById('konfirmasi_password');
+                passwordInput.addEventListener('input', function () {
+                    const password = this.value;
+                    const errorMessage = document.getElementById('password-error-message-confirm');
+                    if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                        errorMessage.innerText = 'Password minimal 8 karakter';
+                    } else {
+                        errorMessage.innerText = '';
+                    }
+                });
+            });
+        </script>
         <script>
             function togglePassword(inputId) {
-                var x = document.getElementById(inputId);
-                var icon = document.getElementById("icon-" + inputId);
+                const input = document.getElementById(inputId);
+                const icon = document.getElementById(`icon-${inputId}`);
 
-                if (x.type === "password") {
-                    x.type = "text";
+                if (input.type === "password") {
+                    input.type = "text";
                     icon.classList.remove("fa-eye");
                     icon.classList.add("fa-eye-slash");
                 } else {
-                    x.type = "password";
+                    input.type = "password";
                     icon.classList.remove("fa-eye-slash");
                     icon.classList.add("fa-eye");
                 }
             }
-        </script>
 
+        </script>
         <script>
             const arrows = document.querySelectorAll(".arrow");
 
