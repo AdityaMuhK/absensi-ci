@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <style>
         * {
@@ -318,27 +319,57 @@
             }
         }
 
-        /* CSS untuk card */
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .card {
+            flex: 1;
             border: 1px solid #6699ff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 70px;
+            padding: 30px;
+            max-width: 50%;
+            height: 400px;
             margin: 20px;
-            max-width: 1200px;
             text-align: center;
             background-color: #fff;
         }
 
-        /* CSS untuk gambar profil dan tombol edit */
+        .card2 {
+            flex: 1;
+            border: 1px solid #6699ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 45%;
+            margin: 20px;
+            text-align: center;
+            background-color: #fff;
+            color: #6699ff;
+
+        }
+
+        .card .card-body {
+            padding: 20px;
+            /* Menambah ruang di dalam card-body */
+            background-color: #f9f9f9;
+            /* Memberikan latar belakang */
+            border-radius: 8px;
+            /* Membuat sudut elemen agak melengkung */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Menambah efek bayangan */
+        }
+
         .profile-image {
             position: relative;
             display: inline-block;
         }
 
         .profile-image img {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             border: 2px solid #6699ff;
             border-radius: 50%;
@@ -348,7 +379,7 @@
         .edit-button {
             position: absolute;
             bottom: 10px;
-            right: 10px;
+            right: 15px;
             background-color: #6699ff;
             color: #fff;
             border: none;
@@ -358,32 +389,41 @@
             font-size: 16px;
         }
 
-        /* CSS untuk judul card (username) dan informasi tambahan */
         .card h5,
         .card p {
-            margin: 0;
-            font-size: 1em;
-            color: #555;
+            margin: 10px 0;
+            font-size: 1.4em;
+            color: #6699ff;
+            line-height: 1.4;
         }
 
-        /* CSS untuk membuat tata letak responsif */
-        @media (max-width: 767px) {
+        .card h5 {
+            font-weight: bold;
+        }
 
-            /* Misalnya, pada layar dengan lebar kurang dari atau sama dengan 767px */
-            .card {
+        .card h5 span {
+            font-weight: bold;
+            color: black;
+        }
+
+        .card p {
+            text-align: justify center;
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .card,
+            .card2 {
                 max-width: 100%;
-                /* Lebar kartu akan mengisi seluruh lebar tata letak */
             }
 
-            .card img {
-                width: 80px;
-                /* Ukuran gambar profil lebih kecil pada layar kecil */
-                height: 80px;
-            }
-
+            .card h5,
             .card p {
                 font-size: 10px;
-                /* Ukuran font lebih kecil pada layar kecil */
             }
         }
 
@@ -476,11 +516,20 @@
 
             /* Opsi tambahan: menyesuaikan teks tombol */
             button[type="submit"] span {
+                font-size: 10px;
+                margin-left: 3px;
+                white-space: nowrap;
+
+            }
+
+            button[type="submit"] i {
+                font-size: 10px;
                 margin-left: 3px;
             }
 
-            button .logout-button {
+            .logout-button {
                 font-size: 10px;
+                margin-top: 10px;
             }
         }
 
@@ -632,7 +681,6 @@
             border-radius: 5px;
             /* Tambahkan sudut melengkung */
         }
-
     </style>
 </head>
 
@@ -682,7 +730,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <li>
                     <div class="profile-details">
                         <?php foreach ($akun as $user): ?>
@@ -715,86 +763,91 @@
                 <i class="fa-solid fa-bars"></i>
                 <span class="text">Profile</span>
             </div>
-            <div class="card">
-                <div class="card-body text-center">
-                    <div class="profile-image">
-                        <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg"
-                            class="rounded-circle trigger-modall">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-image">
+                            <img src="<?php echo base_url('images/' . $user->image) ?>" alt="profileImg"
+                                class="rounded-circle trigger-modall">
 
-                        <input name="id" type="hidden" value="<?php echo $user->id ?>">
-                        <button for="image_upload" class="edit-button" data-bs-toggle="modal"
-                            data-bs-target="#editImageModal"><i class="fa-solid fa-pen"></i></button>
-                        <input type="file" id="image" name="image" accept="image/*" style="display:none;">
+                            <input name="id" type="hidden" value="<?php echo $user->id ?>">
+                            <button for="image_upload" class="edit-button" data-bs-toggle="modal"
+                                data-bs-target="#editImageModal"><i class="fa-solid fa-pen"></i></button>
+                            <input type="file" id="image" name="image" accept="image/*" style="display:none;">
+                        </div>
+                        <h5 class="card-title">
+                            <?php echo $this->session->userdata('username'); ?><span>(</span>
+                            <?php echo $user->nama_depan . ' ' . $user->nama_belakang ?><span>)</span>
+                        </h5>
+                        <p class="card-text">
+                            <?php echo $this->session->userdata('email'); ?>
+                        </p>
                     </div>
-                    <h5 class="card-title">
-                        <?php echo $this->session->userdata('username'); ?>(
-                        <?php echo $user->nama_depan . ' ' . $user->nama_belakang ?>)
-                    </h5>
-                    <p class="card-text">
-                        <?php echo $this->session->userdata('email'); ?>
-                    </p>
                 </div>
+                <div class="card2">
+                    <div class="card-body">
+                        <form action="<?php echo base_url('admin/edit_profile'); ?>" class="profile-form"
+                            enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="<?php echo $user->username ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name">Nama Depan</label>
+                                <input type="text" id="nama_depan" name="nama_depan"
+                                    value="<?php echo $user->nama_depan ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Nama Belakang</label>
+                                <input type="text" id="nama_belakang" name="nama_belakang"
+                                    value="<?php echo $user->nama_belakang ?>">
+                            </div>
+                            <div class="form-group position-relative">
+                                <label for="password">Kata Sandi</label>
+                                <input type="password" id="password" name="password"
+                                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                                <span class="input-group-text" onclick="togglePassword('password')">
+                                    <i id="icon-password" class="fas fa-eye"></i>
+                                </span>
+                                <br>
+                                <small id="password-error-message" style="color: red;"></small>
+                            </div>
+                            <div class="form-group position-relative">
+                                <label for="password_baru">Kata Sandi Baru</label>
+                                <input type="password" id="password_baru" name="password_baru"
+                                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                                <span class="input-group-text" onclick="togglePassword('password_baru')">
+                                    <i id="icon-password_baru" class="fas fa-eye"></i>
+                                </span>
+                                <br>
+                                <small id="password-error-message-new" style="color: red;"></small>
+                            </div>
 
-                <form action="<?php echo base_url('admin/edit_profile'); ?>" class="profile-form"
-                    enctype="multipart/form-data" method="post">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<?php echo $user->email ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="<?php echo $user->username ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="first_name">Nama Depan</label>
-                        <input type="text" id="nama_depan" name="nama_depan" value="<?php echo $user->nama_depan ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Nama Belakang</label>
-                        <input type="text" id="nama_belakang" name="nama_belakang"
-                            value="<?php echo $user->nama_belakang ?>">
-                    </div>
-                    <div class="form-group position-relative">
-                        <label for="password">Kata Sandi</label>
-                        <input type="password" id="password" name="password"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
-                        <span class="input-group-text" onclick="togglePassword('password')">
-                            <i id="icon-password" class="fas fa-eye"></i>
-                        </span>
-                        <br>
-                        <small id="password-error-message" style="color: red;"></small>
-                    </div>
-                    <div class="form-group position-relative">
-                        <label for="password_baru">Kata Sandi Baru</label>
-                        <input type="password" id="password_baru" name="password_baru"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
-                        <span class="input-group-text" onclick="togglePassword('password_baru')">
-                            <i id="icon-password_baru" class="fas fa-eye"></i>
-                        </span>
-                        <br>
-                        <small id="password-error-message-new" style="color: red;"></small>
-                    </div>
+                            <div class="form-group position-relative">
+                                <label for="konfirmasi_password">Konfirmasi Kata Sandi Baru</label>
+                                <input type="password" id="konfirmasi_password" name="konfirmasi_password"
+                                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
+                                <span class="input-group-text" onclick="togglePassword('konfirmasi_password')">
+                                    <i id="icon-konfirmasi_password" class="fas fa-eye"></i>
+                                </span>
+                                <br>
+                                <small id="password-error-message-confirm" style="color: red;"></small>
+                            </div>
+                            <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
+                                    Perubahan</span></button>
+                            <a class="logout-button" onclick="confirmLogout()">
+                                Logout
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </a>
 
-                    <div class="form-group position-relative">
-                        <label for="konfirmasi_password">Konfirmasi Kata Sandi Baru</label>
-                        <input type="password" id="konfirmasi_password" name="konfirmasi_password"
-                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
-                        <span class="input-group-text" onclick="togglePassword('konfirmasi_password')">
-                            <i id="icon-konfirmasi_password" class="fas fa-eye"></i>
-                        </span>
-                        <br>
-                        <small id="password-error-message-confirm" style="color: red;"></small>
+                        </form>
+
                     </div>
-                    <button class="save" type="submit"><i class="fa-solid fa-save"></i><span>Simpan
-                            Perubahan</span></button>
-                    <a class="logout-button" onclick="confirmLogout()">
-                        Logout
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </a>
-
-                </form>
-
-            </div>
+                </div>
             </div>
             <!-- Modal -->
             <div class="modal" id="imageModal">
@@ -818,7 +871,7 @@
             </div>
 
         </section>
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const passwordInput = document.getElementById('password');
@@ -892,7 +945,6 @@
             });
 
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <!-- LOGOUT -->
         <script>
             function confirmLogout() {

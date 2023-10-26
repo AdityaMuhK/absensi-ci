@@ -255,31 +255,31 @@ class Karyawan extends CI_Controller
         $this->load->view('karyawan/izin', $data);
     }
 
-        public function tambah_izin()
-        {
-            if ($this->session->userdata('role') === 'karyawan') {
-                $user_id = $this->session->userdata('id');
-                $this->form_validation->set_rules('keterangan', 'Keterangan Izin', 'required');
+    public function tambah_izin()
+    {
+        if ($this->session->userdata('role') === 'karyawan') {
+            $user_id = $this->session->userdata('id');
+            $this->form_validation->set_rules('keterangan', 'Keterangan Izin', 'required');
 
-                if ($this->form_validation->run() == FALSE) {
-                    $this->load->view('karyawan/izin');
-                } else {
-                    $data = array(
-                        'id_karyawan' => $user_id,
-                        'keterangan' => $this->input->post('keterangan'),
-                        // Mengambil data dari form input
-                    );
-
-                    // Memanggil fungsi untuk menambahkan izin
-                    $this->karyawan_model->addIzin($data);
-
-                    // Redirect ke halaman history_absen
-                    redirect('karyawan/history');
-                }
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('karyawan/izin');
             } else {
-                redirect('auth');
+                $data = array(
+                    'id_karyawan' => $user_id,
+                    'keterangan' => $this->input->post('keterangan'),
+                    // Mengambil data dari form input
+                );
+
+                // Memanggil fungsi untuk menambahkan izin
+                $this->karyawan_model->addIzin($data);
+
+                // Redirect ke halaman history_absen
+                redirect('karyawan/history');
             }
+        } else {
+            redirect('auth');
         }
+    }
     public function profile()
     {
         $data['akun'] = $this->m_model->get_by_id('akun', 'id', $this->session->userdata('id'))->result();
@@ -345,9 +345,11 @@ class Karyawan extends CI_Controller
                 $data = [
                     'image' => $file_name
                 ];
+                $this->session->set_flashdata('berhasil_ubah_foto', 'Foto berhasil diperbarui.');
+                echo '<script type="text/javascript">swal("Sukses!", "Foto berhasil diperbarui.", "success");</script>';
             } else {
-                // Gagal mengunggah image baru
-                redirect(base_url('karyawan/ubah_image/' . $this->input->post('id')));
+                echo '<script type="text/javascript">swal("Gagal!", "Gagal mengunggah foto baru.", "error");</script>';
+                redirect(base_url('karyawan/profile/' . $this->input->post('id')));
             }
         } else {
             // Jika tidak ada image yang diunggah
@@ -362,7 +364,7 @@ class Karyawan extends CI_Controller
         if ($eksekusi) {
             redirect(base_url('karyawan/profile'));
         } else {
-            redirect(base_url('karyawan/ubah_image/' . $this->input->post('id')));
+            redirect(base_url('karyawan/profile/' . $this->input->post('id')));
         }
     }
 

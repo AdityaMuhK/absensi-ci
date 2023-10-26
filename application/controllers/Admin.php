@@ -185,9 +185,11 @@ class Admin extends CI_Controller
                 $data = [
                     'image' => $file_name
                 ];
+                $this->session->set_flashdata('berhasil_ubah_foto', 'Foto berhasil diperbarui.');
+                echo '<script type="text/javascript">swal("Sukses!", "Foto berhasil diperbarui.", "success");</script>';
             } else {
-                // Gagal mengunggah image baru
-                redirect(base_url('admin/ubah_image/' . $this->input->post('id')));
+                echo '<script type="text/javascript">swal("Gagal!", "Gagal mengunggah foto baru.", "error");</script>';
+                redirect(base_url('admin/profile/' . $this->input->post('id')));
             }
         } else {
             // Jika tidak ada image yang diunggah
@@ -202,7 +204,7 @@ class Admin extends CI_Controller
         if ($eksekusi) {
             redirect(base_url('admin/profile'));
         } else {
-            redirect(base_url('admin/ubah_image/' . $this->input->post('id')));
+            redirect(base_url('admin/profile/' . $this->input->post('id')));
         }
     }
     //start export data karyawan

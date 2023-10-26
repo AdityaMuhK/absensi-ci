@@ -147,7 +147,7 @@
         .show_hide {
             position: absolute;
             top: 50%;
-            right: 10px;
+            right: 2px;
             transform: translateY(-50%);
             cursor: pointer;
         }
